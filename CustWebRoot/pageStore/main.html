@@ -1,0 +1,62 @@
+<script type="text/javascript">
+    $(function () {
+        $("#titleSpan").html("我是标题");
+        var user=QueryString("userid");
+        var params = "{\"user\":\""+user+"\"}";
+        $.ajax({
+            url:'/manage?domain=queryTest&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    $("#resJson").append((reportList["aa"]+'|'+reportList["bb"])+"<br>") ;
+                });
+            }
+        });
+    })
+</script>
+<div id="resJson"></div>
+<div class="panel panel-default">
+    <a href="#page-stats" class="panel-heading" data-toggle="collapse"><span id="titleSpan">aaaaa</span></a>
+
+    <div id="page-stats" class="panel-collapse panel-body collapse in">
+
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="knob-container">
+                    <input class="knob" data-width="200" data-min="0" data-max="3000" data-displayPrevious="true"
+                           value="2500" data-fgColor="#92A3C2" data-readOnly=true;>
+
+                    <h3 class="text-muted text-center">Accounts</h3>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="knob-container">
+                    <input class="knob" data-width="200" data-min="0" data-max="4500" data-displayPrevious="true"
+                           value="3299" data-fgColor="#92A3C2" data-readOnly=true;>
+
+                    <h3 class="text-muted text-center">Subscribers</h3>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="knob-container">
+                    <input class="knob" data-width="200" data-min="0" data-max="2700" data-displayPrevious="true"
+                           value="1840" data-fgColor="#92A3C2" data-readOnly=true;>
+
+                    <h3 class="text-muted text-center">Pending</h3>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="knob-container">
+                    <input class="knob" data-width="200" data-min="0" data-max="15000" data-displayPrevious="true"
+                           value="10067" data-fgColor="#92A3C2" data-readOnly=true;>
+
+                    <h3 class="text-muted text-center">Completed</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

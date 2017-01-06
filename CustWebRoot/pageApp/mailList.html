@@ -1,0 +1,30 @@
+<ion-view>
+    <ion-nav-title><h1 class="title"><b>通 讯 录</b></h1></ion-nav-title>
+    <ion-content>
+        <div>
+            <label class="item-input">
+                <i class="icon ion-android-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input ng-model="search" type="text" size="20" placeholder="搜索通讯录">
+            </label>
+        </div>
+        <div>
+            <ui class="list" ng-repeat="contact in contacts | filter:search">
+                <!--<li class="item" ng-class="bg[$index]" on-touch="onTouch($index)" on-release="onRelease($index)">-->
+                <li class="item">
+                    <div class="row row-no-padding">
+                        <div class="col col-50 col-center">
+                            <!--<h2>{{contact.name}}</h2>-->
+                            <!--<p>{{contact.dept}}</p>-->
+                        </div>
+                        <div class="col col-50 col-center">
+                            <i class="icon ion-ios-telephone"></i>&nbsp;
+                            <!--<a href='tel://{{contact.tel}}' style="display:inline-block;text-decoration:none;color:black;font-size:18px">-->
+                                <!--{{contact.tel}}-->
+                            <!--</a>-->
+                        </div>
+                    </div>
+                </li>
+            </ui>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,91 @@
+<script type="text/javascript">
+    $('#pagetitle')[0].innerHTML="收入报表";
+    $('#path')[0].innerHTML="收入报表";
+    function getOrderDetailList(){
+        $("#retable").empty();
+        var user=QueryString("userid");
+        var startDate=$("#startDate").val();
+        var endDate=$("#endDate").val();
+        var page=1;
+        var params = "{\"user\":\""+user+"\",\"page\":\""+page+"\",\"startDate\":\""+startDate+"\",\"endDate\":\""+endDate+"\"}";
+        $.ajax({
+            url:'/manage?domain=incomeList&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var result=resultJSON.substring(0,resultJSON.length-2);
+                if(result=="needlogin"){
+                    alert("请先登录！");
+                    top.window.location="/pageWeb/sign-in.html";
+                }
+                var amount=0;
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    var time=getDateTime(ConvertJSONDateToJSDate("/Date("+reportList["IN_DATE"]["time"]+")/"));
+                    amount+= parseInt(reportList["IN_INCOME"]);
+                    $("#retable").append("<tr><td>"+reportList["O_ORDERID"]+"</td><td>"+reportList["IN_INCOME"]+"</td><td>"+time+"</td></tr>");
+                });
+                $("#amount").append("<tr><td>总金额:</td><td>"+amount+"</td><td></td></tr>");
+            }
+        });
+    }
+    $(function () {
+        getOrderDetailList();
+    })
+</script>
+<div id="resJson"></div>
+     <table style="border-collapse:separate; border-spacing:0px 5px;">
+
+         <tr >
+             <td>开始日期：</td>
+             <td>
+                 <div style="width:80%"  class="input-group date form_date col-md-5"  data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                     <input class="form-control"  name="startDate" id="startDate" size="16" type="text" value="" readonly >
+                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                 </div>
+             </td>
+             <td>结束日期：</td>
+             <td>
+                 <div style="width:80%"  class="input-group date form_date col-md-5"  data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                     <input class="form-control"  name="endDate" id="endDate" size="16" type="text" value="" readonly >
+                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                 </div>
+             </td>
+             <td  align="center">
+                 <button onclick="getOrderDetailList()"   class="btn btn-primary">查询</button>
+             </td>
+         </tr>
+     </table>
+<script type="text/javascript">
+    $('.form_date').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+</script>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>订单ID</th>
+                <th>收入金额</th>
+                <th>收入时间</th>
+            </tr>
+        </thead>
+        <tbody id="retable">
+        </tbody>
+        <tfoot id="amount">
+        </tfoot>
+    </table>
+    <ul class="pagination" id="pagination">
+
+    </ul>
+</div>
+

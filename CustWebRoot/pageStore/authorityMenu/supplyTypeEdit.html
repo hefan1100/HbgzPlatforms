@@ -1,0 +1,114 @@
+<script type="text/javascript">
+    function QueryString(val) {
+        var uri = window.location.search;
+        var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
+        return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+    }
+    var title;
+    var id;
+
+    function getPatentMenu(){
+
+    }
+    $(function () {
+        if($("#hiddentitle").val()!=null && $("#hiddentitle").val()!=""){
+            title  =$("#hiddentitle").val();
+            id=$("#hiddenid").val()
+        }
+        var user=QueryString("userid");
+        var params = "{\"user\":\""+user+"\"}";
+        $.ajax({
+            url:'/manage?domain=getMenuJson&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var $checkableTree = $('#menutreeview').treeview({
+                    data: resultJSON,
+                    showIcon: false,
+                    showCheckbox: true
+                });
+                getData();
+            }
+        });
+    })
+
+    function getData() {
+        if($("#hiddentitle").val()!=null && $("#hiddentitle").val()!=""){
+            title  =$("#hiddentitle").val();
+            id=$("#hiddenid").val()
+        }
+        var user=QueryString("userid");
+        var params = "{\"user\":\""+user+"\",\"id\":\""+id+"\"}";
+        $.ajax({
+            url:'/manage?domain=supplyTypeList&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    $('#typename').val(reportList["SUP_TYPE_NAME"]);
+                });
+            }
+        });
+        $.ajax({
+            url:'/manage?domain=getUserMenu&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    var a=$('#menutreeview').treeview('search', [ reportList["MENU_NAME"], { ignoreCase: false, exactMatch: false } ]);
+                    $('#menutreeview').treeview('checkNode', [ a, { silent: $('#chk-check-silent').is(':checked') }]);
+                });
+            }
+        });
+    }
+
+    function saveSupplyType() {
+        var user=QueryString("userid");
+        var typename=$("#typename").val();
+        var menutreeviews=$('#menutreeview').treeview('getChecked',1);
+        var menuid="";
+        for(var i=0;i<menutreeviews.length;i++){
+            menuid=menuid+menutreeviews[i].id+",";
+        }
+        var params = "{\"user\":\""+user+"\",\"id\":\""+id+"\",\"menuid\":\""+menuid+"\",\"typename\":\""+typename+"\"}";
+        $.ajax({
+            url:'/manage?domain=saveOrUpdateSupplyType&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                changeTarget('/pageStore/authorityMenu/supplyTypeList.html');
+            }
+        });
+    }
+</script>
+<div class="row">
+    <div class="col-md-4">
+        <br>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="home">
+                <form id="tab">
+                    <div class="form-group">
+                        <label>职位名称</label>
+                        <input type="text" name="typename" id="typename"  class="form-control">
+
+                        <label>菜单</label>
+                        <div id="menutreeview" class=""></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="btn-toolbar list-toolbar">
+            <button class="btn btn-primary" onclick="saveSupplyType();"><i class="fa fa-save"></i> 保存</button>
+        </div>
+    </div>
+</div>
+

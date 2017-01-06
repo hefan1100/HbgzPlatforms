@@ -1,0 +1,86 @@
+<ion-view hide-nav-bar="true" style="z-index: 9999;">
+
+    <ion-header-bar align-title="center" style="background-color: #f8f8f8;">
+        <div class="buttons">
+        </div>
+        <h1 class="title">购物车</h1>
+        <div class="buttons">
+            <p class="button" style="border: none;color:#808080;" ng-click="editclick()" ng-show="edit">编辑</p>
+            <p class="button" style="border: none;color:red;" ng-click="completeclick()" ng-show="complete">完成</p>
+            <a href="javascript:void(0);" class="button button-icon icon ion-ios-chatbubble-outline"></a>
+        </div>
+    </ion-header-bar>
+    <ion-content style="background-color: #dcdcdc;">
+        <ion-refresher pulling-text="下拉刷新..." on-refresh="doRefresh()">
+        </ion-refresher>
+
+
+        <ion-list style="padding-top: 0px;padding-bottom: 0px;border-color: #ffff00;" ng-repeat="item in items">
+            <ion-item style="padding: 0px;">
+                <div class="list" style="margin-top: 20px;">
+                    <div class="item item-button-right item-checkbox">
+                        <label class="checkbox" style="width: 80px;height:80px;">
+                            <input type="checkbox" ng-model="item.check" ng-click="checkall()" ng-show="item.show">
+                        </label>
+                        自营
+                        <button class="button" style="border: none;">
+                            <p>已免运费</p>
+                            <i class="icon ion-ios-telephone"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row row-wrap" style="padding: 0px;">
+                    <div class="col col-10 text-center">
+                        <label class="checkbox">
+                            <input type="checkbox" ng-model="item.check"  ng-show="item.show" ng-click="checkall()">
+                        </label>
+                    </div>
+
+                    <div class="col col-25" style="padding-top: 10px;padding-bottom: 10px;padding-right: 0px;">
+                        <img src="{{item.obj.G_PIC}}" width="80px" height="80px">
+                    </div>
+                    <div class="col text-left" style="padding-top: 10px;padding-left: 0px;padding-right: 10px;">
+
+                        <h3>{{item.obj.G_NAME}}</h3>
+                        <p>
+                            <a style="color: #808080;font-size:10px;vertical-align: middle;">颜色：WFS4037/4L 圆炤</a>
+                            <a style="color: #808080;font-size:10px;float:right;vertical-align:middle;">选服务</a>
+                        </p>
+
+                        <p style="color: red;position:absolute;bottom:10px;font-size: 20px;font-weight: bold;">￥{{item.obj.G_PRICE}}</p>
+                        <div style="position:absolute;bottom:11px;right:10px;width: 90px;" class="button-bar" >
+
+                            <a class="button button-small button-assertive">+</a>
+                            <a class="button button-small button-assertive">1</a>
+                            <a class="button button-small button-assertive">-</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </ion-item>
+        </ion-list>
+
+
+    </ion-content>
+    <ion-footer-bar style="background-color: white;">
+        <div class="row row_wrap" style="padding:0px; ">
+
+            <div class="col col-33 text-center" style="padding:0px;border: none;background-color: red;">
+                <div class="item item-checkbox"  style="border: none;margin: auto;">
+                    <label class="checkbox" style="width: 80px;height:80px;padding-right: 0px;">
+                        <input type="checkbox" ng-model="lastcheckall.checked" ng-click="" ng-show="lastcheckall.show">
+                    </label>
+                    <a style="font-size: 13px;text-decoration: none;margin-left: 10px;">全选</a>
+                </div>
+
+            </div>
+            <div class="col col-33" style="padding-left:0px;padding-right:0px;margin: auto;">
+                <a style="font-size: 16px;text-decoration: none;">合计：￥{{all}}</a>
+            </div>
+            <div class="col" style="padding:0px;background-color: red;">
+                <button class="button button-assertive" style="width: 100%;height: 100%;">去结算({{leng}})</button>
+            </div>
+        </div>
+    </ion-footer-bar>
+</ion-view>

@@ -1,0 +1,58 @@
+<script type="text/javascript">
+    function save() {
+        var content=$('#content').val();
+        var radiotype=$("input[name='radiotype']:checked").val();
+        var msgtype="unknow";
+        var params = "{\"content\":\""+content+"\",\"radiotype\":\""+radiotype+"\",\"msgtype\":\""+msgtype+"\"}";
+        $.ajax({
+            url:'/serv?domain=saveMsgs&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                window.location.href="index.html?wxcode="+wxcode+"&url="+"pageApp/configureSec.html";
+            }
+        });
+    }
+</script>
+<div class="row">
+    <div class="col-md-4">
+        <br>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="home">
+                <form id="tab">
+                    <div class="form-group">
+                        <label>类型:</label>
+                        <br/>
+                        <input type="radio" name="radiotype" value="1" >文本
+                        <input type="radio" name="radiotype" value="2" />图文
+                    </div>
+                    <div class="form-group">
+                        <label>内容:</label>
+                        <br/>
+                        <textarea name="content" id="content" cols='100' rows='10'></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-pane fade" id="profile">
+
+                <form id="tab2">
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" class="form-control">
+                    </div>
+                    <div>
+                        <button class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="btn-toolbar list-toolbar">
+            <button class="btn btn-primary" onclick="save();"><i class="fa fa-save"></i> 保存</button>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,109 @@
+<script type="text/javascript">
+    var filepath;
+    $("#file-1").fileinput({
+        uploadUrl: '#', // you must set a valid URL here else you will get an error
+        allowedFileExtensions : ['jpg', 'png','gif'],
+        overwriteInitial: false,
+        maxFileSize: 1000,
+        maxFilesNum: 10,
+        //allowedFileTypes: ['image', 'video', 'flash'],
+        slugCallback: function(filename) {
+            filepath=filename;
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+    function performAjaxSubmit() {
+        var sampleFile = document.getElementById("file-1").files[0];
+        var formdata = new FormData();
+
+        formdata.append("sampleFile", sampleFile);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST","/file", true);
+        xhr.send(formdata);
+        xhr.onload = function(e) {
+            if (this.status == 200) {
+                alert(this.responseText);
+            }
+        };
+    }
+    function QueryString(val) {
+        var uri = window.location.search;
+        var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
+        return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+    }
+    var title;
+    var id;
+    $(function () {
+        if($("#hiddentitle").val()!=null && $("#hiddentitle").val()!=""){
+            $("#title").val($("#hiddentitle").val());
+            $("#title").attr("readonly","readonly");
+            title  =$("#hiddentitle").val();
+            id=$("#hiddenid").val()
+        }
+        var user=QueryString("userid");
+        var isParent="1";
+        var params = "{\"user\":\""+user+"\",\"isParent\":\""+isParent+"\"}";
+        $.ajax({
+            url:'/serv?domain=queryCustomerSource&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var parent = $("#parent");
+                parent.empty();
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    var option = $("<option>").text(reportList["title"]).val(reportList["id"])
+                    parent.append(option);
+                });
+            }
+        });
+    })
+
+
+    function save() {
+        performAjaxSubmit();
+        var parent=jQuery("#parent option:selected").val();
+        var params = "{\"title\":\""+title+"\",\"parent\":\""+parent+"\",\"id\":\""+id+"\"}";
+        $.ajax({
+            url:'/serv?domain=saveCustomerSource&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                window.location.reload();
+            }
+        });
+    }
+</script>
+<div class="row">
+    <div class="col-md-4">
+        <br>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="home">
+                <form id="tab">
+                    <div class="form-group">
+                        <label>素材名称</label>
+                        <input type="text" name="sourcename" id="sourcename"  class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>素材类型</label>
+                        <select name="type" id="type" class="form-control">
+                        </select>
+                        <form enctype="multipart/form-data">
+                            <div class="form-group">
+                                <input id="file-1" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">
+                            </div>
+                        </form>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="btn-toolbar list-toolbar">
+            <button class="btn btn-primary" onclick="save();"><i class="fa fa-save"></i> 保存</button>
+        </div>
+    </div>
+</div>
+

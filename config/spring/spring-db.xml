@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                         http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+        http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">                     
+     <!--weblogic配置-->
+	<!--<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">-->
+		<!--<property name="jndiName">-->
+			<!--<value>prjdb</value>-->
+		<!--</property>-->
+		<!--<property name="resourceRef">-->
+			<!--<value>false</value>-->
+		<!--</property>-->
+		<!--<property name="jndiEnvironment">-->
+			<!--<props>-->
+				<!--<prop key="java.naming.provider.url">t3://localhost:7001</prop>-->
+				<!--<prop key="java.naming.factory.initial">weblogic.jndi.WLInitialContextFactory</prop>-->
+			<!--</props>-->
+		<!--</property>-->
+	<!--</bean>-->
+    <!--tomcat配置-->
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://192.168.15.51:3306/wxpt_test" />
+        <property name="username" value="wxpt_test" />
+        <property name="password" value="wxpt" />
+        <property name="initialSize" value="2" />
+        <property name="maxActive" value="15" />
+        <property name="testWhileIdle" value="true" />
+        <property name="validationQuery" value="select 1 from dual" />
+        <property name="testOnBorrow" value="true" />
+    </bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>		
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.RuntimeException" />
+			<tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.RuntimeException" />
+			<tx:method name="insert*" propagation="REQUIRED" rollback-for="java.lang.RuntimeException" />
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.RuntimeException" />
+			<tx:method name="modify*" propagation="REQUIRED" rollback-for="java.lang.RuntimeException" />
+			<tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.RuntimeException"/>
+			<tx:method name="del*" propagation="REQUIRED" rollback-for="java.lang.RuntimeException"/>
+			<tx:method name="*" propagation="NOT_SUPPORTED" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.manager..*BMOImpl.*(..))" />
+	</aop:config>
+</beans>

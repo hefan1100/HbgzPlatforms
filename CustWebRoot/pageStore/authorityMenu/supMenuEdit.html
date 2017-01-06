@@ -1,0 +1,104 @@
+<script type="text/javascript">
+    function QueryString(val) {
+        var uri = window.location.search;
+        var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
+        return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+    }
+    var title;
+    var id;
+    $(function () {
+        if($("#hiddentitle").val()!=null && $("#hiddentitle").val()!=""){
+            title  =$("#hiddentitle").val();
+            id=$("#hiddenid").val()
+        }
+        var user=QueryString("userid");
+        var params = "{\"user\":\""+user+"\"}";
+        $.ajax({
+            url:'/manage?domain=getMenuJson&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var $tree = $('#menuparent').treeview({
+                    data: resultJSON
+                });
+            }
+        });
+
+        if($("#hiddentitle").val()!=null && $("#hiddentitle").val()!=""){
+            title  =$("#hiddentitle").val();
+            id=$("#hiddenid").val()
+        }
+        var user=QueryString("userid");
+        var params = "{\"user\":\""+user+"\",\"id\":\""+id+"\"}";
+        $.ajax({
+            url:'/manage?domain=supMenuList&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    $('#menuname').val(reportList["MENU_NAME"]);
+                    $('#menucode').val(reportList["MENU_CODE"]);
+                    $('#menuurl').val(reportList["MENU_URL"]);
+                    var a=$('#menuparent').treeview('search', [ reportList["MENU_PARENT"], { ignoreCase: false, exactMatch: false } ]);
+                    $('#menuparent').treeview('selectNode',a);
+                });
+            }
+        });
+    })
+
+
+    function save() {
+        var user=QueryString("userid");
+        var menuname=$('#menuname').val();
+        var menucode=$('#menucode').val();
+        var menuurl=$('#menuurl').val();
+        if($('#menuparent').treeview('getSelected', 1).length==0){
+            var parentmenu="";
+        } else{
+            var parentmenu=$('#menuparent').treeview('getSelected', 1)[0].id;
+        }
+
+        var params = "{\"user\":\""+user+"\",\"id\":\""+id+"\",\"menuname\":\""+menuname+"\",\"menucode\":\""+menucode+"\",\"parentmenu\":\""+parentmenu+"\",\"menuurl\":\""+menuurl+"\"}";
+        $.ajax({
+            url:'/manage?domain=saveOrUpdateSupMenu&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                changeTarget('/pageStore/authorityMenu/supMenuList.html');
+            }
+        });
+    }
+</script>
+<div class="row">
+    <div class="col-md-4">
+        <br>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="home">
+                <form id="tab">
+                    <div class="form-group">
+                        <label>菜单名称</label>
+                        <input type="text" name="menuname" id="menuname"  class="form-control">
+                        <label>菜单名称</label>
+                        <input type="text" name="menucode" id="menucode"  class="form-control">
+                        <label>菜单页面</label>
+                        <input type="text" name="menuurl" id="menuurl"  class="form-control">
+                        <label>上级菜单</label>
+                        <div id="menuparent" class=""></div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="btn-toolbar list-toolbar">
+            <button class="btn btn-primary" onclick="save();"><i class="fa fa-save"></i> 保存</button>
+        </div>
+    </div>
+</div>
+

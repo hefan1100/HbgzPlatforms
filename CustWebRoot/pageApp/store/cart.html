@@ -1,0 +1,124 @@
+<ion-view ng-hide="havingVar">
+    <ion-nav-title><h1 class="title"><b>湖北邮政微商城</b></h1></ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon ion-ios-arrow-back" ng-click="httpback()">返回</button>
+    </ion-nav-buttons>
+    <ion-content style="background-color: #dcdcdc;" overflow-scroll="true" style="overflow: auto;">
+        <ion-refresher pulling-text="下拉刷新..." on-refresh="doRefresh()">
+        </ion-refresher>
+
+
+        <ion-list style="padding-top: 0px;padding-bottom: 0px;border-color: #ffff00;" >
+            <ion-item style="padding: 0px;height: 140px;width: 100%;" ng-repeat="item in items">
+
+                <div class="row row-wrap row-no-padding" style="padding: 0px;">
+                    <div class="col col-10 col-center" style="text-align: center;">
+                        <label class="checkbox checkbox-assertive" style="display: inline;">
+                            <input type="checkbox"  ng-click="checkItem($index)">
+                        </label>
+                    </div>
+
+                    <div class="col col-25 col-center" style="padding: 0px;text-align: center;">
+                        <img src="{{item.obj.G_PIC}}" width="100px" height="100px" style="display: inline;">
+                    </div>
+                    <div class="col text-left" style="padding-top: 20px;padding-left: 30px;padding-right: 10px;">
+
+
+                        <h3>{{item.obj.G_NAME}}</h3>
+                        <p style="color: #808080;font-size:14px;vertical-align: middle;">750ML</p>
+                        <div class="row row_wrap row-no-padding" width="100%" style="height: 80px;">
+                            <div class="col col-33 col-center">
+                                <a style="color: red;font-size: 15px;font-weight: bold;text-decoration: none;display: inline;vertical-align: middle;">
+                                    ￥{{item.obj.G_PRICE}}
+                                </a>
+                            </div>
+
+                            <div class="col col-20 col-center" >
+                                <img src="img/store/icon_minus.png" width="25px" height="25px" ng-click="minusGoodsNumber(item)">
+                            </div>
+
+                            <div class="col col-10 col-center">
+                                <a style="text-decoration: none;">{{item.obj.count}}</a>
+                            </div>
+
+                            <div class="col col-20 col-center" >
+                                <img src="img/store/icon_add.png" width="25px" height="25px" ng-click="addGoodsNumber(item)">
+                            </div>
+
+                            <div class="col col-center">
+                                <img src="img/store/icon-del.png" width="25px" height="25px" ng-click="delCart(item.obj.G_ID)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+         </ion-list>
+    </ion-content>
+    <ion-footer-bar style="background-color: white;padding: 0px;">
+        <div class="row row_wrap row-no-padding" style="padding-left:10px;height:100%; ">
+
+            <div class="col col-10 col-center" style="text-align: center;">
+                <label class="checkbox checkbox-assertive" style="display: inline;">
+                    <input type="checkbox" ng-model="lastcheckall.checked" ng-click="selectAll()">
+                </label>
+            </div>
+            <div class="col col-10 col-center" style="text-align: center;">
+                <p style="font-size: 16px;display: inline;">全选</p>
+            </div>
+            <div class="col col-50 text-left" style="padding-left:15px;padding-right:0px;padding-top: 5px;padding-bottom: 5px;">
+                   <table width="100%">
+                       <tr>
+                           <td>
+                               <a style="text-decoration: none;color: #808080;font-size: 14px;">合计</a>
+                               <a style="text-decoration: none;color: #ffc0cb;font-size: 14px;font-weight: bold;">￥{{allprice}}</a>
+                           </td>
+                        </tr>
+                        <tr>
+                            <td>
+                             <a style="text-decoration: none;color: #808080;font-size: 14px;">共{{allcount}}件</a>
+                            </td>
+                       </tr>
+                   </table>
+            </div>
+            <div class="col col-center" style="padding-top: 10%;padding-bottom: 10%;[padding-left:10%;padding-right:10%;height: 100%;">
+                <button class="button" style="width: 80%;height: 80%;font-weight: bold;font-size: 16px;border:none;background-color: pink;color: white;" ng-click="goConfirm()">
+                    结算
+                </button>
+            </div>
+
+        </div>
+    </ion-footer-bar>
+</ion-view>
+
+<ion-view ng-hide="noVar">
+    <ion-nav-title><h1 class="title"><b>湖北邮政微商城</b></h1></ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon ion-ios-arrow-back" ng-click="httpback()">返回</button>
+    </ion-nav-buttons>
+    <ion-content style="background-color: #EEEEEE;" overflow-scroll="true" style="overflow: hidden">
+
+            <div style="width: 100%;height: 100%;background-color: #EEEEEE;text-align: center;padding-left: 10%;padding-right: 10%;">
+                <div style="width: 80%;height:360px;display: inline;background-color: #EEEEEE;">
+                    <div class="list" style="background-color: #EEEEEE;">
+                        <div class="item item-image" style="background-color: #EEEEEE;border: none;">
+                              <img src="img/store/icon_empty_car.png" width="100px">
+                        </div>
+                        <div class="item" style="text-align: center;background-color: #EEEEEE;border: none;">
+                               <a style="color: #808080;display: inline;">您还没有选择商品</a>
+                        </div>
+
+                        <div class="item" style="text-align: center;background-color: #EEEEEE;border: none;">
+                            <button class="button" style="width: 100%;height: 50px;font-weight: bold;font-size: 16px;border:none;background-color:#87C644;color: white;">
+                                去购物
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </ion-content>
+    <ion-footer-bar style="background-color: #EEEEEE;padding: 0px;">
+    </ion-footer-bar>
+</ion-view>
+
+

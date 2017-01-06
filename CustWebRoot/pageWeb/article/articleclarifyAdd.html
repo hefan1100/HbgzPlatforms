@@ -1,0 +1,70 @@
+<script type="text/javascript">
+
+    function save() {
+        var content=$('#summernote').summernote('code');
+        var title=$('#category_title').val();
+        var categoryurl=$('#category_url').val();
+        var keyword=$('#category_keyword').val();
+        var user=QueryString("userid");
+        var pid=QueryString("pid");
+        var params = "{\"content\":\""+content+"\",\"keyword\":\""+keyword+"\",\"user\":\""+user+"\",\"pid\":\""+pid+"\",\"categoryurl\":\""+categoryurl+"\",\"categorytitle\":\""+title+"\"}";
+        $.ajax({
+            url:'/serv?domain=saveCategory&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                changeTarget('/pageWeb/article/articleclarify.html');
+            }
+        });
+    }
+</script>
+<a href="javascript:void(0);" onclick="changeTarget('/pageWeb/article/articleAdminister.html')">返回</a>
+<div class="row">
+    <div class="col-md-4">
+        <br>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="home">
+                <form id="tab">
+                    <div class="form-group">
+                        分类标题：<br/>
+                        <input type="text" name="categorytitle" id="category_title">
+                    </div>
+                    <div class="form-group">
+                        分类关键词：<br/>
+                        <input type="text" name="categorykeyword" id="category_keyword">
+                    </div>
+                    <div class="form-group">
+                        外链(为空时默认跳转到该分类的文章列表里面)：<br/>
+                        <input type="text" name="categoryurl" id="category_url">
+                    </div>
+                    <div class="form-group">
+                        <label>内容:</label>
+                        <br/>
+                        <div id="summernote" name="content"></div>
+                        <script>
+                            $(document).ready(function() {
+                                $('#summernote').summernote({
+                                    height:200,
+                                    width:450,
+                                    lang: 'zh-CN'
+                                });
+                            });
+                        </script>
+
+
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="btn-toolbar list-toolbar">
+                <button class="btn btn-primary" onclick="save();"><i class="fa fa-save"></i> 保存</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+

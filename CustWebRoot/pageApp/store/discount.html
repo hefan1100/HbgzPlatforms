@@ -1,0 +1,112 @@
+<ion-view>
+    <ion-nav-title><h1 class="title"><b>湖北邮政微商城</b></h1></ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-large button-clear icon ion-ios-arrow-back" ng-click="httpback()">返回</button>
+    </ion-nav-buttons>
+
+    <ion-content scroll="true" style="background-color: #EEEEEE;">
+        <div class="row row-wrap" style="background-color: white;height:50px;" >
+
+            <div class="col col-center" ng-style="WSYstyle.colstyle" style="border-bottom: 1px solid green" ng-click="changestyle(WSYstyle,0)">
+                <p ng-style="WSYstyle.pstyle">未使用</p>
+            </div>
+            <div class="col col-center" ng-style="YSYstyle.colstyle" ng-click="changestyle(YSYstyle,1)">
+                <p ng-style="YSYstyle.pstyle">已使用</p>
+            </div>
+            <div class="col col-center" ng-style="YGQstyle.colstyle" ng-click="changestyle(YGQstyle,2)">
+                <p ng-style="YGQstyle.pstyle">已过期</p>
+            </div>
+         </div>
+        <ion-slide-box on-slide-changed="slideHasChanged($index)"  show-pager="false"  style="width:100%;height: 100%;">
+            <ion-slide style="padding-top:20px;padding-left: 10px;padding-right: 10px;">
+                <ion-list >
+                    <ion-item style="border: none;height:80px;padding:0px;" ng-repeat="i in discountlist" ng-click="goPayByDiscount(i)">
+                        <div class="row row-wrap row-no-padding">
+                            <div class="col col-25" style="background-color: #74BC4C">
+                                <div class="list" style="width: 100%;background-color:#74BC4C;height: 100%;">
+                                    <div class="item"  style="padding-left:16%;padding-right:16%;text-align: center;width: 100%;background-color: #74BC4C;border: none;height: 40px;">
+                                        <a style="display: inline;font-weight: bold;font-size: 32px;color: white;">{{i.C_MONEY}}</a>
+                                        <a style="float:left;font-weight: bold;font-size: 13px;color: white;">￥</a>
+                                    </div>
+                                    <div class="item"  style="padding-left:10%;padding-right:10%;width: 100%;background-color: #74BC4C;border: none;height: 40px;">
+                                        <a style="font-weight: bold;font-size: 13px;color: white;margin-left: auto;margin-right: auto;">{{i.C_DETAIL}}</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col col-50" style="padding-top: 5px;padding-bottom: 5px;padding-left: 3%;">
+                                <p>{{i.SUP_NAME}}</p>
+                                <p style="margin-top: 20px;">使用期限：2016.12.14-2016.12.23</p>
+                            </div>
+
+                            <div class="col col-center" style="text-align: center;">
+                               <a class="button" style="border: 1px solid #74BC4C;color:#74BC4C;background-color: white;display: inline; ">立即使用</a>
+                            </div>
+                        </div>
+                    </ion-item>
+
+
+                </ion-list>
+            </ion-slide>
+            <ion-slide style="padding-top:20px;padding-left: 10px;padding-right: 10px;" >
+                <ion-list>
+                    <ion-item style="border: none;height:80px;padding:0px;" ng-repeat="i in discountlist" ng-click="">
+                        <div class="row row-wrap row-no-padding">
+                            <div class="col col-25" style="background-color: #74BC4C">
+                                <div class="list" style="width: 100%;background-color:#999999;height: 100%;">
+                                    <div class="item"  style="padding-left:16%;padding-right:16%;text-align: center;width: 100%;background-color: #999999;border: none;height: 40px;">
+                                        <a style="display: inline;font-weight: bold;font-size: 32px;color: white;">{{i.C_MONEY}}</a>
+                                        <a style="float:left;font-weight: bold;font-size: 13px;color: white;">￥</a>
+                                    </div>
+                                    <div class="item"  style="padding-left:10%;padding-right:10%;width: 100%;background-color: #999999;border: none;height: 40px;">
+                                        <!--                  <a style="display: inline;font-weight: bold;font-size: 22px;color: white;">5</a>-->
+                                           <a style="font-weight: bold;font-size: 13px;color: white;margin-left: auto;margin-right: auto;">{{i.C_DETAIL}}</a>
+                                     </div>
+                                </div>
+
+                            </div>
+                            <div class="col col-50" style="padding-top: 5px;padding-bottom: 5px;padding-left: 3%;">
+                                <p>{{i.SUP_NAME}}</p>
+                                <p style="margin-top: 20px;">使用期限：2016.12.14-2016.12.23</p>
+                            </div>
+
+                            <div class="col col-center" style="text-align: center;">
+                           <!--     <a class="button" style="border: 1px solid #74BC4C;color:#74BC4C;background-color: white;display: inline; ">立即使用</a>     -->
+                                <img src="img/store/icon_yishiyong.png" width="80%" style="display: inline;">
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </ion-slide>
+            <ion-slide style="padding-top:20px;padding-left: 10px;padding-right: 10px;">
+                <ion-list>
+                    <ion-item style="border: none;height:80px;padding:0px;" ng-repeat="i in discountlist" ng-click="">
+                        <div class="row row-wrap row-no-padding">
+                            <div class="col col-25" style="background-color: #999999">
+                                <div class="list" style="width: 100%;background-color:#999999;height: 100%;">
+                                    <div class="item"  style="padding-left:16%;padding-right:16%;text-align: center;width: 100%;background-color: #999999;border: none;height: 40px;">
+                                        <a style="display: inline;font-weight: bold;font-size: 32px;color: white;">{{i.C_MONEY}}</a>
+                                        <a style="float:left;font-weight: bold;font-size: 13px;color: white;">￥</a>
+                                    </div>
+                                    <div class="item"  style="padding-left:10%;padding-right:10%;width: 100%;background-color: #999999;border: none;height: 40px;">
+                                        <!--                  <a style="display: inline;font-weight: bold;font-size: 22px;color: white;">5</a>-->
+                                        <a style="font-weight: bold;font-size: 13px;color: white;margin-left: auto;margin-right: auto;">{{i.C_DETAIL}}</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col col-50" style="padding-top: 5px;padding-bottom: 5px;padding-left: 3%;">
+                                <p>{{i.SUP_NAME}}</p>
+                                <p style="margin-top: 20px;">使用期限：2016.12.14-2016.12.23</p>
+                            </div>
+
+                            <div class="col col-center" style="text-align: center;">
+                                <img src="img/store/icon_yiguoqi.png" width="80%" style="display: inline;">
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </ion-slide>
+        </ion-slide-box>
+  </ion-content>
+ </ion-view>

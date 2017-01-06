@@ -1,0 +1,117 @@
+<script type="text/javascript">
+    $(function () {
+        var user=QueryString("userid");
+        var id=QueryString("pid");
+        var params = "{\"user\":\""+user+"\",\"id\":\""+id+"\"}";
+        $.ajax({
+            url:'/serv?domain=queryTest&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var result=resultJSON.substring(0,resultJSON.length-2);
+                if(result=="needlogin"){
+                    alert("请先登录！");
+                    top.window.location="/pageWeb/sign-in.html";
+                }
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                   $("#public_name").val(reportList["NAME"]);
+                   $("#public_id").val(reportList["PUBLICID"]);
+                   $("#wechat").val(reportList["WECHAT"]);
+                });
+
+            }
+        });
+    })
+    function getUuid(){
+        var len=32;//32长度
+        var radix=16;//16进制
+        var chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');var uuid=[],i;radix=radix||chars.length;if(len){for(i=0;i<len;i++)uuid[i]=chars[0|Math.random()*radix];}else{var r;uuid[8]=uuid[13]=uuid[18]=uuid[23]='-';uuid[14]='4';for(i=0;i<36;i++){if(!uuid[i]){r=0|Math.random()*16;uuid[i]=chars[(i==19)?(r&0x3)|0x8:r];}}}
+        return uuid.join('');
+    }
+    function save() {
+        var wechat=$('#wechat').val();
+        var type=jQuery("#type option:selected").val();
+        var publicname=$('#public_name').val();
+        var publicid=$('#public_id').val();
+        var userid=QueryString("userid");
+        var pid=QueryString("pid");
+
+        if(pid==null){
+            var newid=getUuid();
+            var params = "{\"wechat\":\""+wechat+"\",\"type\":\""+type+"\",\"public_name\":\""+publicname+"\",\"public_id\":\""+publicid+"\",\"user\":\""+userid+"\",\"id\":\""+newid+"\"}";
+            $.ajax({
+                url:'/serv?domain=saveConfigure&params='+encodeURIComponent(params),
+                type:'post',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType:'html',
+                error: function(){alert('error');},
+                success:function(resultJSON){
+                    window.location.href="../mainPage.html?url=pageWeb/appConfig/configureSec.html?wxcode="+wechat+"&userid="+userid+"&pid="+newid;
+                }
+            });
+        }else{
+            var params = "{\"wechat\":\""+wechat+"\",\"type\":\""+type+"\",\"public_name\":\""+publicname+"\",\"public_id\":\""+publicid+"\",\"user\":\""+userid+"\",\"id\":\""+pid+"\"}";
+            $.ajax({
+                url:'/serv?domain=updateConfigure&params='+encodeURIComponent(params),
+                type:'post',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType:'html',
+                error: function(){alert('error');},
+                success:function(resultJSON){
+                    changeTarget('/pageWeb/appConfig/configureSec.html')
+                }
+            });
+        }
+
+    }
+</script>
+<div class="row">
+    <div class="col-md-4">
+        <br>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="home">
+                <form id="tab">
+                    <div class="form-group">
+                        <label>公众号类型</label>
+                        <select name="type" id="type" class="form-control">
+                            <option value="1">订阅号</option>
+                            <option value="2">公众号</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>公众号名称</label>
+                        <input type="text" name="public_name" id="public_name"  class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>原始ID</label>
+                        <input type="text" name="public_id" id="public_id" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>微信号</label>
+                        <input type="text" name="wechat" id="wechat" class="form-control">
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-pane fade" id="profile">
+
+                <form id="tab2">
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" class="form-control">
+                    </div>
+                    <div>
+                        <button class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="btn-toolbar list-toolbar">
+            <button class="btn btn-primary" onclick="save();"><i class="fa fa-save"></i> 保存</button>
+        </div>
+    </div>
+</div>
+

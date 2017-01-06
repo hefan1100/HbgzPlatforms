@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="user">
+    <select id="queryAnyList" parameterClass="java.util.HashMap" remapResults="true" resultClass="java.util.HashMap">
+        <![CDATA[
+            $queryAnyListSQL$
+        ]]>
+    </select>
+    <select id="queryAny" parameterClass="java.util.HashMap" remapResults="true" resultClass="java.util.HashMap">
+        <![CDATA[
+            $queryAnySQL$
+        ]]>
+    </select>
+    <insert id="addAny" parameterClass="java.util.HashMap">
+        <![CDATA[
+            $addAnySQL$
+        ]]>
+        <selectKey keyProperty="id" resultClass="long">
+        <![CDATA[
+          select 1 from dual
+        ]]>
+        </selectKey>
+    </insert>
+    <update id="updateAny" parameterClass="java.util.HashMap">
+        <![CDATA[
+            $updateAnySQL$
+        ]]>
+    </update>
+    <delete id="delAny" parameterClass="java.util.HashMap">
+        <![CDATA[
+            $delAnySQL$
+        ]]>
+    </delete>
+    <select id="countAny" parameterClass="java.util.HashMap" resultClass="String">
+    <![CDATA[
+	  select count(1) n from ( $sql$ )
+    ]]>
+	</select>
+    <select id="queryPageAny" parameterClass="java.util.HashMap" remapResults="true" resultClass="java.util.HashMap">
+    <![CDATA[
+      SELECT * FROM (SELECT A.*, ROWNUM RN FROM (
+        $sql$
+      ) A WHERE ROWNUM <= ((#curPage# - 1) * #rowsPerPage# + #rowsPerPage#))
+	  WHERE RN >=((#curPage# - 1) * #rowsPerPage# + 1)
+    ]]>
+    </select>
+</sqlMap>

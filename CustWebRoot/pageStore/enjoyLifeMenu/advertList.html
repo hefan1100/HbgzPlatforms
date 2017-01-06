@@ -1,0 +1,197 @@
+<script type="text/javascript">
+    $('#pagetitle')[0].innerHTML="悦享生活";
+    $('#path')[0].innerHTML="悦享生活";
+    function check_all(obj, cName) {
+        var checkboxs = document.getElementsByName(cName);
+        var gids="";
+        for ( var i = 0; i < checkboxs.length; i+=1) {
+            checkboxs[i].checked = obj.checked;
+        }
+    }
+    function QueryStrings(uri,val) {
+        var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
+        return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+    }
+    function changeTargets(url){
+        var title=QueryStrings(url,"title");
+        var id=QueryStrings(url,"id");
+        var parames={"title":""+title+"","id":""+id+""};
+        $.ajax({
+            url:''+url+'',
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            data:parames,
+            error: function(){alert('error');},
+            success:function(data){
+                var str="<input class=\"hidden\" id=\"hiddentitle\" name=\"hiddentitle\" value=\""+title+"\"></input><input class=\"hidden\" id=\"hiddenid\" id=\"hiddenid\" value=\""+id+"\"></input>";
+                $("#tagetDiv").html(str+data);
+            }
+        });
+    }
+    function delgood(gid){
+        var user=QueryString("userid");
+        var params = "{\"user\":\""+user+"\",\"gids\":\""+gid+"\"}";
+        $.ajax({
+            url:'/serv?domain=delgoods&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var result=resultJSON.substring(0,resultJSON.length-2);
+                if(result=="needlogin"){
+                    alert("请先登录！");
+                    top.window.location="/pageWeb/sign-in.html";
+                }
+                changeTarget('/pageStore/goodsMenu/goodsList.html')
+                alert("删除成功！")
+            }
+        });
+    }
+    function delgoods(goodid) {
+        var user=QueryString("userid");
+        var page=1;
+        var checkboxs = document.getElementsByName("gid");
+        var gids="";
+        for (var i = 0; i < checkboxs.length; i+=1) {
+            if(checkboxs[i].checked){
+                var gid=checkboxs[i].value+",";
+                gids+=gid;
+            }
+        }
+        if(gids==""){
+            alert("请选择商品！")
+        }else{
+            var params = "{\"user\":\""+user+"\",\"gids\":\""+gids+"\"}";
+            $.ajax({
+                url:'/serv?domain=delgoods&params='+encodeURIComponent(params),
+                type:'post',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType:'html',
+                error: function(){alert('error');},
+                success:function(resultJSON){
+                    var result=resultJSON.substring(0,resultJSON.length-2);
+                    if(result=="needlogin"){
+                        alert("请先登录！");
+                        top.window.location="/pageWeb/sign-in.html";
+                    }
+                    changeTarget('/pageStore/goodsMenu/goodsList.html')
+                    alert("删除成功！")
+                }
+            });
+        }
+    }
+    function changeStatus(status){
+        var user=QueryString("userid");
+        var checkboxs = document.getElementsByName("gid");
+        var gids="";
+        for (var i = 0; i < checkboxs.length; i+=1) {
+            if(checkboxs[i].checked){
+                var gid=checkboxs[i].value+",";
+                gids+=gid;
+            }
+        }
+        if(gids==""){
+            alert("请选择商品！")
+        } else{
+            var params = "{\"user\":\""+user+"\",\"g_id\":\""+gids+"\",\"type\":\""+status+"\"}";
+            $.ajax({
+                url:'/serv?domain=saveOrUpdateGoods&params='+encodeURIComponent(params),
+                type:'post',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType:'html',
+                error: function(){alert('error');},
+                success:function(resultJSON){
+                    changeTarget('/pageStore/goodsMenu/goodsList.html');
+                }
+            });
+        }
+
+    }
+    $(function () {
+        var user=QueryString("userid");
+        var page=1;
+        var params = "{\"user\":\""+user+"\",\"page\":\""+page+"\"}";
+        $.ajax({
+            url:'/serv?domain=goodsList&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var result=resultJSON.substring(0,resultJSON.length-2);
+                if(result=="needlogin"){
+                    alert("请先登录！");
+                    top.window.location="/pageWeb/sign-in.html";
+                }
+                if(parseInt(resultJSON)>1){
+                    var append="<li><a href=\"#\">&laquo;</a></li>";
+                    for(var i=1;i<=parseInt(resultJSON);i++ ){
+                        append+="<li><a href=\"#\">"+i+"</a></li>"
+                    }
+                    append+="<li><a href=\"#\">&raquo;</a></li>";
+                    $("#pagination").append(append);
+                }else{
+
+                }
+
+            }
+        });
+    })
+
+    $(function () {
+        var user=QueryString("userid");
+        var page=1;
+        var params = "{\"user\":\""+user+"\",\"page\":\""+page+"\"}";
+        $.ajax({
+            url:'/serv?domain=goodsList&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var result=resultJSON.substring(0,resultJSON.length-2);
+                if(result=="needlogin"){
+                    alert("请先登录！");
+                    top.window.location="/pageWeb/sign-in.html";
+                }
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    var status= "";
+                    if(reportList["STATUS"]=="1"){
+                        status="上架";
+                    }else{
+                        status="下架";
+                    }
+                    $("#retable").append("<tr><td><input type='checkbox' name='gid' value='"+reportList["G_ID"]+"'></td><td>"+reportList["G_NAME"]+"</td><td>"+reportList["G_PRICE"]+"</td><td>"+reportList["G_AMOUNT"]+"</td><td>"+status+"</td><td>"+reportList["DIC_NAME"]+"</td><td><a onclick=\"changeTargets('/pageStore/goodsMenu/goodsEdit.html?user="+user+"&title="+reportList["G_NAME"]+"&id="+reportList["G_ID"]+"')\"><i class=\"fa fa-pencil\"></i></a><a href=\"#myModal\" role=\"button\" data-toggle=\"modal\"><i class=\"fa fa-trash-o\" onclick='delgood('"+reportList["G_ID"]+"')'></i></a></td></tr>");
+                });
+
+            }
+        });
+    })
+</script>
+<div id="resJson"></div>
+<button onclick="changeTargets('/pageStore/enjoyLifeMenu/advertList.html')"  class="btn btn-primary"><i class="fa fa-plus"></i>新增商品</button>
+<button onclick="changeStatus('puton')"  class="btn btn-primary">商品上架</button>
+<button onclick="changeStatus('putoff')"  class="btn btn-primary">商品下架</button>
+<a onclick="delgoods()"  class="btn btn-primary pull-right">删除</a>
+<table class="table">
+    <thead>
+    <tr>
+        <th> <input type="checkbox" name="check" onclick="check_all(this,'gid');"/></th>
+        <th>商品名称</th>
+        <th>价格</th>
+        <th>数量</th>
+        <th>状态</th>
+        <th>类型</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody id="retable">
+    </tbody>
+</table>
+<ul class="pagination" id="pagination">
+
+</ul>
+</div>
+

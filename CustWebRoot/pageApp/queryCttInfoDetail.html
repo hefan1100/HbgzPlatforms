@@ -1,0 +1,42 @@
+<ion-view>
+    <ion-nav-title><h1 class="title"><b>合同信息</b></h1></ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon ion-ios-arrow-back" ng-click="goToMain()"> 返回</button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-compose" ng-click="openModal()">审批</button>
+    </ion-nav-buttons>
+    <ion-content class="padding">
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()" spinner="android"></ion-refresher>
+        <ion-list can-swipe="true">
+            <ion-item ng-repeat="item in items" ng_click="showDetail('{{item.bid_id}}')">
+                <div class="row" style="padding:1% 0 2% 2%;border-bottom:1px solid #dddddd" >
+                    <div class="col" style="font-size:18px;font-weight: 700;">合同名称：{{item.CTT_NAME}}</div>
+                </div>
+                <div class="row" style="padding: 3%;margin-top: 3%" >
+                    <div class="col-33 col-top"><b>合同编号：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.CTT_CODE}}</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>合同金额：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.CTT_AMOUNT}}</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>合同类型：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.CTT_TYPE_NAME}}</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>部门名称：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.AREA_NAME}}</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>签约日期：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.SIGN_DATE}}</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>立项编码：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.PRJ_CODE}}</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>经办人员：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.USER_NAME}}</div>
+                </div>
+            </ion-item>
+        </ion-list>
+        <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" on-infinite="loadMore()" distance="10%" immediate-check='true'>
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>

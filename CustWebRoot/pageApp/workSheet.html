@@ -1,0 +1,55 @@
+<ion-modal-view>
+    <div class="modal">
+        <ion-header-bar class="bar bar-header bar-assertive">
+            <h1 class="title"><b>{{title}}审批</b></h1>
+            <button class="button button-clear button-primary" ng-click="modal.hide()">取消</button>
+        </ion-header-bar>
+        <ion-content>
+            <p style="padding-top: 10px;font-family: '微软雅黑';font-size:18px;color:#666666;font-weight: 800;padding-left: 10px;">
+                流程跟踪：
+            </p>
+            <ion-list class="list">
+                <ion-item class="list-item" ng-repeat="item in checkLogs | filter: {STATE_DATE: ''}">
+                <div style="clear: both">
+                    <p style="float:left;font-family: '微软雅黑';font-size: 16px;color:black;font-weight: 500;padding-left: 10px;">
+                        {{item.DEAL_USER_NAME}}：
+                    </p>
+                    <p style="float:right;">{{item.STATE_DATE}}</p>
+                </div>
+                <p style="font-size:13px;font-family:'微软雅黑';color:#666666; clear: both;padding-left: 10px;white-space:normal;">
+                    {{item.REMARKS}}
+                </p>
+                </ion-item>
+            </ion-list>
+            <div style="border: 0px;background-image: url('img/line.png');height: 16px;"></div>
+            <div class="padding">
+                <label class="item item-input">
+                    <span class="input-label">审批意见：</span>
+                    <textarea class="item-input-wrapper" rows="4" ng-model="suggest.inStr" placeholder="请填写内容"></textarea>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">送审此人：</span>
+                    {{receiverName}}
+                </label>
+                <ion-toggle toggle-class="toggle-balanced"  ng-repeat="item in yornSms" ng-model="item.checked">{{item.text}}</ion-toggle>
+                <ion-item class="item item-input item-select">
+                    <span class="input-label">选择退回到  ： </span>
+                    <select ng-model="yornToStart.id" ng-options="item.id as item.name for item in toWhereSelectOptions"/>
+                </ion-item>
+                <input type="hidden" ng-model="receiverId">
+                <input type="hidden" ng-model="workRelId">
+                <input type="hidden" ng-model="workLogId">
+                <input type="hidden" ng-model="currNodeId">
+                <input type="hidden" ng-model="lastNodeId">
+            </div>
+            <div class="row">
+                <div class="col col-50">
+                    <button class="button icon icon-right ion-android-arrow-back button-block button-assertive" ng-click="doWork('C0R')" ng-disabled="disableButton">退 回{{countdown}}</button>
+                </div>
+                <div class="col col-50">
+                    <button class="button icon icon-right ion-android-arrow-forward button-block button-balanced" ng-click="doWork('C0E')" ng-disabled="disableButton">通 过{{countdown}}</button>
+                </div>
+            </div>
+        </ion-content>
+    </div>
+</ion-modal-view>

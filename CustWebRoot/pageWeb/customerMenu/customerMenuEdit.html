@@ -1,0 +1,92 @@
+<script type="text/javascript">
+    function QueryString(val) {
+        var uri = window.location.search;
+        var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
+        return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+    }
+    var title;
+    var id;
+    $(function () {
+        if($("#hiddentitle").val()!=null && $("#hiddentitle").val()!=""){
+            $("#title").val($("#hiddentitle").val());
+            $("#title").attr("readonly","readonly");
+            title  =$("#hiddentitle").val();
+            id=$("#hiddenid").val()
+            isparent=$("#isparent").val()
+        }
+        $("#title").val(title);
+        var user=QueryString("userid");
+        var pid=QueryString("pid");
+        var params = "{\"user\":\""+user+"\",\"isParent\":\""+isparent+"\",\"pid\":\""+pid+"\"}";
+        $.ajax({
+            url:'/serv?domain=queryCustomerMenu&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var parent = $("#parent");
+                parent.empty();
+
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    var option = $("<option>").text(reportList["NAME"]).val(reportList["ID"])
+                    parent.append(option);
+                });
+            }
+        });
+    })
+
+
+    function save() {
+        var parent=jQuery("#parent option:selected").val();
+        var params = "{\"title\":\""+title+"\",\"parent\":\""+parent+"\",\"id\":\""+id+"\"}";
+        $.ajax({
+            url:'/serv?domain=saveCustomerMenu&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                window.location.reload();
+            }
+        });
+    }
+</script>
+<div class="row">
+    <div class="col-md-4">
+        <br>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="home">
+                <form id="tab">
+                    <div class="form-group">
+                        <label>菜单名称</label>
+                        <input type="text" name="title" id="title"  class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>上级菜单</label>
+                        <select name="parent" id="parent" class="form-control">
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-pane fade" id="profile">
+
+                <form id="tab2">
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" class="form-control">
+                    </div>
+                    <div>
+                        <button class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="btn-toolbar list-toolbar">
+            <button class="btn btn-primary" onclick="save();"><i class="fa fa-save"></i> 保存</button>
+        </div>
+    </div>
+</div>
+

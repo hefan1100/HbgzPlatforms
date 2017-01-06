@@ -1,0 +1,62 @@
+<script type="text/javascript">
+    function QueryString(val) {
+        var uri = window.location.search;
+        var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
+        return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+    }
+    function del(id) {
+        var params = "{\"id\":\""+id+"\",\"user\":\""+QueryString("userid")+"\"}";
+        $.ajax({
+            url:'/serv?domain=delConfigure&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+            }
+        });
+    }
+    $(function () {
+        var user=QueryString("userid");
+        var params = "{\"user\":\""+user+"\"}";
+        $.ajax({
+            url:'/serv?domain=queryTest&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var result=resultJSON.substring(0,resultJSON.length-2);
+                if(result=="needlogin"){
+                    alert("请先登录！");
+                    top.window.location="/pageWeb/sign-in.html";
+                }
+                if(JSON.parse(resultJSON).length==0){
+                    window.location.href="../mainPage.html?url=pageWeb/appConfig/configure.html&userid="+user;
+                }
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    var id=reportList["ID"];
+                    var wechat=reportList["WECHAT"];
+                    $("#retable").append("<tr><td>"+reportList["NAME"]+"</td><td>"+reportList["PUBLICID"]+"</td><td>"+reportList["TYPE"]+"</td><td><a href=\"index.html?userid="+user+"&pid="+id+"\"&wechat="+wechat+"\"><i class=\"fa fa-pencil\"></i></a><a href=\"#myModal\" role=\"button\" data-toggle=\"modal\" onclick='del("+id+")'><i class=\"fa fa-trash-o\"></i></a></td></tr>");
+                });
+
+            }
+        });
+    })
+</script>
+<div id="resJson"></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>公众号ID</th>
+                <th>公众号名称</th>
+                <th>Token</th>
+                <th>操作</th>
+                <th style="width: 3.5em;"></th>
+            </tr>
+        </thead>
+        <tbody id="retable">
+        </tbody>
+    </table>
+</div>
+

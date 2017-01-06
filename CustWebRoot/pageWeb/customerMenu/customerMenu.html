@@ -1,0 +1,99 @@
+<script type="text/javascript">
+    function QueryStrings(uri,val) {
+        var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
+        return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+    }
+    function changeTargets(url){
+        var title=QueryStrings(url,"title");
+        var id=QueryStrings(url,"id");
+        var isparent=QueryStrings(url,"isparent");
+        var parames={"title":""+title+"","id":""+id+"","isparent":+isparent+""};
+        $.ajax({
+            url:''+url+'&nickname='+nickname+'',
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            data:parames,
+            error: function(){alert('error');},
+            success:function(data){
+                var str="<input class=\"hidden\" id=\"hiddentitle\" value=\""+title+"\"></input><input class=\"hidden\" id=\"hiddenid\" value=\""+id+"\"></input><input class=\"hidden\" id=\"isparent\" value=\""+isparent+"\"></input>";
+                $("#tagetDiv").html(str+data);
+            }
+        });
+    }
+
+    $(function () {
+        var uri = window.location.search;
+        var user=QueryStrings(uri,"userid");
+        var pid=QueryStrings(uri,"pid");
+        var params = "{\"user\":\""+user+"\",\"pid\":\""+pid+"\"}";
+        $.ajax({
+            url:'/serv?domain=queryCustomerMenu&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    var parentname;
+                    var isparent;
+                    if(reportList["parentname"]==null){
+                        parentname=" 1";
+                        isparent="0";
+                    } else{
+                        parentname= reportList["parentname"];
+                        isparent="1"
+                    }
+
+                    $("#retable").append("<tr><td>"+reportList["name"]+"</td><td>"+parentname+"</td><td>"+reportList["type"]+"</td><td><a onclick=\"changeTargets('/pageWeb/customerMenu/customerMenuEdit.html?user="+user+"&title="+reportList["name"]+"&id="+reportList["id"]+"&isparent="+isparent+"')\"><i class=\"fa fa-pencil\"></i></a><a href=\"#myModal\" role=\"button\" data-toggle=\"modal\"><i class=\"fa fa-trash-o\"></i></a></td></tr>");
+                });
+
+            }
+        });
+    })
+
+
+    function submit() {
+        var uri = window.location.search;
+        var user=QueryStrings(uri,"userid");
+        var pid=QueryStrings(uri,"pid");
+        var params = "{\"user\":\""+user+"\",\"pid\":\""+pid+"\"}";
+        $.ajax({
+            url:'/serv?domain=submitCustomerMenu&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    var parentname;
+                    if(reportList["parentname"]==null){
+                        parentname=" 1";
+                    } else{
+                        parentname= reportList["parentname"];
+                    }
+
+                    $("#retable").append("<tr><td>"+reportList["name"]+"</td><td>"+parentname+"</td><td>"+reportList["type"]+"</td><td><a onclick=\"changeTargets('/pageApp/customerMenuEdit.html?userid="+user+"&id="+reportList["id"]+"')\"><i class=\"fa fa-pencil\"></i></a><a href=\"#myModal\" role=\"button\" data-toggle=\"modal\"><i class=\"fa fa-trash-o\"></i></a></td></tr>");
+                });
+
+            }
+        });
+    }
+</script>
+<div id="resJson"></div>
+    <button name="submit" id="submit" onclick="submit()">提交自定义菜单</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>菜单名称</th>
+                <th>上级菜单</th>
+                <th>模式</th>
+                <th>操作</th>
+                <th style="width: 3.5em;"></th>
+            </tr>
+        </thead>
+        <tbody id="retable">
+        </tbody>
+    </table>
+</div>
+

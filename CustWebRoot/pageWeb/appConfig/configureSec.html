@@ -1,0 +1,89 @@
+<script type="text/javascript">
+    $(function () {
+        var user=QueryString("userid");
+        var id=QueryString("pid");
+        var params = "{\"user\":\""+user+"\",\"id\":\""+id+"\"}";
+        $.ajax({
+            url:'/serv?domain=queryTest&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var result=resultJSON.substring(0,resultJSON.length-2);
+                if(result=="needlogin"){
+                    alert("请先登录！");
+                    top.window.location="/pageWeb/sign-in.html";
+                }
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    $("#AppID").val(reportList["APPID"]);
+                    $("#AppSecret").val(reportList["APPSECRET"]);
+                    $("#EncodingAESKey").val(reportList["ENCODINGAESKEY"]);
+                });
+
+            }
+        });
+    })
+
+    function save() {
+        var appID=$('#AppID').val();
+        var appSecret=$('#AppSecret').val();
+        var encodingAESKey=$('#EncodingAESKey').val();
+        var wxcode=QueryString("wxcode");
+        var user=QueryString("userid");
+        var pid=QueryString("pid");
+        var params = "{\"appID\":\""+appID+"\",\"appSecret\":\""+appSecret+"\",\"encodingAESKey\":\""+encodingAESKey+"\",\"wxcode\":\""+wxcode+"\",\"user\":\""+user+"\",\"id\":\""+pid+"\"}";
+        $.ajax({
+            url:'/serv?domain=saveConfigureSec&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                alert('保存成功！');
+                window.location.href="index.html?userid="+user+"&pid="+pid;
+            }
+        });
+    }
+</script>
+<div class="row">
+    <div class="col-md-4">
+        <br>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="home">
+                <form id="tab">
+                    <div class="form-group">
+                        <label>AppID(应用ID)</label>
+                        <input type="text" name="AppID" id="AppID"  class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>AppSecret(应用秘钥)</label>
+                        <input type="text" name="AppSecret" id="AppSecret" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>EncodingAESKey(安全模式下必填)</label>
+                        <input type="text" name="EncodingAESKey" id="EncodingAESKey" class="form-control">
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-pane fade" id="profile">
+
+                <form id="tab2">
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" class="form-control">
+                    </div>
+                    <div>
+                        <button class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="btn-toolbar list-toolbar">
+            <button class="btn btn-primary" onclick="save();"><i class="fa fa-save"></i> 保存</button>
+        </div>
+    </div>
+</div>
+

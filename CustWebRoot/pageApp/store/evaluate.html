@@ -1,0 +1,87 @@
+//ion-ios-star-outline
+<ion-view>
+<ion-nav-title>
+       发表评价
+</ion-nav-title>
+
+<ion-nav-buttons side="left">
+    <button class="button button-clear icon ion-ios-arrow-back" ng-click="httpback()"> 返回</button>
+</ion-nav-buttons>
+<ion-content style="background-color: gainsboro;">
+         <div class="row row-wrap row-no-padding" style="height: 120px;background-color: white;">
+             <div class="col col-33 col-center" style="text-align: center;">
+                <img src="img/store/icon_order_left.png" height="80px" style="display: inline;">
+                </img>
+             </div>
+             <div class="col col-center">
+                 <label class="item item-input" style="height: 80px;width: 100%;">
+                     <textarea placeholder="请输入您对此商品的评价"></textarea>
+                 </label>
+             </div>
+        </div>
+
+        <div class="row row-wrap row-no-padding" style="margin-top: 20px;padding-left: 20px;padding-right: 20px;background-color: white;height: 50px;">
+            <div class="col col-10 col-center">
+                <img src="img/store/icon_eval.png" width="20px">
+            </div>
+            <div class="col col-center">
+                <a style="font-size: 16px;" >评分</a>
+            </div>
+        </div>
+
+        <div class="list" style="margin-top: 1px;padding:10px;background-color: white;">
+            <div class="item row row-wrap row-no-padding" style="height: 50px;border: none;padding-left: 10px;">
+                 <div class="col col-33 col-center">
+                      <p style="font-size: 16px;">描述相符</p>
+                 </div>
+                <div class="col col-center">
+                    <p>
+                      <a style="float: right;">
+                      <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[description[0]]" ng-click="chooseDescription(0)" style="font-size: 30px;"></i>
+                      <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[description[1]]" ng-click="chooseDescription(1)" style="font-size: 30px;"></i>
+                      <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[description[2]]" ng-click="chooseDescription(2)" style="font-size: 30px;"></i>
+                      <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[description[3]]" ng-click="chooseDescription(3)" style="font-size: 30px;"></i>
+                      <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[description[4]]" ng-click="chooseDescription(4)" style="font-size: 30px;"></i>
+                      </a>
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="item row row-wrap row-no-padding" style="height: 50px;border: none;padding-left: 10px;">
+                <div class="col col-33 col-center">
+                    <p style="font-size: 16px;">物流服务</p>
+                </div>
+                <div class="col col-center">
+                    <p>
+                        <a style="float: right;">
+                            <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[wuliu[0]]" ng-click="chooseWuliu(0)" style="font-size: 30px;"></i>
+                            <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[wuliu[1]]" ng-click="chooseWuliu(1)" style="font-size: 30px;"></i>
+                            <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[wuliu[2]]" ng-click="chooseWuliu(2)" style="font-size: 30px;"></i>
+                            <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[wuliu[3]]" ng-click="chooseWuliu(3)" style="font-size: 30px;"></i>
+                            <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[wuliu[4]]" ng-click="chooseWuliu(4)" style="font-size: 30px;"></i>
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="item row row-wrap row-no-padding" style="height: 50px;border: none;padding-left: 10px;">
+                <div class="col col-33 col-center">
+                    <p style="font-size: 16px;">服务态度</p>
+                </div>
+                <div class="col col-center">
+                    <p>
+                        <a style="float: right;">
+                            <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[fuwu[0]]" ng-click="chooseFuwu(0)" style="font-size: 30px;"></i>
+                            <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[fuwu[1]]" ng-click="chooseFuwu(1)" style="font-size: 30px;"></i>
+                            <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[fuwu[2]]" ng-click="chooseFuwu(2)" style="font-size: 30px;"></i>
+                            <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[fuwu[3]]" ng-click="chooseFuwu(3)" style="font-size: 30px;"></i>
+                            <i ng-class="{true: 'icon ion-ios-star assertive', false: 'icon ion-ios-star-outline'}[fuwu[4]]" ng-click="chooseFuwu(4)" style="font-size: 30px;"></i>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+</ion-content>
+</ion-view>

@@ -1,0 +1,66 @@
+<!-- 隐藏头部  试试ng-hide         -->
+<ion-view>
+    <ion-nav-title><h1 class="title"><b>设置</b></h1></ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon ion-ios-arrow-back" ng-click="httpback()"> 返回</button>
+    </ion-nav-buttons>
+    <ion-content style="background-color: gainsboro;">
+        <ul class="list">
+
+            <li class="item item-toggle">
+                亮度调节
+                <label class="toggle toggle-assertive">
+                    <input type="checkbox">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </li>
+
+            <li class="item item-toggle">
+                非WLAN环境下手动下载图片
+                <label class="toggle toggle-assertive">
+                    <input type="checkbox">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </li>
+
+            <li class="item item-toggle">
+                WLAN环境下自动升级客户端
+                <label class="toggle toggle-assertive">
+                    <input type="checkbox">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </li>
+
+            <li class="item item-toggle">
+                清除缓存
+                <label class="toggle toggle-assertive">
+                    <input type="checkbox">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </li>
+
+
+        </ul>
+
+        <div class="list" style="margin-top: 50px;">
+            <a class="item item-icon-right">
+                关于
+                <i class="icon ion-chevron-right"></i>
+            </a>
+        </div>
+
+        <div style="width: 100%;padding-left: 50px;padding-right: 50px;margin-top: 100px;">
+            <button class="button button-assertive" style="width: 100%;">
+                退出登录
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,81 @@
+<script type="text/javascript">
+
+    $(function () {
+        var user=QueryString("userid");
+        var page=1;
+        var params = "{\"user\":\""+user+"\",\"page\":\""+page+"\"}";
+        $.ajax({
+            url:'/serv?domain=getFollowCount&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var result=resultJSON.substring(0,resultJSON.length-2);
+                if(result=="needlogin"){
+                    alert("请先登录！");
+                    top.window.location="/pageWeb/sign-in.html";
+                }
+                if(parseInt(resultJSON)>1){
+                    var append="<li><a href=\"#\">&laquo;</a></li>";
+                    for(var i=1;i<=parseInt(resultJSON);i++ ){
+                         append+="<li><a href=\"#\">"+i+"</a></li>"
+                    }
+                    append+="<li><a href=\"#\">&raquo;</a></li>";
+                    $("#pagination").append(append);
+                }else{
+
+                }
+
+            }
+        });
+    })
+
+    $(function () {
+        var user=QueryString("userid");
+        var page=1;
+        var params = "{\"user\":\""+user+"\",\"page\":\""+page+"\"}";
+        $.ajax({
+            url:'/serv?domain=getFollowInfo&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var result=resultJSON.substring(0,resultJSON.length-2);
+                if(result=="needlogin"){
+                    alert("请先登录！");
+                    top.window.location="/pageWeb/sign-in.html";
+                }
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    var sex="";
+                    if(reportList["sex"]==1){
+                         sex="男";
+                    }
+                    if(reportList["sex"]==0){
+                        sex="女";
+                    }
+                    $("#retable").append("<tr><td>"+reportList["nickname"]+"</td><td>"+sex+"</td><td>"+reportList["city"]+"</td></tr>");
+                });
+
+            }
+        });
+    })
+</script>
+<div id="resJson"></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>昵称</th>
+                <th>性别</th>
+                <th>城市</th>
+            </tr>
+        </thead>
+        <tbody id="retable">
+        </tbody>
+    </table>
+    <ul class="pagination" id="pagination">
+
+    </ul>
+</div>
+

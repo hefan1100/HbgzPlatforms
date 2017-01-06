@@ -1,0 +1,88 @@
+<script type="text/javascript">
+    function QueryString(val) {
+        var uri = window.location.search;
+        var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
+        return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+    }
+
+
+    var title;
+    var id;
+    $(function () {
+        if($("#hiddentitle").val()!=null && $("#hiddentitle").val()!=""){
+            title  =$("#hiddentitle").val();
+            id=$("#hiddenid").val()
+        }
+        gettype("goods_type","g_type");
+        gettype("goods_status","g_status");
+        var user=QueryString("userid");
+        var params = "{\"user\":\""+user+"\",\"g_id\":\""+id+"\",\"page\":1}";
+        $.ajax({
+            url:'/manage?domain=goodsList&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    $('#g_name').val(reportList["G_NAME"]);
+                    $('#g_price').val(reportList["G_PRICE"]);
+                    $('#g_amount').val(reportList["G_AMOUNT"]);
+                    $("#g_status").find("option[value='"+reportList["STATUS"]+"']").attr("selected",true);
+                    $("#g_type").find("option[value='"+reportList["G_TYPE"]+"']").attr("selected",true);
+                });
+            }
+        });
+    })
+
+    function save() {
+        var user=QueryString("userid");
+        var g_name=$('#g_name').val();
+        var g_price=$('#g_price').val();
+        var g_amount=$('#g_amount').val();
+        var g_status=jQuery("#g_status option:selected").val();
+        var g_type=jQuery("#g_type option:selected").val();
+        var params = "{\"user\":\""+user+"\",\"g_name\":\""+g_name+"\",\"g_price\":\""+g_price+"\",\"g_amount\":\""+g_amount+"\",\"g_status\":\""+g_status+"\",\"g_type\":\""+g_type+"\",\"g_id\":\""+id+"\",\"type\":\"saveorupdate\"}";
+        $.ajax({
+            url:'/manage?domain=saveOrUpdateGoods&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                changeTarget('/pageStore/goodsMenu/goodsList.html');
+            }
+        });
+    }
+</script>
+<div class="row">
+    <div class="col-md-4">
+        <br>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="home">
+                <form id="tab">
+                    <div class="form-group">
+                        <label>商品名称</label>
+                        <input type="text" name="g_name" id="g_name"  class="form-control">
+                        <label>商品价格</label>
+                        <input type="text" name="g_price" id="g_price"  class="form-control">
+                        <label>商品数量</label>
+                        <input type="text" name="g_amount" id="g_amount"  class="form-control">
+                        <label>商品状态</label>
+                        <select name="g_status" id="g_status" class="form-control">
+                        </select>
+                        <label>商品类型</label>
+                        <select name="g_type" id="g_type" class="form-control">
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="btn-toolbar list-toolbar">
+            <button class="btn btn-primary" onclick="save();"><i class="fa fa-save"></i> 保存</button>
+        </div>
+    </div>
+</div>
+

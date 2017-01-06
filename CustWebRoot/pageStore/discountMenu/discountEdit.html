@@ -1,0 +1,122 @@
+<script type="text/javascript">
+    function QueryString(val) {
+        var uri = window.location.search;
+        var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
+        return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+    }
+    var title;
+    var id;
+    $(function () {
+        if($("#hiddentitle").val()!=null && $("#hiddentitle").val()!=""){
+            title  =$("#hiddentitle").val();
+            id=$("#hiddenid").val()
+        }
+        gettype("discount_type","discount_type");
+        gettype("goods_type","C_GOODTYPE");
+        var user=QueryString("userid");
+        var params = "{\"user\":\""+user+"\",\"c_id\":\""+id+"\"}";
+        $.ajax({
+            url:'/manage?domain=discountList&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    $('#C_NAME').val(reportList["C_NAME"]);
+                    $('#C_MONEY').val(reportList["C_MONEY"]);
+                    $('#C_DETAIL').val(reportList["C_DETAIL"]);
+                    $('#C_STARTMONEY').val(reportList["C_STARTMONEY"]);
+                    $("#C_GOODTYPE").find("option[value='"+reportList["C_GOODTYPE"]+"']").attr("selected",true);
+                    $('#C_STARTDATE').val(getDateTime(ConvertJSONDateToJSDate("/Date("+reportList["C_STARTDATE"]["time"]+")/")));
+                    $('#C_DEADLINE').val(getDateTime(ConvertJSONDateToJSDate("/Date("+reportList["C_DEADLINE"]["time"]+")/")));
+                    $("#discount_type").find("option[value='"+reportList["C_TYPE"]+"']").attr("selected",true);
+                });
+            }
+        });
+    })
+
+    function save() {
+        var user=QueryString("userid");
+        var name=$('#C_NAME').val();
+        var money=$('#C_MONEY').val();
+        var detail=$('#C_DETAIL').val();
+        var startmoney=$('#C_STARTMONEY').val();
+        var startdate=$('#C_STARTDATE').val();
+        var deadline=$('#C_DEADLINE').val();
+        var goodtype=jQuery("#C_GOODTYPE option:selected").val();
+        var discounttype=jQuery("#discount_type option:selected").val();
+        var params = "{\"id\":\""+id+"\",\"user\":\""+user+"\",\"name\":\""+name+"\",\"money\":\""+money+"\",\"detail\":\""+detail+"\",\"startmoney\":\""+startmoney+"\",\"startdate\":\""+startdate+"\",\"deadline\":\""+deadline+"\",\"goodtype\":\""+goodtype+"\",\"discounttype\":\""+discounttype+"\"}";
+        $.ajax({
+            url:'/manage?domain=saveOrUpdateDiscount&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                changeTarget('/pageStore/discountMenu/discountList.html');
+            }
+        });
+    }
+</script>
+<div class="row">
+    <div class="col-md-4">
+        <br>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="home">
+                <form id="tab">
+                    <div class="form-group">
+                        <label>优惠卷名称</label>
+                        <input type="text" name="C_NAME" id="C_NAME"  class="form-control">
+                        <label>优惠卷说明</label>
+                        <input type="text" name="C_DETAIL" id="C_DETAIL"  class="form-control">
+                        <label>优惠起始金额</label>
+                        <input type="text" name="C_STARTMONEY" id="C_STARTMONEY"  class="form-control">
+                        <label>优惠价格</label>
+                        <input type="text" name="C_MONEY" id="C_MONEY"  class="form-control">
+                        <label>优惠商品类型</label>
+                        <select name="C_GOODTYPE" id="C_GOODTYPE" class="form-control">
+                        </select>
+                        <label>优惠类型</label>
+                        <select name="discount_type" id="discount_type" class="form-control">
+                        </select>
+                        <div class="form-group">
+                            <label>优惠卷开始日期</label>
+                            <div style="width:100%"  class="input-group date form_date col-md-5"  data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                <input class="form-control"  name="C_STARTDATE" id="C_STARTDATE" size="16" type="text" value="" readonly >
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                            <label>优惠卷结束日期</label>
+                            <div style="width:100%"  class="input-group date form_date col-md-5"  data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                <input class="form-control"  name="C_DEADLINE" id="C_DEADLINE" size="16" type="text" value="" readonly >
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="dtp_input2" value="" /><br/>
+                    <script type="text/javascript">
+                        $('.form_date').datetimepicker({
+                            language:  'zh-CN',
+                            weekStart: 1,
+                            todayBtn:  1,
+                            autoclose: 1,
+                            todayHighlight: 1,
+                            startView: 2,
+                            minView: 2,
+                            forceParse: 0
+                        });
+                    </script>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="btn-toolbar list-toolbar">
+            <button class="btn btn-primary" onclick="save();"><i class="fa fa-save"></i> 保存</button>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serviceframework-config>
+    <services>
+        <!-- queryAnyList -->
+        <service id="10062" name="queryAnyList"
+                 path="hbtelecom.app.web.user.queryAnyList"
+                 uri="com.hbtelecom.app.web.user.UserHttpImpl/queryAnyList"/>
+        <!-- queryAny -->
+        <service id="10063" name="queryAny"
+                 path="hbtelecom.app.web.user.queryAny"
+                 uri="com.hbtelecom.app.web.user.UserHttpImpl/queryAny"/>
+        <!-- addAny -->
+        <service id="10064" name="addAny"
+                 path="hbtelecom.app.web.user.addAny"
+                 uri="com.hbtelecom.app.web.user.UserHttpImpl/addAny"/>
+        <!-- updateAny -->
+        <service id="10065" name="updateAny"
+                 path="hbtelecom.app.web.user.updateAny"
+                 uri="com.hbtelecom.app.web.user.UserHttpImpl/updateAny"/>
+        <!-- delAny -->
+        <service id="10066" name="delAny"
+                 path="hbtelecom.app.web.user.delAny"
+                 uri="com.hbtelecom.app.web.user.UserHttpImpl/delAny"/>
+    </services>
+</serviceframework-config>

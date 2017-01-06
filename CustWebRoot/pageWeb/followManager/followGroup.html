@@ -1,0 +1,70 @@
+<script type="text/javascript">
+
+    $(function () {
+        var user=QueryString("userid");
+        var page=1;
+        var params = "{\"user\":\""+user+"\"}";
+        $.ajax({
+            url:'/serv?domain=queryGroup&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var result=resultJSON.substring(0,resultJSON.length-2);
+                if(result=="needlogin"){
+                    alert("请先登录！");
+                    top.window.location="/pageWeb/sign-in.html";
+                }
+//                if(parseInt(resultJSON)>1){
+//                    var append="<li><a href=\"#\">&laquo;</a></li>";
+//                    for(var i=1;i<=parseInt(resultJSON);i++ ){
+//                         append+="<li><a href=\"#\">"+i+"</a></li>"
+//                    }
+//                    append+="<li><a href=\"#\">&raquo;</a></li>";
+//                    $("#pagination").append(append);
+//                }
+            }
+        });
+    })
+
+    $(function () {
+        var user=QueryString("userid");
+        var params = "{\"user\":\""+user+"\"}";
+        $.ajax({
+            url:'/serv?domain=queryGroup&params='+encodeURIComponent(params),
+            type:'post',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:'html',
+            error: function(){alert('error');},
+            success:function(resultJSON){
+                var result=resultJSON.substring(0,resultJSON.length-2);
+                if(result=="needlogin"){
+                    alert("请先登录！");
+                    top.window.location="/pageWeb/sign-in.html";
+                }
+                $.each(JSON.parse(resultJSON), function (i, reportList) {
+                    $("#retable").append("<tr><td>"+reportList["id"]+"</td><td>"+reportList["name"]+"</td><td>"+reportList["count"]+"</td></tr>");
+                });
+
+            }
+        });
+    })
+</script>
+<div id="resJson"></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>名称</th>
+                <th>人数</th>
+            </tr>
+        </thead>
+        <tbody id="retable">
+        </tbody>
+    </table>
+    <ul class="pagination" id="pagination">
+
+    </ul>
+</div>
+

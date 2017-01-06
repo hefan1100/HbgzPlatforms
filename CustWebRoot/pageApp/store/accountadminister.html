@@ -1,0 +1,27 @@
+<!-- 隐藏头部  试试ng-hide         -->
+<ion-view>
+    <ion-nav-title><h1 class="title"><b>账户管理</b></h1></ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon ion-ios-arrow-back" ng-click="httpback()"> 返回</button>
+    </ion-nav-buttons>
+    <ion-content style="background-color: gainsboro;">
+        <div class="list" style="background-color: gainsboro;">
+            <a class="item item-thumbnail-left item-icon-right" style="background-color: white;" ng-click="enterpersonalinfo()">
+                <img src="img/store/image-avatar.png">
+                <h2 style="margin-top: 20px;">Wangwenhai</h2>
+                <p>用户名：wangwenhai</p>
+                <i class="icon ion-chevron-right"></i>
+            </a>
+
+            <div class="item item-button-right" style="margin-top: 50px;background-color: white;" >
+                实名认证
+                <button class="button button-clear icon-right ion-chevron-right">立即认证</button>
+            </div>
+
+            <div class="item item-icon-right">
+                地址管理
+                <i class="icon ion-chevron-right"></i>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

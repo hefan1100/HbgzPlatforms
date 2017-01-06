@@ -1,0 +1,629 @@
+<ion-view>
+    <ion-nav-title><h1 class="title"><b>湖北邮政微商城</b></h1></ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon ion-ios-arrow-back" ng-click="httpback()"> 返回</button>
+    </ion-nav-buttons>
+
+    <ion-content style="background-color:white;height: 100%;" ng-controller="orderslistCtrl">
+        <div class="row row-wrap" style="background-color: white;height:50px;" >
+
+             <div class="col col-center" ng-style="allstyle.colstyle" ng-click="changestyle(allstyle,0)">
+                 <p ng-style="allstyle.pstyle">全部</p>
+             </div>
+             <div class="col col-center" ng-style="Fkstyle.colstyle" ng-click="changestyle(Fkstyle,1)">
+                 <p ng-style="Fkstyle.pstyle">待付款<!--   0待付款    --></p>
+             </div>
+             <div class="col col-center" ng-style="Fhstyle.colstyle" ng-click="changestyle(Fhstyle,2)">
+                 <p ng-style="Fhstyle.pstyle">待发货<!--   1已付款    --></p>
+             </div>
+             <div class="col col-center" ng-style="Shstyle.colstyle" ng-click="changestyle(Shstyle,3)">
+                  <p ng-style="Shstyle.pstyle">待收货<!--  2已发货    --></p>
+             </div>
+             <div class="col col-center" ng-style="Pjstyle.colstyle" ng-click="changestyle(Pjstyle,4)">
+                  <p ng-style="Pjstyle.pstyle">待评价<!--  3已签收    --></p>
+             </div>
+       </div>
+       <div style="height:2px;background-color: #dcdcdc;">
+       </div>
+       <ion-slide-box on-slide-changed="slideHasChanged($index)" show-pager="false" active-slide="myActiveSlide">
+            <ion-slide >
+                <ion-list>
+         <!--
+                <ion-item style="padding-left: 0px;padding-right: 0px;" ng-repeat="i in orderlist" ng-if="i.INFO_STATUS=='3'">
+                    <div class="list">
+                        <div class="item item-icon-left item-button-right" ng-click="goOrderdetail(i.O_ORDERID)">
+                            <i class="icon ion-clipboard"></i>
+                            {{i.SUP_NAME}}
+                            <button class="button button-clear button-assertive" >
+                                已签收
+                            </button>
+                        </div>
+                        <div class="item row row_wrap row-no-padding" style="height: 100px;" ng-repeat="o in i.datalist" ng-click="goOrderdetail(o.O_ORDERID)">
+                            <div class="col col-33 col-center" style="text-align: center;">
+                                <img src="{{o.G_PIC}}" height="80px" style="display: inline;">
+                            </div>
+                            <div class="col col-center">
+                                <div class="list" >
+                                    <div class="item" style="border: none;">
+                                        <p>{{o.G_NAME}}</p>
+                                    </div>
+                                    <div class="item" style="border: none;">
+                                        <p>规格：5KG</p>
+                                    </div>
+                                    <div class="item item-button-right" style="border: none;">
+                                        <a style="color: red;font-size: 18px;font-weight: bold;vertical-align: middle;">￥{{o.G_PRICE}}</a>
+                                        <a class="button" style="color: red;font-size: 18px;float:right;vertical-align: middle;">*{{o.INFO_AMOUNT}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item row row-wrap row-no-padding" style="border: none;height: 50px;">
+                            <div class="col col-center">
+                                <a class="button" style="border:none;">共{{i.INFO_AMOUNT}}件商品 合计：￥{{i.O_TOTALPRICE}} （含运费￥0.00）</a>
+                            </div>
+                        </div>
+
+                        <div class="item" style="padding: 5px;height:50px;">
+                            <p style="height: 40px;float: right;">
+                                <a class="button" style="border:1px solid black;height:100%;width: 100px;">查看发货</a>
+                                <a class="button" style="border:1px solid pink;height:100%;width: 100px;margin-left: 20px;color:pink;" ng-click="confirmordertip(i.O_ORDERID)">确认收货</a>
+                            </p>
+                        </div>
+                    </div>
+                </ion-item>
+
+                <ion-item style="padding-left: 0px;padding-right: 0px;" ng-repeat="i in orderlist" ng-if="i.INFO_STATUS=='5'" >
+                    <div class="list" >
+                        <div class="item item-icon-left item-button-right" ng-click="goOrderdetail(i.O_ORDERID)">
+                            <i class="icon ion-clipboard"></i>
+                            {{i.SUP_NAME}}
+                            <button class="button button-clear button-assertive" >
+                                交易关闭
+                            </button>
+                        </div>
+                        <div class="item row row_wrap row-no-padding" style="height: 200px;" ng-repeat="o in i.datalist" ng-click="goOrderdetail(o.O_ORDERID)">
+                            <div class="col col-33 col-center" style="text-align: center;">
+                                <img src="{{o.G_PIC}}" width="100%" style="display: inline;">
+                            </div>
+                            <div class="col col-center">
+                                <div class="list" >
+                                    <div class="item" style="border: none;">
+                                        <p>{{o.G_NAME}}</p>
+                                    </div>
+                                    <div class="item" style="border: none;">
+                                        <p>规格：5KG</p>
+                                    </div>
+                                    <div class="item item-button-right" style="border: none;">
+                                        <a style="color: red;font-size: 18px;font-weight: bold;vertical-align: middle;">￥{{o.G_PRICE}}</a>
+                                        <a class="button" style="color: red;font-size: 18px;float:right;vertical-align: middle;">*{{o.INFO_AMOUNT}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item row row-wrap row-no-padding" style="border: none;height: 50px;">
+                            <div class="col col-center">
+                                <a class="button" style="border:none;">共{{i.INFO_AMOUNT}}件商品 合计：￥{{i.O_TOTALPRICE}} （含运费￥0.00）</a>
+                            </div>
+                        </div>
+
+                        <div class="item" style="padding: 10px;height:72px;">
+                            <p style="height: 50px;float: right;">
+                                <a class="button" style="border:1px solid black;height:100%;">查看物流</a>
+                                <a class="button" style="border:1px solid pink;height:100%;margin-left: 20px;color:pink;" ng-click="delorder(i.O_ORDERID)">删除订单</a>
+                            </p>
+                        </div>
+                    </div>
+                </ion-item>
+                 <ion-item style="padding-left: 0px;padding-right: 0px;" ng-repeat="i in orderlist" ng-if="i.INFO_STATUS=='0'">
+                        <div class="list">
+                            <div class="item item-icon-left item-button-right" ng-click="goOrderdetail(i.O_ORDERID)">
+                                <i class="icon ion-clipboard"></i>
+                                {{i.SUP_NAME}}
+                                <button class="button button-clear button-assertive" >
+                                    等待买家付款
+                                </button>
+                            </div>
+                            <div class="item row row_wrap row-no-padding" style="height: 200px;" ng-repeat="o in i.datalist" ng-click="goOrderdetail(o.O_ORDERID)">
+                                <div class="col col-33 col-center" style="text-align: center;">
+                                    <img src="{{o.G_PIC}}" width="100%" style="display: inline;">
+                                </div>
+                                <div class="col col-center">
+                                    <div class="list" >
+                                        <div class="item" style="border: none;">
+                                            <p>{{o.G_NAME}}</p>
+                                        </div>
+                                        <div class="item" style="border: none;">
+                                            <p>规格：5KG</p>
+                                        </div>
+                                        <div class="item item-button-right" style="border: none;">
+                                            <a style="color: red;font-size: 18px;font-weight: bold;vertical-align: middle;">￥{{o.G_PRICE}}</a>
+                                            <a class="button" style="color: red;font-size: 18px;float:right;vertical-align: middle;">*{{o.INFO_AMOUNT}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item row row-wrap row-no-padding" style="border: none;height: 50px;">
+                                <div class="col col-center">
+                                     <a class="button" style="border:none;">共{{i.INFO_AMOUNT}}件商品 合计：￥{{i.O_TOTALPRICE}} （含运费￥0.00）</a>
+                                </div>
+                            </div>
+
+                            <div class="item" style="padding: 10px;height:72px;">
+                                <p style="height: 50px;float: right;">
+                                    <a class="button" style="border:1px solid black;height:100%;" ng-click="cancelorder(i.O_ORDERID,i.INFO_STATUS)">取消订单</a>
+                                    <a class="button" style="border:1px solid pink;height:100%;margin-left: 20px;color:pink;" ng-click="itemgopay(i.O_ORDERID,i.O_TOTALPRICE)">付款</a>
+                                </p>
+                            </div>
+                        </div>
+                    </ion-item>
+
+                    <ion-item style="padding-left: 0px;padding-right: 0px;" ng-repeat="i in orderlist" ng-if="i.INFO_STATUS=='1'">
+                        <div class="list">
+                            <div class="item item-icon-left item-button-right" ng-click="goOrderdetail(i.O_ORDERID)">
+                                <i class="icon ion-clipboard"></i>
+                                {{i.SUP_NAME}}
+                                <button class="button button-clear button-assertive" >
+                                    买家已付款
+                                </button>
+                            </div>
+                            <div class="item row row_wrap row-no-padding" style="height: 200px;" ng-repeat="o in i.datalist" ng-click="goOrderdetail(o.O_ORDERID)">
+                                <div class="col col-33 col-center" style="text-align: center;">
+                                    <img src="{{o.G_PIC}}" width="100%" style="display: inline;">
+                                </div>
+                                <div class="col col-center">
+                                    <div class="list" >
+                                        <div class="item" style="border: none;">
+                                            <p>{{o.G_NAME}}</p>
+                                        </div>
+                                        <div class="item" style="border: none;">
+                                            <p>规格：5KG</p>
+                                        </div>
+                                        <div class="item item-button-right" style="border: none;">
+                                            <a style="color: red;font-size: 18px;font-weight: bold;vertical-align: middle;">￥{{o.G_PRICE}}</a>
+                                            <a class="button" style="color: red;font-size: 18px;float:right;vertical-align: middle;">*{{o.INFO_AMOUNT}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item row row-wrap row-no-padding" style="border: none;height: 50px;">
+                                <div class="col col-center">
+                                    <a class="button" style="border:none;">共{{i.INFO_AMOUNT}}件商品 合计：￥{{i.O_TOTALPRICE}} （含运费￥0.00）</a>
+                                </div>
+                            </div>
+
+                            <div class="item" style="padding: 10px;height:72px;">
+                                <p style="height: 50px;float: right;">
+                                    <a class="button" style="border:1px solid black;height:100%;" ng-click="cancelorder(i.O_ORDERID,i.INFO_STATUS)">取消订单</a>
+                                    <a class="button" style="border:1px solid pink;height:100%;margin-left: 20px;color:pink;">提醒发货</a>
+                                </p>
+                            </div>
+                        </div>
+                    </ion-item>
+
+
+                    <ion-item style="padding-left: 0px;padding-right: 0px;" ng-repeat="i in orderlist" ng-if="i.INFO_STATUS=='2'">
+                        <div class="list">
+                            <div class="item item-icon-left item-button-right" ng-click="goOrderdetail(i.O_ORDERID)">
+                                <i class="icon ion-clipboard"></i>
+                                {{i.SUP_NAME}}
+                                <button class="button button-clear button-assertive" >
+                                    卖家已发货
+                                </button>
+                            </div>
+                            <div class="item row row_wrap row-no-padding" style="height: 200px;" ng-repeat="o in i.datalist" ng-click="goOrderdetail(o.O_ORDERID)">
+                                <div class="col col-33 col-center" style="text-align: center;">
+                                    <img src="{{o.G_PIC}}" width="100%" style="display: inline;">
+                                </div>
+                                <div class="col col-center">
+                                    <div class="list" >
+                                        <div class="item" style="border: none;">
+                                            <p>{{o.G_NAME}}</p>
+                                        </div>
+                                        <div class="item" style="border: none;">
+                                            <p>规格：5KG</p>
+                                        </div>
+                                        <div class="item item-button-right" style="border: none;">
+                                            <a style="color: red;font-size: 18px;font-weight: bold;vertical-align: middle;">￥{{o.G_PRICE}}</a>
+                                            <a class="button" style="color: red;font-size: 18px;float:right;vertical-align: middle;">*{{o.INFO_AMOUNT}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item row row-wrap row-no-padding" style="border: none;height: 50px;">
+                                <div class="col col-center">
+                                    <a class="button" style="border:none;">共{{i.INFO_AMOUNT}}件商品 合计：￥{{i.O_TOTALPRICE}} （含运费￥0.00）</a>
+                                </div>
+                            </div>
+
+                            <div class="item" style="padding: 10px;height:72px;">
+                                <p style="height: 50px;float: right;">
+                                    <a class="button" style="border:1px solid black;height:100%;">查看发货</a>
+                                    <a class="button" style="border:1px solid pink;height:100%;margin-left: 20px;color:pink;" ng-click="confirmordertip(i.O_ORDERID)">确认收货</a>
+                                </p>
+                            </div>
+                        </div>
+                    </ion-item>
+
+
+                    <ion-item style="padding-left: 0px;padding-right: 0px;" ng-repeat="i in orderlist" ng-if="i.INFO_STATUS=='8'">
+                        <div class="list" >
+                            <div class="item item-icon-left item-button-right" ng-click="goOrderdetail(i.O_ORDERID)">
+                                <i class="icon ion-clipboard"></i>
+                                {{i.SUP_NAME}}
+                                <button class="button button-clear button-assertive" >
+                                    交易成功
+                                </button>
+                            </div>
+                            <div class="item row row_wrap row-no-padding" style="height: 200px;" ng-repeat="o in i.datalist" ng-click="goOrderdetail(o.O_ORDERID)">
+                                <div class="col col-33 col-center" style="text-align: center;">
+                                    <img src="{{o.G_PIC}}" width="100%" style="display: inline;">
+                                </div>
+                                <div class="col col-center">
+                                    <div class="list" >
+                                        <div class="item" style="border: none;">
+                                            <p>{{o.G_NAME}}</p>
+                                        </div>
+                                        <div class="item" style="border: none;">
+                                            <p>规格：5KG</p>
+                                        </div>
+                                        <div class="item item-button-right" style="border: none;">
+                                            <a style="color: red;font-size: 18px;font-weight: bold;vertical-align: middle;">￥{{o.G_PRICE}}</a>
+                                            <a class="button" style="color: red;font-size: 18px;float:right;vertical-align: middle;">*{{o.INFO_AMOUNT}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item row row-wrap row-no-padding" style="border: none;height: 50px;">
+                                <div class="col col-center">
+                                    <a class="button" style="border:none;">共{{i.INFO_AMOUNT}}件商品 合计：￥{{i.O_TOTALPRICE}} （含运费￥0.00）</a>
+                                </div>
+                            </div>
+
+                            <div class="item" style="padding: 10px;height:72px;">
+                                <p style="height: 50px;float: right;">
+                                    <a class="button" style="border:1px solid black;height:100%;" ng-click="delorder(i.O_ORDERID)">删除订单</a>
+                                    <a class="button" style="border:1px solid pink;height:100%;margin-left: 20px;color:pink;">评价</a>
+                                </p>
+                            </div>
+                        </div>
+                    </ion-item>     -->
+                         <ion-item style="padding-left: 0px;padding-right: 0px;" ng-repeat="i in orderlist" >
+                             <div class="list">
+                                 <div class="item row row-wrap row-no-padding" style="height: 40px;padding-left: 20px;padding-right: 20px;" ng-click="goOrderdetail(i.O_ORDERID)" ng-if="i.INFO_STATUS=='3'">
+                                     <div class="col col-10 col-center">
+                                          <i class="icon ion-clipboard" style="font-size: 22px;"></i>
+                                     </div>
+                                     <div class="col col-center">
+                                         <a  style="float: right;color: red;font-size: 16px;">
+                                             已签收
+                                         </a>
+                                     </div>
+                                 </div>
+
+                                 <div class="item row row-wrap row-no-padding" style="height: 40px;padding-left: 20px;padding-right: 20px;" ng-click="goOrderdetail(i.O_ORDERID)" ng-if="i.INFO_STATUS=='5'">
+                                     <div class="col col-10 col-center">
+                                           <i class="icon ion-clipboard" style="font-size: 22px;"></i>
+                                     </div>
+                                     <div class="col col-center">
+                                         <a  style="float: right;color: red;font-size: 16px;">
+                                             交易关闭
+                                         </a>
+                                     </div>
+                                 </div>
+
+                                 <div class="item row row-wrap row-no-padding" style="height: 40px;padding-left: 20px;padding-right: 20px;"  ng-click="goOrderdetail(i.O_ORDERID)" ng-if="i.INFO_STATUS=='0'">
+                                     <div class="col col-10 col-center">
+                                         <i class="icon ion-clipboard" style="font-size: 22px;"></i>
+                                     </div>
+                                     <div class="col col-center">
+                                         <a  style="float: right;color: red;font-size: 16px;">
+                                             等待买家付款
+                                         </a>
+                                     </div>
+                                 </div>
+
+                                 <div class="item row row-wrap row-no-padding" style="height: 40px;padding-left: 20px;padding-right: 20px;"  ng-click="goOrderdetail(i.O_ORDERID)" ng-if="i.INFO_STATUS=='1'">
+                                     <div class="col col-10 col-center">
+                                             <i class="icon ion-clipboard" style="font-size: 22px;"></i>
+                                      </div>
+                                     <div class="col col-center">
+                                         <a  style="float: right;color: red;font-size: 16px;">
+                                             买家已付款
+                                         </a>
+                                      </div>
+                                 </div>
+
+                                 <div class="item row row-wrap row-no-padding" style="height: 40px;padding-left: 20px;padding-right: 20px;"  ng-click="goOrderdetail(i.O_ORDERID)" ng-if="i.INFO_STATUS=='2'">
+                                     <div class="col col-10 col-center">
+                                          <i class="icon ion-clipboard" style="font-size: 22px;"></i>
+                                     </div>
+                                     <div class="col col-center">
+                                         <a  style="float: right;color: red;font-size: 16px;">
+                                             卖家已发货
+                                         </a>
+                                     </div>
+                                 </div>
+
+                                 <div class="item row row-wrap row-no-padding" style="height: 40px;padding-left: 20px;padding-right: 20px;"  ng-click="goOrderdetail(i.O_ORDERID)" ng-if="i.INFO_STATUS=='8'">
+                                     <div class="col col-10 col-center">
+                                             <i class="icon ion-clipboard" style="font-size: 22px;"></i>
+                                     </div>
+                                     <div class="col col-center">
+                                         <a  style="float: right;color: red;font-size: 16px;">
+                                             交易成功
+                                         </a>
+                                     </div>
+                                 </div>
+
+                                 <div class="item row row_wrap row-no-padding" style="height: 160px;padding-left: 10px;padding-right: 10px;" ng-repeat="o in i.datalist" ng-click="goOrderdetail(o.O_ORDERID)">
+                                     <div class="col col-33 col-center" style="text-align: center;">
+                                         <img src="{{o.G_PIC}}" height="120px" style="display: inline;">
+                                     </div>
+                                     <div class="col">
+                                         <div class="list" style="padding-left: 20px;">
+                                             <div class="item" style="border: none;margin-top: 10px;padding-left: 0px;">
+                                                 <p>{{o.G_NAME}}</p>
+                                             </div>
+                                             <div class="item" style="border: none;margin-top: 5px;padding: 0px;">
+                                                 <p>规格：5KG</p>
+                                             </div>
+                                             <div class="item item-button-right" style="border: none;margin-top: 20px;padding: 0px;">
+                                                 <a style="color: red;font-size: 18px;font-weight: bold;vertical-align: middle;">￥{{o.G_PRICE}}</a>
+                                                 <a style="color: red;font-size: 18px;float:right;vertical-align: middle;">*{{o.INFO_AMOUNT}}</a>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+
+                                 <div class="item row row-wrap row-no-padding" style="border: none;height: 50px;">
+                                     <div class="col col-center">
+                                         <a class="button" style="border:none;">共{{i.INFO_AMOUNT}}件商品 合计：￥{{i.O_TOTALPRICE}} （含运费￥0.00）</a>
+                                     </div>
+                                 </div>
+
+                                 <div class="item" style="padding: 5px;height:50px;" >
+                                     <p style="height: 38px;float: right;" ng-if="i.INFO_STATUS=='3'">
+                                         <a class="button round" style="border:1px solid black;height:40px;width: 100px;">查看发货</a>
+                                         <a class="button round" style="border:1px solid pink;height:40px;width: 100px;margin-left: 20px;color:pink;" ng-click="confirmordertip(i.O_ORDERID)">确认收货</a>
+                                     </p>
+
+                                     <p style="height: 38px;float: right;" ng-if="i.INFO_STATUS=='5'">
+                                         <a class="button round" style="border:1px solid black;height:40px;width: 100px;">查看物流</a>
+                                         <a class="button round" style="border:1px solid pink;height:40px;width: 100px;margin-left: 20px;color:pink;" ng-click="delorder(i.O_ORDERID)">删除订单</a>
+                                     </p>
+
+                                     <p style="height: 38px;float: right;" ng-if="i.INFO_STATUS=='0'">
+                                         <a class="button round" style="border:1px solid black;height:40px;width: 100px;" ng-click="cancelorder(i.O_ORDERID,i.INFO_STATUS)">取消订单</a>
+                                         <a class="button round" style="border:1px solid pink;height:40px;width: 100px;margin-left: 20px;color:pink;" ng-click="itemgopay(i.O_ORDERID,i.O_TOTALPRICE)">付款</a>
+                                     </p>
+
+                                     <p style="height: 38px;float: right;" ng-if="i.INFO_STATUS=='1'">
+                                         <a class="button round" style="border:1px solid black;height:40px;width: 100px;" ng-click="cancelorder(i.O_ORDERID,i.INFO_STATUS)">取消订单</a>
+                                         <a class="button round" style="border:1px solid pink;height:40px;width: 100px;margin-left: 20px;color:pink;">提醒发货</a>
+                                     </p>
+
+                                     <p style="height: 38px;float: right;" ng-if="i.INFO_STATUS=='2'">
+                                         <a class="button round" style="border:1px solid black;height:40px;width: 100px;">查看发货</a>
+                                         <a class="button round" style="border:1px solid pink;height:40px;width: 100px;margin-left: 20px;color:pink;" ng-click="confirmordertip(i.O_ORDERID)">确认收货</a>
+                                     </p>
+
+                                     <p style="height: 38px;float: right;" ng-if="i.INFO_STATUS=='8'">
+                                         <a class="button round" style="border:1px solid black;height:40px;width: 100px;" ng-click="delorder(i.O_ORDERID)">删除订单</a>
+                                         <a class="button round" style="border:1px solid pink;height:40px;width: 100px;margin-left: 20px;color:pink;" ng-click="goEvaluate(i.O_ORDERID)">评价</a>
+                                     </p>
+                                 </div>
+                             </div>
+                         </ion-item>
+             </ion-list>
+
+            </ion-slide>
+            <ion-slide >
+                <ion-list>
+                    <ion-item style="padding-left: 0px;padding-right: 0px;"  ng-repeat="i in orderlist">
+                        <div class="list" >
+                            <div class="item row row-wrap row-no-padding" style="height: 40px;padding-left: 20px;padding-right: 20px;"  ng-click="goOrderdetail(i.O_ORDERID)" ng-if="i.INFO_STATUS=='0'">
+                                <div class="col col-10 col-center">
+                                    <i class="icon ion-clipboard" style="font-size: 22px;"></i>
+                                </div>
+                                <div class="col col-center">
+                                    <a  style="float: right;color: red;font-size: 16px;">
+                                        等待买家付款
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="item row row_wrap row-no-padding" style="height: 160px;padding-left: 10px;padding-right: 10px;" ng-repeat="o in i.datalist" ng-click="goOrderdetail(o.O_ORDERID)">
+                                <div class="col col-33 col-center" style="text-align: center;">
+                                    <img src="{{o.G_PIC}}" height="120px" style="display: inline;">
+                                </div>
+                                <div class="col">
+                                    <div class="list" style="padding-left: 20px;">
+                                        <div class="item" style="border: none;margin-top: 10px;padding-left: 0px;">
+                                            <p>{{o.G_NAME}}</p>
+                                        </div>
+                                        <div class="item" style="border: none;margin-top: 5px;padding: 0px;">
+                                            <p>规格：5KG</p>
+                                        </div>
+                                        <div class="item item-button-right" style="border: none;margin-top: 20px;padding: 0px;">
+                                            <a style="color: red;font-size: 18px;font-weight: bold;vertical-align: middle;">￥{{o.G_PRICE}}</a>
+                                            <a style="color: red;font-size: 18px;float:right;vertical-align: middle;">*{{o.INFO_AMOUNT}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item row row-wrap row-no-padding" style="border: none;height: 50px;">
+                                <div class="col col-center">
+                                    <a class="button" style="border:none;">共{{i.INFO_AMOUNT}}件商品 合计：￥{{i.O_TOTALPRICE}} （含运费￥0.00）</a>
+                                </div>
+                            </div>
+
+                            <div class="item" style="padding: 5px;height:50px;">
+                                <p style="height: 38px;float: right;">
+                                    <a class="button round" style="border:1px solid black;height:40px;width: 100px;" ng-click="cancelorder(i.O_ORDERID,i.INFO_STATUS)">取消订单</a>
+                                    <a class="button round" style="border:1px solid pink;height:40px;width: 100px;margin-left: 20px;color:pink;" ng-click="itemgopay(i.O_ORDERID,i.O_TOTALPRICE)">付款</a>
+                                </p>
+                             </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </ion-slide>
+            <ion-slide >
+                <ion-list>
+                    <ion-item style="padding-left: 0px;padding-right: 0px;" ng-repeat="i in orderlist">
+                        <div class="list" >
+                            <div class="item row row-wrap row-no-padding" style="height: 40px;padding-left: 20px;padding-right: 20px;"  ng-click="goOrderdetail(i.O_ORDERID)">
+                                <div class="col col-10 col-center">
+                                    <i class="icon ion-clipboard" style="font-size: 22px;"></i>
+                                </div>
+                                <div class="col col-center">
+                                    <a  style="float: right;color: red;font-size: 16px;">
+                                        买家已付款
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="item row row_wrap row-no-padding" style="height: 160px;padding-left: 10px;padding-right: 10px;" ng-repeat="o in i.datalist" ng-click="goOrderdetail(o.O_ORDERID)">
+                                <div class="col col-33 col-center" style="text-align: center;">
+                                    <img src="{{o.G_PIC}}" height="120px" style="display: inline;">
+                                </div>
+                                <div class="col">
+                                    <div class="list" style="padding-left: 20px;">
+                                        <div class="item" style="border: none;margin-top: 10px;padding-left: 0px;">
+                                            <p>{{o.G_NAME}}</p>
+                                        </div>
+                                        <div class="item" style="border: none;margin-top: 5px;padding: 0px;">
+                                            <p>规格：5KG</p>
+                                        </div>
+                                        <div class="item item-button-right" style="border: none;margin-top: 20px;padding: 0px;">
+                                            <a style="color: red;font-size: 18px;font-weight: bold;vertical-align: middle;">￥{{o.G_PRICE}}</a>
+                                            <a style="color: red;font-size: 18px;float:right;vertical-align: middle;">*{{o.INFO_AMOUNT}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item row row-wrap row-no-padding" style="border: none;height: 50px;">
+                                <div class="col col-center">
+                                    <a class="button" style="border:none;">共{{i.INFO_AMOUNT}}件商品 合计：￥{{i.O_TOTALPRICE}} （含运费￥0.00）</a>
+                                </div>
+                            </div>
+
+                            <div class="item" style="padding: 5px;height:50px;">
+                                <p style="height: 38px;float: right;">
+                                    <a class="button round" style="border:1px solid black;height:40px;width: 100px;" ng-click="cancelorder(i.O_ORDERID,i.INFO_STATUS)">取消订单</a>
+                                    <a class="button round" style="border:1px solid pink;height:40px;width: 100px;margin-left: 20px;color:pink;">提醒发货</a>
+                                </p>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </ion-slide>
+           <ion-slide>
+               <ion-list>
+                   <ion-item style="padding-left: 0px;padding-right: 0px;" ng-repeat="i in orderlist">
+                       <div class="list" >
+                           <div class="item row row-wrap row-no-padding" style="height: 40px;padding-left: 20px;padding-right: 20px;"  ng-click="goOrderdetail(i.O_ORDERID)">
+                               <div class="col col-10 col-center">
+                                   <i class="icon ion-clipboard" style="font-size: 22px;"></i>
+                               </div>
+                               <div class="col col-center">
+                                   <a  style="float: right;color: red;font-size: 16px;">
+                                       卖家已发货
+                                   </a>
+                               </div>
+                           </div>
+                           <div class="item row row_wrap row-no-padding" style="height: 160px;padding-left: 10px;padding-right: 10px;" ng-repeat="o in i.datalist" ng-click="goOrderdetail(o.O_ORDERID)">
+                               <div class="col col-33 col-center" style="text-align: center;">
+                                   <img src="{{o.G_PIC}}" height="120px" style="display: inline;">
+                               </div>
+                               <div class="col">
+                                   <div class="list" style="padding-left: 20px;">
+                                       <div class="item" style="border: none;margin-top: 10px;padding-left: 0px;">
+                                           <p>{{o.G_NAME}}</p>
+                                       </div>
+                                       <div class="item" style="border: none;margin-top: 5px;padding: 0px;">
+                                           <p>规格：5KG</p>
+                                       </div>
+                                       <div class="item item-button-right" style="border: none;margin-top: 20px;padding: 0px;">
+                                           <a style="color: red;font-size: 18px;font-weight: bold;vertical-align: middle;">￥{{o.G_PRICE}}</a>
+                                           <a style="color: red;font-size: 18px;float:right;vertical-align: middle;">*{{o.INFO_AMOUNT}}</a>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="item row row-wrap row-no-padding" style="border: none;height: 50px;">
+                               <div class="col col-center">
+                                   <a class="button" style="border:none;">共{{i.INFO_AMOUNT}}件商品 合计：￥{{i.O_TOTALPRICE}} （含运费￥0.00）</a>
+                               </div>
+                           </div>
+
+                           <div class="item" style="padding: 5px;height:50px;">
+                               <p style="height: 38px;float: right;" >
+                                   <a class="button round" style="border:1px solid black;height:40px;width: 100px;">查看发货</a>
+                                   <a class="button round" style="border:1px solid pink;height:40px;width: 100px;margin-left: 20px;color:pink;" ng-click="confirmordertip(i.O_ORDERID)">确认收货</a>
+                               </p>
+                           </div>
+                       </div>
+                   </ion-item>
+               </ion-list>
+           </ion-slide>
+           <ion-slide>
+               <ion-list>
+                   <ion-item style="padding-left: 0px;padding-right: 0px;" ng-repeat="i in orderlist">
+                       <div class="list" >
+                           <div class="item row row-wrap row-no-padding" style="height: 40px;padding-left: 20px;padding-right: 20px;"  ng-click="goOrderdetail(i.O_ORDERID)" >
+                               <div class="col col-10 col-center">
+                                   <i class="icon ion-clipboard" style="font-size: 22px;"></i>
+                               </div>
+                               <div class="col col-center">
+                                   <a  style="float: right;color: red;font-size: 16px;">
+                                       交易成功
+                                   </a>
+                               </div>
+                           </div>
+                           <div class="item row row_wrap row-no-padding" style="height: 160px;padding-left: 10px;padding-right: 10px;" ng-repeat="o in i.datalist" ng-click="goOrderdetail(o.O_ORDERID)">
+                               <div class="col col-33 col-center" style="text-align: center;">
+                                   <img src="{{o.G_PIC}}" height="120px" style="display: inline;">
+                               </div>
+                               <div class="col">
+                                   <div class="list" style="padding-left: 20px;">
+                                       <div class="item" style="border: none;margin-top: 10px;padding-left: 0px;">
+                                           <p>{{o.G_NAME}}</p>
+                                       </div>
+                                       <div class="item" style="border: none;margin-top: 5px;padding: 0px;">
+                                           <p>规格：5KG</p>
+                                       </div>
+                                       <div class="item item-button-right" style="border: none;margin-top: 20px;padding: 0px;">
+                                           <a style="color: red;font-size: 18px;font-weight: bold;vertical-align: middle;">￥{{o.G_PRICE}}</a>
+                                           <a style="color: red;font-size: 18px;float:right;vertical-align: middle;">*{{o.INFO_AMOUNT}}</a>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="item row row-wrap row-no-padding" style="border: none;height: 50px;">
+                               <div class="col col-center">
+                                   <a class="button" style="border:none;">共{{i.INFO_AMOUNT}}件商品 合计：￥{{i.O_TOTALPRICE}} （含运费￥0.00）</a>
+                               </div>
+                           </div>
+
+                           <div class="item" style="padding: 5px;height:50px;">
+                               <p style="height: 38px;float: right;">
+                                   <a class="button round" style="border:1px solid black;height:40px;width: 100px;" ng-click="delorder(i.O_ORDERID)">删除订单</a>
+                                   <a class="button round" style="border:1px solid pink;height:40px;width: 100px;margin-left: 20px;color:pink;" ng-click="goEvaluate(i.O_ORDERID)">评价</a>
+                               </p>
+                           </div>
+                       </div>
+                   </ion-item>
+               </ion-list>
+           </ion-slide>
+        </ion-slide-box>
+
+    </ion-content>
+</ion-view>

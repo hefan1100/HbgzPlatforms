@@ -1,0 +1,51 @@
+<ion-view>
+    <ion-nav-title><h1 class="title"><b>投标信息</b></h1></ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon ion-ios-arrow-back" ng-click="goToMain()"> 返回</button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-compose" ng-click="openModal()">审批</button>
+    </ion-nav-buttons>
+    <ion-content>
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()" spinner="android"></ion-refresher>
+        <ion-list can-swipe="true">
+            <ion-item ng-repeat="item in items" ng_click="showDetail('{{item.bid_id}}')">
+                <div class="row" style="padding:1% 0 2% 2%;border-bottom:1px solid #dddddd" >
+                    <div class="col" style="font-size:18px;font-weight: 700;">商机编码：{{item.COO_CODE}}</div>
+                </div>
+                <div class="row" style="padding: 3%;margin-top: 3%" >
+                    <div class="col-33 col-top"><b>审批状态：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.STATE_NAME}}</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>投标类型：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.BID_TYPE_NAME}}</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>产品类型：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.SERV_TYPE_NAME}}</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>预计规模：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.PRE_AMOUNT}} (元)</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>预计成本：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.PRE_CB}} (元)</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>预计毛利：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.PRE_ML}} (%)</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>所需资质：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.BID_QUALITY}}</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>合作模式：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.COOPERATION_MODE}}</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>实施单位：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.EX_UNIT}}</div>
+                </div>
+                <div class="row" style="padding: 3%" >
+                    <div class="col-33 col-top"><b>标书制作：</b></div><div class="col-67" style="color:#666666;white-space: normal;">{{item.BIDDER}}</div>
+                </div>
+            </ion-item>
+        </ion-list>
+        <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" on-infinite="loadMore()" distance="10%" immediate-check='true'>
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>

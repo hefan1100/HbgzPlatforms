@@ -1,0 +1,137 @@
+<ion-view>
+    <ion-nav-title><h1 class="title"><b>湖北邮政微商城</b></h1></ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-large button-clear icon ion-ios-arrow-back" ng-click="httpback()">返回</button>
+    </ion-nav-buttons>
+
+    <ion-content>
+          <div class="row row-wrap row-no-padding" style="padding:10px;height: 130px;" ng-repeat="item in addressresult">
+
+            <div class="col col-90" style="padding: 0px;">
+                <div class="list" >
+                    <div class="item" style="padding-left: 36px;border: none;padding-right: 0px;" >
+                          <p style="width: 100%;">
+                              <a style="text-decoration: none;font-weight: bold;font-size: 18px;">收货人：{{item.A_RECEIVENAME}}</a>
+                              <a style="text-decoration: none;font-weight: bold;float: right;font-size: 18px;">{{item.A_MOBILEPHONE}}</a>
+                          </p>
+                    </div>
+
+                    <div class="item row row-wrap row-no-padding " style="height: 50px;border: none;">
+                          <div class="col col-10 col-center" style="text-align: center;">
+                               <img src="img/store/icon_location.png" width="20px" style="display: inline;">
+                          </div>
+                          <div class="col col-center">
+                                <a style="margin-left: 5px;font-weight: bold;font-size: 18px;">收货地址:{{item.A_ADDRESS}}</a>
+                          </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col col-center" style="padding:0px;">
+                <i class="icon ion-chevron-right" style="height: 20px;float: right;font-size: 20px;"></i>
+            </div>
+        </div>
+       <ion-list>
+           <ion-item style="height: 120px;padding: 0px;" ng-repeat="i in cartlistresult">
+                <div class="row row-wrap row-no-padding" style="height: 100%;background-color: #EEEEEE;">
+                    <div class="col col-33 col-center" style="text-align: center;">
+                        <img src="{{i.G_PIC}}" width="80px" style="display: inline;">
+                    </div>
+                    <div class="col col-center" style="text-align: center;padding: 10px;">
+                            <p style="width: 100%;">
+                                <a style="font-size: 18px;color: #000000;float: left;">{{i.G_NAME}}</a>
+                            </p>
+                            <p style="width: 100%;margin-top: 10px;">
+                                <a style="color:#999999;font-weight: bold;text-decoration: none;float:left;">规格：5KG</a>
+                            </p>
+                            <p style="width: 100%;margin-top: 10px;">
+                               <a style="color: pink;font-size: 18px;font-weight: bold;float:left;">￥{{i.G_PRICE}}</a>
+                               <a style="color:#dcdcdc;font-size: 18px;float:right;">*{{i.COUNT}}</a>
+                            </p>
+                    </div>
+                </div>
+           </ion-item>
+     </ion-list>
+
+        <div class="row row-wrap row-no-padding" style="height: 50px;padding-left: 10px;padding-right: 10px;" ng-click="goDiscount()">
+            <div class="col-75 col-center" style="padding: 0px;position:relative;">
+                <a style="text-decoration: none;font-size: 18px;font-weight: bold;">优惠券</a>
+            </div>
+            <div class="col col-center">
+                <a style="text-decoration: none;font-size: 18px;">无可用</a>
+                <i class="icon ion-chevron-right" style="font-size: 18px;float:right;"></i>
+            </div>
+
+        </div>
+        <div style="height: 1px;background-color: #dcdcdc;width: 100%;padding-left: 40px;padding-right: 40px;">
+        </div>
+
+        <div class="row row-wrap row-no-padding" style="height: 50px;padding-left: 10px;padding-right: 10px;">
+            <div class="col col-center" style="padding: 0px;">
+                <a style="text-decoration: none;font-size: 18px;font-weight: bold;">发票</a>
+            </div>
+            <div class="col col-center" style="padding: 0px;">
+                <label class="toggle toggle-assertive" style="float: right;">
+                    <input type="checkbox">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div style="height: 1px;background-color: #dcdcdc;width: 100%;padding-left: 40px;padding-right: 40px;">
+        </div>
+
+        <div class="list" style="height: 40px;padding-left: 10px;padding-right: 10px;padding-top: 5px;">
+            <label class="item item-input" style="border: none;padding-left: 0px;">
+                <span class="input-label" style="font-size: 18px;font-weight: bold;">备注信息：</span>
+                <input type="text" placeholder="选填（请填写您对本次订单的要求，我们会尽力满足）" style="font-size: 18px;">
+            </label>
+        </div>
+
+        <div style="height: 1px;background-color: #dcdcdc;width: 100%;padding-left: 40px;padding-right: 40px;">
+        </div>
+
+        <div class="row row-wrap row-no-padding" style="height:120px;padding-top:20px;padding-bottom:20px;padding-left: 10px;padding-right: 10px;text-align: center;">
+            <p style="width: 100%;">
+                <a style="text-decoration: none;font-size: 18px;font-weight: bold;float: left;">商品金额：</a>
+                <a style="text-decoration: none;color:red;float: right;font-size: 18px;font-weight: bold;">￥{{allprice}}</a>
+            </p>
+            <p style="width: 100%;margin-top: 10px;">
+                <a style="text-decoration: none;font-size: 18px;font-weight: bold;float: left;">运费：</a>
+                <a style="text-decoration: none;color:red;float: right;font-size: 18px;font-weight: bold;">￥0.00</a>
+            </p>
+        </div>
+
+        <div style="height: 1px;background-color: #dcdcdc;width: 100%;padding-left: 40px;padding-right: 40px;">
+        </div>
+
+
+    </ion-content>
+
+    <ion-footer-bar style="padding: 0px;height:60px;">
+        <div class="row row-wrap row-no-padding" style="padding: 0px;background-color: #dcdcdc;">
+            <div class="col col-60 col-center" style="padding-left: 10px;height:100%;">
+                 <a style="font-size: 18px;font-weight: bold;color: #ff4500;">实付款：￥{{allprice}}</a>
+            </div>
+            <div class="col col-center" style="text-align: center;padding-top:5px;padding-bottom:5px;padding-right: 10px;">
+                 <button class="button" style="width: 100%;height: 50px;color: white;font-size:18px;background-color: #ff4500;"ng-click="enterPay()">
+                       提交订单
+                 </button>
+            </div>
+
+        </div>
+    </ion-footer-bar><ion-footer-bar style="padding: 0px;height:60px;">
+    <div class="row row-wrap row-no-padding" style="padding: 0px;background-color: #dcdcdc;">
+        <div class="col col-60 col-center" style="padding-left: 10px;height:100%;">
+            <a style="font-size: 18px;font-weight: bold;color: #ff4500;">实付款：￥{{allprice}}</a>
+        </div>
+        <div class="col col-center" style="text-align: center;padding-top:5px;padding-bottom:5px;padding-right: 10px;">
+            <button class="button" style="width: 100%;height: 50px;color: white;font-size:18px;background-color: #ff4500;"ng-click="enterPay()">
+                提交订单
+            </button>
+        </div>
+
+    </div>
+</ion-footer-bar>
+</ion-view>
