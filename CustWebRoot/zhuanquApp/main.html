@@ -1,0 +1,80 @@
+<ion-view>
+    <ion-header-bar style="background-color: #ffffff">
+   <!--     <div class="row row-wrap row-no-padding" style="height:100%;width:100%">
+          <div class="col col-25 col-center" style="text-align:center;">
+              <div class="list" style="display:inline;">
+                  <div class="item item-select">
+                    <select>
+                          <option selected>湖北</option>
+                          <option>四川</option>
+                          <option>上海</option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+
+
+            <div class="col col-50 col-center" style="text-align:center;background-color: #009933">
+                <h1 class="title" style="color: #000000;"><b>市州专区</b></h1>
+            </div>
+
+            <div class="col col-25 col-center">
+                <div style="background-color: #ffffff;width: 100%;height: 100%;">
+
+                </div>
+            </div>
+        </div>    -->
+
+        <div class="buttons" style="width: 33%;background: none;border: none;">
+            <a class="button list" style="border: none;width:100%;background: none;">
+                <div class="item item-select" style="border: none; background: none;text-align: center;">
+                    <select style="border: none; display: inline;">
+                        <option selected>湖北</option>
+                        <option>四川</option>
+                        <option>上海</option>
+                    </select>
+                </div>
+            </a>
+        </div>
+        <h1 class="title">市州专区</h1>
+
+    </ion-header-bar>
+
+
+
+    <ion-content style="background-color: #dcdcdc;">
+          <ion-list>
+              <ion-item ng-style="itemStyle">
+                  <div class="row row-wrap row-no-padding" ng-style="itemtitleStyle">
+                     <div class="col col-center" style="padding: 0px;">
+                        <p style="color: #adff2f;font-size: 18px;">武汉邮政</p>
+                     </div>
+                  </div>
+                  <img src="img/icon-avatar.png" ng-style="itemavatarstyle"/>
+                  <div ng-style="itemdescriptionstyle">
+                      <p style="font-size: 16px;">更多精彩尽在武汉邮政微邮局</p>
+                      <p style="font-size: 13px;margin-top: 2%;color: #dcdcdc;">来源：武汉邮政微邮局</p>
+                  </div>
+                  <div ng-style="itemdivider">
+
+                  </div>
+              </ion-item>
+              <ion-item ng-style="itemStyle">
+                  <div class="row row-wrap row-no-padding" ng-style="itemtitleStyle">
+                      <div class="col col-center" style="padding: 0px;">
+                          <p style="color: #adff2f;font-size: 18px;">武汉邮政</p>
+                      </div>
+                  </div>
+                  <img src="img/icon-avatar.png" ng-style="itemavatarstyle"/>
+                  <div ng-style="itemdescriptionstyle">
+                      <p style="font-size: 16px;">更多精彩尽在武汉邮政微邮局</p>
+                      <p style="font-size: 13px;margin-top: 5%;color: #dcdcdc;">来源：武汉邮政微邮局</p>
+                  </div>
+                  <div ng-style="itemdivider">
+
+                  </div>
+              </ion-item>
+          </ion-list>
+
+    </ion-content>
+</ion-view>
