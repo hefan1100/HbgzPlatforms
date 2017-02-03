@@ -1,0 +1,23 @@
+<ion-view>
+  <ion-content style="background-color:#ffffff;padding:2%; ">
+
+       <div ng-style="imgheaderStyle">
+          <img src="img/title_image.png" ng-style="imgheaderStyle">
+       </div>
+
+       <ion-list style="padding: 0px;">
+           <ion-item ng-style="itemStyle" ng-repeat="i in articlelist" ng-click="goDetail(i.ID)">
+               <div class="row row-wrap row-no-padding" style="height:100%;padding: 0px;">
+                   <div class="col col-20 col-center" style="text-align: center;height:100%;">
+                       <img src="img/icon_item_message.png" style="display: inline;width: 20px;">
+                   </div>
+                   <div class="col col-80 col-center" style="text-align: center;height:100%;">
+                       <div style="white-space:normal;width: 100%;text-align: left;font-size: 1em;">{{i.CONTENT}}
+                       </div>
+                   </div>
+               </div>
+           </ion-item>
+
+        </ion-list>
+    </ion-content>
+</ion-view>

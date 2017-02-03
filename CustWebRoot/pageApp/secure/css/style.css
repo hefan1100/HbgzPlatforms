@@ -24,3 +24,13 @@ td{border-bottom: solid 1px grey;}
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
 }
+.color_blue{color:#387ef5}
+.bg_color_blue{background-color:#387ef5}
+.date_col:hover{background-color:rgba(56,126,245,.5);cursor:pointer}
+.date_col:active,.date_selected{background-color:rgba(56,126,245,1)}
+.date_col:active{cursor:pointer}.no_padding{padding:0}
+.date_cell{padding:5px}
+.error_msg{color:#c00!important;font-size:12px}
+.warp{
+    white-space: normal;width:200px;
+}

@@ -4,8 +4,8 @@
         var content=$('#summernote').summernote('code');
         var radiotype=$("input[name='radiotype']:checked").val();
         var msgtype="welcome";
-        var user=QueryString("userid");
-        var id=QueryString("pid");
+        var user=GetQueryString("userid");
+        var id=GetQueryString("pid");
         var pic= $('#file51').val();
         alert(pic);
         var params = "{\"content\":\""+content+"\",\"radiotype\":\""+radiotype+"\",\"msgtype\":\""+msgtype+"\",\"user\":\""+user+"\",\"id\":\""+id+"\"}";

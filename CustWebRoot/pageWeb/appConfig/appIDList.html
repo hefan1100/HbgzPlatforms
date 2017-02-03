@@ -1,23 +1,23 @@
 <script type="text/javascript">
-    function QueryString(val) {
+    function GetQueryString(val) {
         var uri = window.location.search;
         var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
         return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
     }
     function del(id) {
-        var params = "{\"id\":\""+id+"\",\"user\":\""+QueryString("userid")+"\"}";
+        var params = "{\"id\":\""+id+"\",\"user\":\""+GetQueryString("userid")+"\"}";
         $.ajax({
             url:'/serv?domain=delConfigure&params='+encodeURIComponent(params),
             type:'post',
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             dataType:'html',
-            error: function(){alert('error');},
+            error: function(){},
             success:function(resultJSON){
             }
         });
     }
     $(function () {
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var params = "{\"user\":\""+user+"\"}";
         $.ajax({
             url:'/serv?domain=queryTest&params='+encodeURIComponent(params),
@@ -37,7 +37,7 @@
                 $.each(JSON.parse(resultJSON), function (i, reportList) {
                     var id=reportList["ID"];
                     var wechat=reportList["WECHAT"];
-                    $("#retable").append("<tr><td>"+reportList["NAME"]+"</td><td>"+reportList["PUBLICID"]+"</td><td>"+reportList["TYPE"]+"</td><td><a href=\"index.html?userid="+user+"&pid="+id+"\"&wechat="+wechat+"\"><i class=\"fa fa-pencil\"></i></a><a href=\"#myModal\" role=\"button\" data-toggle=\"modal\" onclick='del("+id+")'><i class=\"fa fa-trash-o\"></i></a></td></tr>");
+                    $("#retable").append("<tr><td>"+reportList["NAME"]+"</td><td>"+reportList["PUBLICID"]+"</td><td>"+reportList["TYPE"]+"</td><td><a href=\"index.html?userid="+user+"&pid="+id+"\"&wechat="+wechat+"\"><i class=\"fa fa-pencil\"></i></a>&nbsp;&nbsp;<a href=\"#myModal\" role=\"button\" data-toggle=\"modal\" onclick='del("+id+")'><i class=\"fa fa-trash-o\"></i></a></td></tr>");
                 });
 
             }

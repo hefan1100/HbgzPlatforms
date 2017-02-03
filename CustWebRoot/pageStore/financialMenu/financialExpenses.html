@@ -1,9 +1,7 @@
 <script type="text/javascript">
-    $('#pagetitle')[0].innerHTML="支出报表";
-    $('#path')[0].innerHTML="支出报表";
     function getOrderDetailList(){
         $("#retable").empty();
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var startDate=$("#startDate").val();
         var endDate=$("#endDate").val();
         var page=1;

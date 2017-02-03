@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    function QueryString(val) {
+    function GetQueryString(val) {
         var uri = window.location.search;
         var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
         return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
@@ -15,8 +15,8 @@
             isparent=$("#isparent").val()
         }
         $("#title").val(title);
-        var user=QueryString("userid");
-        var pid=QueryString("pid");
+        var user=GetQueryString("userid");
+        var pid=GetQueryString("pid");
         var params = "{\"user\":\""+user+"\",\"isParent\":\""+isparent+"\",\"pid\":\""+pid+"\"}";
         $.ajax({
             url:'/serv?domain=queryCustomerMenu&params='+encodeURIComponent(params),

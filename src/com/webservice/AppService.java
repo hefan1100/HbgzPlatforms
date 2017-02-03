@@ -20,7 +20,9 @@ import java.util.*;
 
 /**
  * Created by swt on 2015/10/13.
- * sql处理方式：
+ * sql处理方式：
+
+
 
 
 
@@ -63,7 +65,7 @@ public class AppService extends HttpServlet {
 
             if(platform.equals("wxpt")){
                 //微信平台登录
-                String sql = "select * from wx_user where username='"+username+"' and password='"+pwd+"'";
+                String sql = "SELECT USERID,USERNAME FROM WX_USER WHERE USERNAME='"+username+"' AND PASSWORD='"+pwd+"'";
                 jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
                 JSONArray  ja=JSONArray.fromObject(jsonStr);
                 JSONObject rejson = ja.getJSONObject(0);
@@ -71,7 +73,7 @@ public class AppService extends HttpServlet {
                 session.setAttribute(userid,"wxpt");
             }else if(platform.equals("store")){
                 //商户登录
-                String sql = "select * from store_sup_supply where sup_username='"+username+"' and sup_pwd='"+pwd+"'";
+                String sql = "SELECT * FROM STORE_SUP_SUPPLY WHERE SUP_USERNAME='"+username+"' AND SUP_PWD='"+pwd+"'";
                 jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
                 JSONArray  ja=JSONArray.fromObject(jsonStr);
                 JSONObject rejson = ja.getJSONObject(0);
@@ -86,7 +88,7 @@ public class AppService extends HttpServlet {
                         JSONObject obj = JSONObject.fromObject(params);
                         String id=obj.get("id").toString();
                         ui = new UserHttpImpl();
-                        String sql = "delete from wx_public where id="+id+"";
+                        String sql = "DELETE FROM WX_PUBLIC WHERE id="+id+"";
                         jsonStr=ui.delAny(getJsonSql("delAnySQL",sql));
                     }
                     if(domain.equals("saveConfigure")){
@@ -98,7 +100,7 @@ public class AppService extends HttpServlet {
                         String wechat=obj.get("wechat").toString();
                         String id=obj.get("id").toString();
                         ui = new UserHttpImpl();
-                        String sql = "insert into wx_public (id,userid,publicid,name,wechat,type) values('"+id+"','"+userid+"','"+publicid+"','"+publicname+"','"+wechat+"','"+type+"')";
+                        String sql = "INSERT INTO WX_PUBLIC (ID,USERID,PUBLICID,NAME,WECHAT,TYPE) VALUES('"+id+"','"+userid+"','"+publicid+"','"+publicname+"','"+wechat+"','"+type+"')";
                         jsonStr=ui.addAny(getJsonSql("addAnySQL",sql));
                     }
                     if(domain.equals("updateConfigure")){
@@ -110,7 +112,7 @@ public class AppService extends HttpServlet {
                         String wechat=obj.get("wechat").toString();
                         String id=obj.get("id").toString();
                         ui = new UserHttpImpl();
-                        String sql = "update wx_public set publicid='"+publicid+"',name='"+publicname+"',type='"+type+"',wechat='"+wechat+"' where userid='"+userid+"' and id='"+id+"' ";
+                        String sql = "UPDATE WX_PUBLIC SET publicid='"+publicid+"',name='"+publicname+"',type='"+type+"',wechat='"+wechat+"' where userid='"+userid+"' and id='"+id+"' ";
                         jsonStr=ui.updateAny(getJsonSql("updateAnySQL",sql));
                     }
                     if(domain.equals("saveConfigureSec")){
@@ -131,7 +133,7 @@ public class AppService extends HttpServlet {
                         }else{
                             throw new ServletException();
                         }
-                        String sql = "update wx_public set appid='"+appID+"',appSecret='"+appSecret+"',encodingAESKey='"+encodingAESKey+"' where 1=1 ";
+                        String sql = "UPDATE WX_PUBLIC SET appid='"+appID+"',appSecret='"+appSecret+"',encodingAESKey='"+encodingAESKey+"' where 1=1 ";
                         jsonStr=ui.updateAny(getJsonSql("updateAnySQL",sql+sb.toString()));
                     }
                     if (domain.equals("saveMsgs")) {
@@ -142,7 +144,7 @@ public class AppService extends HttpServlet {
                         String userid=obj.get("user").toString();
                         UUID uuid=UUID.randomUUID();
                         ui = new UserHttpImpl();
-                        String sql = "insert into wx_massage (id,userid,content,msgtype,type) values('"+uuid+"','"+userid+"','"+content+"','"+msgtype+"','"+radiotype+"');";
+                        String sql = "INSERT INTO WX_MASSAGE (ID,USERID,CONTENT,MSGTYPE,TYPE) VALUES('"+uuid+"','"+userid+"','"+content+"','"+msgtype+"','"+radiotype+"');";
                         jsonStr=ui.addAny(getJsonSql("addAnySQL",sql));
                     }
                     if (domain.equals("saveCustomerMenu")) {
@@ -151,7 +153,7 @@ public class AppService extends HttpServlet {
                         String id=obj.get("id").toString();
                         String parent=obj.get("parent").toString();
                         ui = new UserHttpImpl();
-                        String sql = "update wp_custom_menu set title='"+title+"' , pid='"+parent+"' where id='"+id+"'";
+                        String sql = "UPDATE WP_CUSTOM_MENU SET title='"+title+"' , pid='"+parent+"' where id='"+id+"'";
                         jsonStr=ui.updateAny(getJsonSql("updateAnySQL",sql));
                     }
                     if (domain.equals("getCustomerMenu")) {
@@ -193,12 +195,14 @@ public class AppService extends HttpServlet {
                         //                    }
                     }
                     if (domain.equals("submitCustomerMenu")) {
-                        //取出数据库数据
+                        //取出数据库数据
+
+
                         ui = new UserHttpImpl();
                         JSONObject obj = JSONObject.fromObject(params);
                         //                    String user=obj.get("user").toString();
                         //                    String id=obj.get("id").toString();
-                        String sql="select * from WX_MENU";
+                        String sql="SELECT * FROM WX_MENU";
                         jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
                         //解析返回json
                         JSONArray ja=JSONArray.fromObject(jsonStr);
@@ -241,7 +245,9 @@ public class AppService extends HttpServlet {
                         //调用微信接口
                         String restr="";
                         try {
-                            //先删除，再增加
+                            //先删除，再增加
+
+
                             String redel=WeChatUtil.callWeChat("https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=","");
                             String success=JSONObject.fromObject(redel).get("errmsg").toString();
                             if(success.equals("ok")){
@@ -259,7 +265,7 @@ public class AppService extends HttpServlet {
                         ui = new UserHttpImpl();
                         JSONObject obj = JSONObject.fromObject(params);
                         String user=obj.get("user").toString();
-                        String sql = "select t.id,t.name,t1.name as parentname,t.type from wx_menu t left join wx_menu t1 on t.parentid=t1.id where 1=1 " ;
+                        String sql = "SELECT T.ID,T.NAME,T1.NAME AS PARENTNAME,T.TYPE FROM WX_MENU T LEFT JOIN WX_MENU T1 ON T.PARENTID=T1.ID WHERE 1=1 " ;
                         //条件
                         StringBuffer sb=new StringBuffer();
                         if(obj.has("pid")){
@@ -280,7 +286,7 @@ public class AppService extends HttpServlet {
                     if (domain.equals("queryWelcomeMsg")) {
                         System.out.println(params);
                         ui = new UserHttpImpl();
-                        String sql = "select * from wx_message ";
+                        String sql = "SELECT * FROM WX_MESSAGE ";
                         jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
                     }
                     if(domain.equals("queryGroup")){
@@ -327,7 +333,9 @@ public class AppService extends HttpServlet {
                             }
                             String naxtopenid=jo.get("next_openid").toString();
                             String count=jo.get("count").toString();
-                            //如果大于10000条，第二次调用
+                            //如果大于10000条，第二次调用
+
+
                             while (count.equals("10000")){
                                 List rest=new ArrayList();
                                 JSONObject jos = JSONObject.fromObject(WeChatUtil.callWeChat("https://api.weixin.qq.com/cgi-bin/user/get?access_token=",naxtopenid));
@@ -338,7 +346,9 @@ public class AppService extends HttpServlet {
                                 }
                                 follow.addAll(rest);
                             }
-                            //拼接参数，取当前页数的20个用户
+                            //拼接参数，取当前页数的20个用户
+
+
                             StringBuffer sb=new StringBuffer();
                             sb.append("{\"user_list\":[");
                             int cursize;
@@ -376,9 +386,9 @@ public class AppService extends HttpServlet {
                         UUID id=UUID.randomUUID();
                         ui = new UserHttpImpl();
                         try{
-                            String usersql = "insert into WX_USER (userid,username,password,id) values('"+id+"','"+username+"','"+password+"','"+id+"')";
+                            String usersql = "INSERT INTO WX_USER (USERID,USERNAME,PASSWORD,ID) VALUES('"+id+"','"+username+"','"+password+"','"+id+"')";
                             ui.addAny(getJsonSql("addAnySQL",usersql));
-                            String infosql = "insert into WX_USERINFO (userid,realname,tel,address) values('"+id+"','"+realname+"','"+tel+"','"+address+"')";
+                            String infosql = "INSERT INTO WX_USERINFO (USERID,REALNAME,TEL,ADDRESS) VALUES('"+id+"','"+realname+"','"+tel+"','"+address+"')";
                             ui.addAny(getJsonSql("addAnySQL",infosql));
                         }catch (Exception e){
                             jsonStr="error";
@@ -389,7 +399,7 @@ public class AppService extends HttpServlet {
                         JSONObject obj = JSONObject.fromObject(params);
                         String user;
                         String id;
-                        String sql = "select * from wx_public where 1=1";
+                        String sql = "SELECT * FROM WX_PUBLIC WHERE 1=1";
                         StringBuffer sb=new StringBuffer();
                         if(obj.has("id")){
                             id=obj.get("id").toString() ;
@@ -426,7 +436,7 @@ public class AppService extends HttpServlet {
                         UUID id=UUID.randomUUID();
                         ui = new UserHttpImpl();
                         try{
-                            String usersql = "insert into WX_USER (userid,username,password,id) values('"+id+"','"+username+"','"+password+"','"+id+"')";
+                            String usersql = "INSERT INTO WX_USER (USERID,USERNAME,PASSWORD,ID) VALUES('"+id+"','"+username+"','"+password+"','"+id+"')";
                             String addAnysql=ui.addAny(getJsonSql("addAnySQL",usersql));
                             Boolean isSuccess=Boolean.parseBoolean(addAnysql);
                             String message=null;
@@ -457,7 +467,7 @@ public class AppService extends HttpServlet {
                         String uid=obj.get("newuserid").toString();
                         ui = new UserHttpImpl();
                         try{
-                            String infosql = "insert into WX_USERINFO (userid,realname,tel,address) values('"+uid+"','"+realname+"','"+tel+"','"+address+"')";
+                            String infosql = "INSERT INTO WX_USERINFO (USERID,REALNAME,TEL,ADDRESS) VALUES('"+uid+"','"+realname+"','"+tel+"','"+address+"')";
                             String addAnysql=ui.addAny(getJsonSql("addAnySQL",infosql));
                             Boolean isSuccess=Boolean.parseBoolean(addAnysql);
                             String message=null;
@@ -483,8 +493,10 @@ public class AppService extends HttpServlet {
                     {
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
-                        String pid=obj.getString("pid");//根据每一个公众号的token来获取所有分类下的文章
-                        String sql = "select cms.id as articleid,cms.keyword as articlekeyword,cms.title as articletitle,cms.content as articlecontent,cate.title as catetitle,cate.content as catecontent,cate.keyword as catekeyword from wx_cms cms,wx_category cate where cms.cate_id=cate.id and cms.cate_id in (select categ.id from wx_category categ where categ.pid='"+pid+"')";
+                        String pid=obj.getString("pid");//根据每一个公众号的token来获取所有分类下的文章
+
+
+                        String sql = "SELECT CMS.ID AS ARTICLEID,CMS.KEYWORD AS ARTICLEKEYWORD,CMS.TITLE AS ARTICLETITLE,CMS.CONTENT AS ARTICLECONTENT,CATE.TITLE AS CATETITLE,CATE.CONTENT AS CATECONTENT,CATE.KEYWORD AS CATEKEYWORD FROM WX_CMS CMS,WX_CATEGORY CATE WHERE CMS.CATE_ID=CATE.ID AND CMS.CATE_ID IN (SELECT CATEG.ID FROM WX_CATEGORY CATEG WHERE categ.pid='"+pid+"')";
                         jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
                         System.out.println(jsonStr);
                     }
@@ -492,9 +504,11 @@ public class AppService extends HttpServlet {
                     {
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
-                        String pid=obj.getString("pid");//根据每一个公众号的token来获取所有分类下的文章
+                        String pid=obj.getString("pid");//根据每一个公众号的token来获取所有分类下的文章
+
+
                         System.out.println("pid:"+pid);
-                        String sql = "select * from WX_CATEGORY cat where cat.PID='"+pid+"'";
+                        String sql = "SELECT * FROM WX_CATEGORY CAT WHERE cat.PID='"+pid+"'";
                         jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
                         System.out.println(jsonStr);    //获取list数据
                     }
@@ -502,9 +516,11 @@ public class AppService extends HttpServlet {
                     {
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
-                        String pid=obj.getString("pid");//根据每一个公众号的token来获取所有分类下的文章
+                        String pid=obj.getString("pid");//根据每一个公众号的token来获取所有分类下的文章
+
+
                         System.out.println("pid:"+pid);
-                        String sql = "select * from WX_CATEGORY cat where cat.PID='"+pid+"'";
+                        String sql = "SELECT * FROM WX_CATEGORY CAT WHERE cat.PID='"+pid+"'";
                         jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
                         System.out.println(jsonStr);    //获取list数据
                     }
@@ -513,11 +529,13 @@ public class AppService extends HttpServlet {
                         System.out.print("dsfdsfdsfds");
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
-                        String pid=obj.getString("pid");//根据每一个公众号的token来获取所有分类下的文章
+                        String pid=obj.getString("pid");//根据每一个公众号的token来获取所有分类下的文章
+
+
                         String uid=obj.getString("user");
                         String id=obj.getString("id");
                         System.out.println("id:"+id);
-                        String sql = "delete from wx_category where id='"+id+"'";
+                        String sql = "DELETE FROM WX_CATEGORY WHERE id='"+id+"'";
                         Boolean isDel=Boolean.parseBoolean(ui.delAny(getJsonSql("delAnySQL",sql)));
                         System.out.println(ui.delAny(getJsonSql("delAnySQL",sql)));
                         JSONObject jsonObject=new JSONObject();
@@ -541,7 +559,7 @@ public class AppService extends HttpServlet {
                         String uid=obj.getString("user");
                         String id=obj.getString("id");
                         System.out.println("id:"+id);
-                        String sql = "delete from wx_cms where id='"+id+"'";
+                        String sql = "DELETE FROM WX_CMS WHERE id='"+id+"'";
                         Boolean isDel=Boolean.parseBoolean(ui.delAny(getJsonSql("delAnySQL",sql)));
                         System.out.println(ui.delAny(getJsonSql("delAnySQL",sql)));
                         JSONObject jsonObject=new JSONObject();
@@ -568,7 +586,7 @@ public class AppService extends HttpServlet {
                         UUID id=UUID.randomUUID();
                         ui = new UserHttpImpl();
                         try{
-                            String usersql = "insert into WX_CATEGORY (ID,TITLE,URL,CONTENT,PID,KEYWORD) VALUES ('"+id+"','"+title+"','"+categoryurl+"','"+content+"','"+pid+"','"+keyword+"')";
+                            String usersql = "INSERT INTO WX_CATEGORY (ID,TITLE,URL,CONTENT,PID,KEYWORD) VALUES ('"+id+"','"+title+"','"+categoryurl+"','"+content+"','"+pid+"','"+keyword+"')";
                             String addAnysql=ui.addAny(getJsonSql("addAnySQL",usersql));
                             Boolean isSuccess=Boolean.parseBoolean(addAnysql);
                             String message=null;
@@ -602,7 +620,7 @@ public class AppService extends HttpServlet {
                         UUID id=UUID.randomUUID();
                         ui = new UserHttpImpl();
                         try{
-                            String usersql = "insert into WX_CMS (ID,CATE_ID,KEYWORD,TITLE,CONTENT,CTIME) VALUES ('"+id+"','"+categoryid+"','"+categorykey+"','"+categorytitle+"','"+content+"',to_date('"+dateformat+"','yyyy-mm-dd hh24:mi:ss'))";
+                            String usersql = "INSERT INTO WX_CMS (ID,CATE_ID,KEYWORD,TITLE,CONTENT,CTIME) VALUES ('"+id+"','"+categoryid+"','"+categorykey+"','"+categorytitle+"','"+content+"',STR_TO_DATE('"+dateformat+"','%Y-%M-%D hh24:mi:ss'))";
                             String addAnysql=ui.addAny(getJsonSql("addAnySQL",usersql));
                             Boolean isSuccess=Boolean.parseBoolean(addAnysql);
                             String message=null;
@@ -629,7 +647,9 @@ public class AppService extends HttpServlet {
                     if(domain.equals("fileUpload")){
                         String savePath = this.getServletContext().getRealPath("/WEB-INF/upload");
                         File file = new File(savePath);
-                        //判断上传文件的保存目录是否存在
+                        //判断上传文件的保存目录是否存在
+
+
                         if (!file.exists() && !file.isDirectory()) {
                             System.out.println(savePath+"目录不存在，需要创建");
                             //创建目录
@@ -638,7 +658,9 @@ public class AppService extends HttpServlet {
                         //消息提示
                         String message = "";
                         try{
-                            //使用Apache文件上传组件处理文件上传步骤：
+                            //使用Apache文件上传组件处理文件上传步骤：
+
+
                             //1、创建一个DiskFileItemFactory工厂
                             DiskFileItemFactory factory = new DiskFileItemFactory();
                             //2、创建一个文件上传解析器
@@ -653,14 +675,18 @@ public class AppService extends HttpServlet {
                             //4、使用ServletFileUpload解析器解析上传数据，解析结果返回的是一个List<FileItem>集合，每一个FileItem对应一个Form表单的输入项
                             List<FileItem> list = upload.parseRequest(request);
                             for(FileItem item : list){
-                                //如果fileitem中封装的是普通输入项的数据
+                                //如果fileitem中封装的是普通输入项的数据
+
+
                                 if(item.isFormField()){
                                     String name = item.getFieldName();
                                     //解决普通输入项的数据的中文乱码问题
                                     String value = item.getString("UTF-8");
                                     //value = new String(value.getBytes("iso8859-1"),"UTF-8");
                                     System.out.println(name + "=" + value);
-                                }else{//如果fileitem中封装的是上传文件
+                                }else{//如果fileitem中封装的是上传文件
+
+
                                     //得到上传的文件名称，
                                     String filename = item.getName();
                                     System.out.println(filename);
@@ -683,9 +709,13 @@ public class AppService extends HttpServlet {
                                         //使用FileOutputStream输出流将缓冲区的数据写入到指定的目录(savePath + "\\" + filename)当中
                                         fileout.write(buffer, 0, len);
                                     }
-                                    //关闭输入流
+                                    //关闭输入流
+
+
                                     in.close();
-                                    //关闭输出流
+                                    //关闭输出流
+
+
                                     fileout.close();
                                     //删除处理文件上传时生成的临时文件
                                     item.delete();
@@ -707,7 +737,7 @@ public class AppService extends HttpServlet {
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
                         StringBuffer sql = new StringBuffer();
-                        sql.append("select g_id,g_name,g_price,g_type,g_amount,status,creater,sup_id,b.dic_name from store_goods_info a join store_dic_dictionary b on a.g_type=b.dic_code and dic_type='goods_type' where sup_id='"+user+"'");
+                        sql.append("SELECT G_ID,G_NAME,G_PRICE,G_TYPE,G_AMOUNT,STATUS,CREATER,SUP_ID,B.DIC_NAME FROM STORE_GOODS_INFO A JOIN STORE_DIC_DICTIONARY B ON A.G_TYPE=B.DIC_CODE AND DIC_TYPE='GOODS_TYPE' WHERE sup_id='"+user+"'");
                         if(obj.has("g_id")){
                             sql.append(" and g_id='"+objs.get("g_id").toString()+"'");
                         }
@@ -716,11 +746,13 @@ public class AppService extends HttpServlet {
                     }
                     if(domain.equals("getDicTpye"))
                     {
-                        //获取字典类型，获得类型信息
+                        //获取字典类型，获得类型信息
+
+
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
                         StringBuffer sql = new StringBuffer();
-                        sql.append("select * from store_dic_dictionary where 1=1 ");
+                        sql.append("SELECT * FROM STORE_DIC_DICTIONARY WHERE 1=1 ");
                         if(obj.has("dic_type")){
                             sql.append(" and dic_type='"+objs.get("dic_type").toString()+"'");
                         }
@@ -738,13 +770,15 @@ public class AppService extends HttpServlet {
                         String gids=obj.getString("gids").toString();
                         String gid[]=gids.split(",");
                         for(int i=0;i<gid.length;i++){
-                            String sql = "delete from store_goods_info where g_id='"+gid[i]+"'";
+                            String sql = "DELETE FROM STORE_GOODS_INFO WHERE g_id='"+gid[i]+"'";
                             jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
                         }
                     }
                     if(domain.equals("saveOrUpdateGoods"))
                     {
-                        //新增或保存商品
+                        //新增或保存商品
+
+
                         JSONObject obj = JSONObject.fromObject(params);
                         String type=obj.get("type").toString();
                         if(type.equals("saveorupdate")){
@@ -758,11 +792,11 @@ public class AppService extends HttpServlet {
                                 UUID uuid=UUID.randomUUID();
                                 String id=uuid.toString().replaceAll("-","");
                                 ui = new UserHttpImpl();
-                                String sql = "insert into STORE_GOODS_INFO (g_id,g_name,g_price,g_type,g_amount,status,creater,sup_id) values('"+id+"','"+g_name+"','"+g_price+"','"+g_type+"','"+g_amount+"','"+g_status+"','"+userid+"','"+userid+"')";
+                                String sql = "INSERT INTO STORE_GOODS_INFO (G_ID,G_NAME,G_PRICE,G_TYPE,G_AMOUNT,STATUS,CREATER,SUP_ID) VALUES('"+id+"','"+g_name+"','"+g_price+"','"+g_type+"','"+g_amount+"','"+g_status+"','"+userid+"','"+userid+"')";
                                 jsonStr=ui.addAny(getJsonSql("addAnySQL",sql));
                             }else{
                                 String g_id=obj.get("g_id").toString();
-                                String sql="update STORE_GOODS_INFO set g_name='"+g_name+"',g_price='"+g_price+"',g_amount='"+g_amount+"',status='"+g_status+"',g_type='"+g_type+"' where g_id='"+g_id+"'" ;
+                                String sql="UPDATE STORE_GOODS_INFO SET g_name='"+g_name+"',g_price='"+g_price+"',g_amount='"+g_amount+"',status='"+g_status+"',g_type='"+g_type+"' where g_id='"+g_id+"'" ;
                                 jsonStr=ui.updateAny(getJsonSql("updateAnySQL",sql));
                             }
                         }else if(type.equals("puton")){
@@ -770,7 +804,7 @@ public class AppService extends HttpServlet {
                             String gids=obj.getString("g_id").toString();
                             String gid[]=gids.split(",");
                             for(int i=0;i<gid.length;i++){
-                                String sql = "update STORE_GOODS_INFO set status=1 where g_id='"+gid[i]+"'";
+                                String sql = "UPDATE STORE_GOODS_INFO SET STATUS=1 WHERE g_id='"+gid[i]+"'";
                                 jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
                             }
                         }else if(type.equals("putoff")){
@@ -778,7 +812,7 @@ public class AppService extends HttpServlet {
                             String gids=obj.getString("g_id").toString();
                             String gid[]=gids.split(",");
                             for(int i=0;i<gid.length;i++){
-                                String sql = "update STORE_GOODS_INFO set status=0 where g_id='"+gid[i]+"'";
+                                String sql = "UPDATE STORE_GOODS_INFO SET STATUS=0 WHERE g_id='"+gid[i]+"'";
                                 jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
                             }
                         }
@@ -786,11 +820,13 @@ public class AppService extends HttpServlet {
                     }
                     if(domain.equals("discountList"))
                     {
-                        //优惠卷列表
+                        //优惠卷列表
+
+
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
                         StringBuffer sql = new StringBuffer();
-                        sql.append("select s.*,(select dic_name from STORE_DIC_DICTIONARY d where s.c_type=d.dic_code and d.dic_type='discount_type') as c_typename,(select dic_name from STORE_DIC_DICTIONARY d where s.c_goodtype=d.dic_code and d.dic_type='goods_type') as c_goodstypename from store_sup_discount s where s.sup_id='"+user+"'");
+                        sql.append("SELECT S.*,(SELECT DIC_NAME FROM STORE_DIC_DICTIONARY D WHERE S.C_TYPE=D.DIC_CODE AND D.DIC_TYPE='DISCOUNT_TYPE') AS C_TYPENAME,(SELECT DIC_NAME FROM STORE_DIC_DICTIONARY D WHERE S.C_GOODTYPE=D.DIC_CODE AND D.DIC_TYPE='GOODS_TYPE') AS C_GOODSTYPENAME FROM STORE_SUP_DISCOUNT S WHERE s.sup_id='"+user+"'");
                         if(obj.has("c_id")){
                             sql.append(" and c_id='"+objs.get("c_id").toString()+"'");
                         }
@@ -815,23 +851,25 @@ public class AppService extends HttpServlet {
                             UUID uuid=UUID.randomUUID();
                             String newid=uuid.toString().replaceAll("-","");
                             ui = new UserHttpImpl();
-                            String sql = "insert into store_sup_discount (c_id,sup_id,c_name,c_money,c_type,c_detail,c_startmoney,c_startdate,c_deadline,c_goodtype) values('"+newid+"','"+user+"','"+name+"','"+money+"','"+discounttype+"','"+detail+"','"+startmoney+"',to_date('"+startdate+"','yyyy-mm-dd'),to_date('"+deadline+"','yyyy-mm-dd'),'"+goodtype+"')";
+                            String sql = "INSERT INTO STORE_SUP_DISCOUNT (C_ID,SUP_ID,C_NAME,C_MONEY,C_TYPE,C_DETAIL,C_STARTMONEY,C_STARTDATE,C_DEADLINE,C_GOODTYPE) VALUES('"+newid+"','"+user+"','"+name+"','"+money+"','"+discounttype+"','"+detail+"','"+startmoney+"',STR_TO_DATE('"+startdate+"','%Y-%M-%D'),STR_TO_DATE('"+deadline+"','%Y-%M-%D'),'"+goodtype+"')";
                             jsonStr=ui.addAny(getJsonSql("addAnySQL",sql));
                         }else{
-                            String sql="update store_sup_discount set c_name='"+name+"',c_money='"+money+"',c_type='"+discounttype+"',c_detail='"+detail+"',c_startmoney='"+startmoney+"',c_startdate=to_date('"+startdate+"','yyyy-mm-dd'),c_deadline=to_date('"+deadline+"','yyyy-mm-dd'),c_goodtype='"+goodtype+"'  where c_id='"+id+"' and sup_id='"+user+"'" ;
+                            String sql="UPDATE STORE_SUP_DISCOUNT SET c_name='"+name+"',c_money='"+money+"',c_type='"+discounttype+"',c_detail='"+detail+"',c_startmoney='"+startmoney+"',c_startdate=STR_TO_DATE('"+startdate+"','%Y-%M-%D'),c_deadline=STR_TO_DATE('"+deadline+"','%Y-%M-%D'),c_goodtype='"+goodtype+"'  where c_id='"+id+"' and sup_id='"+user+"'" ;
                             jsonStr=ui.updateAny(getJsonSql("updateAnySQL",sql));
                         }
 
                     }
                     if(domain.equals("deldiscounts"))
                     {
-                        //删除优惠卷
+                        //删除优惠卷
+
+
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
                         String cids=obj.getString("cids").toString();
                         String cid[]=cids.split(",");
                         for(int i=0;i<cid.length;i++){
-                            String sql = "delete from store_sup_discount where c_id='"+cid[i]+"'";
+                            String sql = "DELETE FROM STORE_SUP_DISCOUNT WHERE c_id='"+cid[i]+"'";
                             jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
                         }
                     }
@@ -840,15 +878,15 @@ public class AppService extends HttpServlet {
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
                         StringBuffer sql = new StringBuffer();
-                        sql.append("select a.o_orderid,(select g_name from store_goods_info where g_id = a.g_id) as g_name,a.info_amount,info_totalprice,b.lastmodify,(select u_name from store_user_info where u_userid in(select u_userid from store_commission where com_code = a.com_code) ) as username from store_order_details a, store_order_info b where a.g_id in (select g_id from store_goods_info where sup_id = '"+user+"')");
+                        sql.append("SELECT A.O_ORDERID,(SELECT G_NAME FROM STORE_GOODS_INFO WHERE G_ID = A.G_ID) AS G_NAME,A.INFO_AMOUNT,INFO_TOTALPRICE,B.LASTMODIFY,(SELECT U_NAME FROM STORE_USER_INFO WHERE U_USERID IN(SELECT U_USERID FROM STORE_COMMISSION WHERE com_code = a.com_code) ) as username from store_order_details a, store_order_info b where a.g_id in (select g_id from store_goods_info where sup_id = '"+user+"')");
                         if(obj.has("orderid")&& !obj.get("orderid").toString().equals("null") && !StringUtil.isBlank(obj.get("orderid").toString())){
                             sql.append(" and a.o_orderid like '%"+objs.get("orderid").toString()+"%'");
                         }
                         if(obj.has("startDate")&& !obj.get("startDate").toString().equals("null")&& !StringUtil.isBlank(obj.get("startDate").toString())){
-                            sql.append(" and lastmodify>to_date('"+objs.get("startDate").toString()+"','yyyy-MM-dd')");
+                            sql.append(" and lastmodify>STR_TO_DATE('"+objs.get("startDate").toString()+"','%Y-%M-%D')");
                         }
                         if(obj.has("endDate")&& !obj.get("endDate").toString().equals("null")&& !StringUtil.isBlank(obj.get("endDate").toString())){
-                            sql.append(" and lastmodify<to_date('"+objs.get("endDate").toString()+"','yyyy-MM-dd')");
+                            sql.append(" and lastmodify<STR_TO_DATE('"+objs.get("endDate").toString()+"','%Y-%M-%D')");
                         }
                         if(obj.has("goodname")&& !obj.get("goodname").toString().equals("null")&& !StringUtil.isBlank(obj.get("goodname").toString())){
                             sql.append(" and a.g_id in (select g_id from store_goods_info where g_name like '%"+objs.get("goodname").toString()+"%')");
@@ -864,15 +902,15 @@ public class AppService extends HttpServlet {
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
                         StringBuffer sql = new StringBuffer();
-                        sql.append("select b.*,(select dic_name from store_dic_dictionary where dic_code=b.info_status and dic_type='info_status') as statusname,(select g_name from store_goods_info where g_id=b.g_id) as goodsname,(select u_name from store_user_info where u_userid=a.u_userid) as username,a.lastmodify from store_order_info a,store_order_details b where b.g_id in (select g_id from store_goods_info where sup_id = '"+user+"')");
+                        sql.append("SELECT B.*,(SELECT DIC_NAME FROM STORE_DIC_DICTIONARY WHERE DIC_CODE=B.INFO_STATUS AND DIC_TYPE='INFO_STATUS') AS STATUSNAME,(SELECT G_NAME FROM STORE_GOODS_INFO WHERE G_ID=B.G_ID) AS GOODSNAME,(SELECT U_NAME FROM STORE_USER_INFO WHERE U_USERID=A.U_USERID) AS USERNAME,A.LASTMODIFY FROM STORE_ORDER_INFO A,STORE_ORDER_DETAILS B WHERE B.G_ID IN (SELECT G_ID FROM STORE_GOODS_INFO WHERE sup_id = '"+user+"')");
                         if(obj.has("infoid")&& !obj.get("infoid").toString().equals("null") && !StringUtil.isBlank(obj.get("infoid").toString())){
                             sql.append(" and b.info_id like '%"+objs.get("infoid").toString()+"%'");
                         }
                         if(obj.has("startDate")&& !obj.get("startDate").toString().equals("null")&& !StringUtil.isBlank(obj.get("startDate").toString())){
-                            sql.append(" and lastmodify>to_date('"+objs.get("startDate").toString()+"','yyyy-MM-dd')");
+                            sql.append(" and lastmodify>STR_TO_DATE('"+objs.get("startDate").toString()+"','%Y-%M-%D')");
                         }
                         if(obj.has("endDate")&& !obj.get("endDate").toString().equals("null")&& !StringUtil.isBlank(obj.get("endDate").toString())){
-                            sql.append(" and lastmodify<to_date('"+objs.get("endDate").toString()+"','yyyy-MM-dd')");
+                            sql.append(" and lastmodify<STR_TO_DATE('"+objs.get("endDate").toString()+"','%Y-%M-%D')");
                         }
                         if(obj.has("goodname")&& !obj.get("goodname").toString().equals("null")&& !StringUtil.isBlank(obj.get("goodname").toString())){
                             sql.append(" and b.g_id in (select g_id from store_goods_info where g_name like '%"+objs.get("goodname").toString()+"%')");
@@ -893,8 +931,8 @@ public class AppService extends HttpServlet {
                         String infoids=obj.getString("infoids").toString();
                         String infoid[]=infoids.split(",");
                         for(int i=0;i<infoid.length;i++){
-                            String aprovesql = "update store_order_details set info_status=7 where info_id='"+infoid[i]+"'";
-                            String financialsql="insert  into  store_order_expenses (sup_id,o_orderid,exp_id,exp_expenses,exp_Date,exp_Checkid,exp_checkdate) values((select sup_id from store_goods_info where g_id=(select g_id from store_order_details where info_id='"+infoid[i]+"')),'"+infoid[i]+"',sys_guid(),(select info_totalprice from store_order_details where info_id='"+infoid[i]+"'),sysdate,'"+user+"',sysdate)";
+                            String aprovesql = "UPDATE STORE_ORDER_DETAILS SET INFO_STATUS=7 WHERE info_id='"+infoid[i]+"'";
+                            String financialsql="INSERT  INTO  STORE_ORDER_EXPENSES (SUP_ID,O_ORDERID,EXP_ID,EXP_EXPENSES,EXP_DATE,EXP_CHECKID,EXP_CHECKDATE) VALUES((SELECT SUP_ID FROM STORE_GOODS_INFO WHERE G_ID=(SELECT G_ID FROM STORE_ORDER_DETAILS WHERE info_id='"+infoid[i]+"')),'"+infoid[i]+"',sys_guid(),(select info_totalprice from store_order_details where info_id='"+infoid[i]+"'),sysdate,'"+user+"',sysdate)";
                             ui.addAny(getJsonSql("addAnySQL",financialsql));
                             jsonStr=ui.updateAny(getJsonSql("updateAnySQL",aprovesql));
 
@@ -905,12 +943,12 @@ public class AppService extends HttpServlet {
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
                         StringBuffer sql = new StringBuffer();
-                        sql.append("select a.*,(select sup_name from store_sup_supply where sup_id=a.exp_checkid) as checkname from store_order_expenses a where sup_id='"+user+"'");
+                        sql.append("SELECT A.*,(SELECT SUP_NAME FROM STORE_SUP_SUPPLY WHERE SUP_ID=A.EXP_CHECKID) AS CHECKNAME FROM STORE_ORDER_EXPENSES A WHERE sup_id='"+user+"'");
                         if(obj.has("startDate")&& !obj.get("startDate").toString().equals("null")&& !StringUtil.isBlank(obj.get("startDate").toString())){
-                            sql.append(" and exp_date>to_date('"+objs.get("startDate").toString()+"','yyyy-MM-dd')");
+                            sql.append(" and exp_date>STR_TO_DATE('"+objs.get("startDate").toString()+"','%Y-%M-%D')");
                         }
                         if(obj.has("endDate")&& !obj.get("endDate").toString().equals("null")&& !StringUtil.isBlank(obj.get("endDate").toString())){
-                            sql.append(" and exp_date<to_date('"+objs.get("endDate").toString()+"','yyyy-MM-dd')");
+                            sql.append(" and exp_date<STR_TO_DATE('"+objs.get("endDate").toString()+"','%Y-%M-%D')");
                         }
                         jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
                         System.out.println(jsonStr);    //获取list数据
@@ -920,12 +958,12 @@ public class AppService extends HttpServlet {
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
                         StringBuffer sql = new StringBuffer();
-                        sql.append("select * from store_order_income  where sup_id='"+user+"'");
+                        sql.append("SELECT * FROM STORE_ORDER_INCOME  WHERE sup_id='"+user+"'");
                         if(obj.has("startDate")&& !obj.get("startDate").toString().equals("null")&& !StringUtil.isBlank(obj.get("startDate").toString())){
-                            sql.append(" and in_date>to_date('"+objs.get("startDate").toString()+"','yyyy-MM-dd')");
+                            sql.append(" and in_date>STR_TO_DATE('"+objs.get("startDate").toString()+"','%Y-%M-%D')");
                         }
                         if(obj.has("endDate")&& !obj.get("endDate").toString().equals("null")&& !StringUtil.isBlank(obj.get("endDate").toString())){
-                            sql.append(" and in_date<to_date('"+objs.get("endDate").toString()+"','yyyy-MM-dd')");
+                            sql.append(" and in_date<STR_TO_DATE('"+objs.get("endDate").toString()+"','%Y-%M-%D')");
                         }
                         jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
                         System.out.println(jsonStr);    //获取list数据
@@ -935,15 +973,17 @@ public class AppService extends HttpServlet {
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
                         StringBuffer sql = new StringBuffer();
-                        sql.append("select menu_id,menu_name,menu_parentid,menu_code,menu_url,to_char(insertdate,'yyyy-mm-dd') as ins,(select menu_name from store_sup_menu where t.menu_parentid=menu_id) as menu_parent from store_sup_menu t");
-                        if(obj.has("id")){
+                        sql.append("SELECT MENU_ID,MENU_NAME,MENU_PARENTID,MENU_CODE,MENU_URL,DATE_FORMAT(INSERTDATE,'%Y-%M-%D') AS INS,(SELECT MENU_NAME FROM STORE_SUP_MENU WHERE T.MENU_PARENTID=MENU_ID) AS MENU_PARENT FROM STORE_SUP_MENU T");
+                            if(obj.has("id")){
                             sql.append(" where menu_id='"+obj.get("id")+"'");
                         }
                         jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
                         System.out.println(jsonStr);    //获取list数据
                     }
                     if(domain.equals("saveOrUpdateSupMenu")){
-                        //保存或更新页面
+                        //保存或更新页面
+
+
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
                         String id=obj.get("id").toString();
@@ -953,10 +993,10 @@ public class AppService extends HttpServlet {
                         String parentmenu=obj.get("parentmenu").toString();
                         if(obj.get("id").toString().length()!=32){
                             ui = new UserHttpImpl();
-                            String sql = "insert into store_sup_menu(menu_id,menu_name,menu_parentid,menu_code,menu_url) values (sys_guid(),'"+menuname+"','"+parentmenu+"','"+menucode+"','"+menuurl+"')";
+                            String sql = "INSERT INTO STORE_SUP_MENU(MENU_ID,MENU_NAME,MENU_PARENTID,MENU_CODE,MENU_URL) VALUES (sys_guid(),'"+menuname+"','"+parentmenu+"','"+menucode+"','"+menuurl+"')";
                             jsonStr=ui.addAny(getJsonSql("addAnySQL",sql));
                         }else{
-                            String sql="update store_sup_menu set menu_name='"+menuname+"',menu_parentid='"+parentmenu+"',menu_code='"+menucode+"',menu_url='"+menuurl+"' where menu_id='"+id+"' " ;
+                            String sql="UPDATE STORE_SUP_MENU SET menu_name='"+menuname+"',menu_parentid='"+parentmenu+"',menu_code='"+menucode+"',menu_url='"+menuurl+"' where menu_id='"+id+"' " ;
                             jsonStr=ui.updateAny(getJsonSql("updateAnySQL",sql));
                         }
                     }
@@ -965,7 +1005,7 @@ public class AppService extends HttpServlet {
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
                         StringBuffer sql = new StringBuffer();
-                        sql.append("select * from store_supply_type where sup_id='"+user+"'");
+                        sql.append("SELECT * FROM STORE_SUPPLY_TYPE WHERE sup_id='"+user+"'");
                         if(obj.has("id")){
                             String id=obj.get("id").toString();
                             sql.append(" and sup_type_id='"+id+"'");
@@ -983,26 +1023,26 @@ public class AppService extends HttpServlet {
                             StringBuffer sql = new StringBuffer();
                             UUID uuid=UUID.randomUUID();
                             String type_id=uuid.toString().replaceAll("-","").toUpperCase();
-                            sql.append("insert into store_supply_type (sup_type_id,sup_id,sup_type_name) values ('"+type_id+"','"+user+"','"+typeName+"')");
+                            sql.append("INSERT INTO STORE_SUPPLY_TYPE (SUP_TYPE_ID,SUP_ID,SUP_TYPE_NAME) VALUES ('"+type_id+"','"+user+"','"+typeName+"')");
                             jsonStr = ui.addAny(getJsonSql("addAnySQL", sql.toString()));
                             String menuids=obj.get("menuid").toString();
                             String[] menuid=menuids.split(",");
                             for(int i=0;i<menuid.length;i++){
-                                String authsql="insert into store_auth_info (menu_id,sup_type_id) values ('"+menuid[i]+"','"+type_id+"')";
+                                String authsql="INSERT INTO STORE_AUTH_INFO (MENU_ID,SUP_TYPE_ID) VALUES ('"+menuid[i]+"','"+type_id+"')";
                                 ui.addAny(getJsonSql("addAnySQL", authsql.toString()));
                             }
                         }else{
-                            String delsql="delete from store_auth_info where sup_type_id='"+id+"'";
+                            String delsql="DELETE FROM STORE_AUTH_INFO WHERE sup_type_id='"+id+"'";
                             ui.delAny(getJsonSql("delAnySQL",delsql));
                             String menuids=obj.get("menuid").toString();
                             String[] menuid=menuids.split(",");
                             for(int i=0;i<menuid.length;i++){
-                                String authsql="insert into store_auth_info (menu_id,sup_type_id) values ('"+menuid[i]+"','"+id+"')";
+                                String authsql="INSERT INTO STORE_AUTH_INFO (MENU_ID,SUP_TYPE_ID) VALUES ('"+menuid[i]+"','"+id+"')";
                                 ui.addAny(getJsonSql("addAnySQL", authsql.toString()));
                             }
                         }
                         StringBuffer sql = new StringBuffer();
-                        sql.append("select * from store_supply_type where sup_id='"+user+"'");
+                        sql.append("SELECT * FROM STORE_SUPPLY_TYPE WHERE sup_id='"+user+"'");
                         jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
                         System.out.println(jsonStr);    //获取list数据
                     }
@@ -1010,7 +1050,7 @@ public class AppService extends HttpServlet {
                         //获取用户界面
                         ui=new UserHttpImpl();
                         StringBuffer sql = new StringBuffer();
-                        sql.append("select MENU_CODE,MENU_ID,MENU_PARENTID,MENU_NAME,MENU_URL from store_sup_menu where 1=1 and menu_id in (select menu_id from store_auth_info where sup_type_id in (select sup_type_id from store_sup_supply where sup_id='"+user+"'))");
+                        sql.append("SELECT MENU_CODE,MENU_ID,MENU_PARENTID,MENU_NAME,MENU_URL FROM STORE_SUP_MENU WHERE 1=1 AND MENU_ID IN (SELECT MENU_ID FROM STORE_AUTH_INFO WHERE SUP_TYPE_ID IN (SELECT SUP_TYPE_ID FROM STORE_SUP_SUPPLY WHERE sup_id='"+user+"'))");
                         jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
                         System.out.println(jsonStr);
                     }
@@ -1019,7 +1059,7 @@ public class AppService extends HttpServlet {
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
                         StringBuffer sql = new StringBuffer();
-                        sql.append("select MENU_PARENTID,MENU_NAME,MENU_ID,MENU_URL from store_sup_menu where menu_id in (select menu_id from store_auth_info where sup_type_id in (select sup_type_id from store_sup_supply where sup_id='"+user+"'))");
+                        sql.append("SELECT MENU_PARENTID,MENU_NAME,MENU_ID,MENU_URL FROM STORE_SUP_MENU WHERE MENU_ID IN (SELECT MENU_ID FROM STORE_AUTH_INFO WHERE SUP_TYPE_ID IN (SELECT SUP_TYPE_ID FROM STORE_SUP_SUPPLY WHERE sup_id='"+user+"'))");
                         String data = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
 
                         Object[] ac=JsonUtil.getObjectArray(data);
@@ -1051,12 +1091,13 @@ public class AppService extends HttpServlet {
                         System.out.println(sb.toString());
                         jsonStr=sb.toString();
                     }
+
                     if(domain.equals("commentList")){
                         //页面列表
                         ui=new UserHttpImpl();
                         JSONObject obj=JSONObject.fromObject(params);
                         StringBuffer sql = new StringBuffer();
-                        sql.append("select (select g_name from store_goods_info where g_id=t.g_id) as g_name,to_char(t.c_comment) as C_COMMENT,to_char(t.c_insertdate,'yyyy-mm-dd') as c_insertdate,u_name from store_order_comment t join store_order_info o on o.o_orderid= t.o_orderid join store_user_info u on u.u_userid=o.u_userid where 1=1 and g_id in(select g_id from store_goods_info where sup_id='"+user+"')");
+                        sql.append("SELECT (SELECT G_NAME FROM STORE_GOODS_INFO WHERE G_ID=T.G_ID) AS G_NAME,DATE_FORMAT(T.C_COMMENT) AS C_COMMENT,DATE_FORMAT(T.C_INSERTDATE,'%Y-%M-%D') AS C_INSERTDATE,U_NAME FROM STORE_ORDER_COMMENT T JOIN STORE_ORDER_INFO O ON O.O_ORDERID= T.O_ORDERID JOIN STORE_USER_INFO U ON U.U_USERID=O.U_USERID WHERE 1=1 AND G_ID IN(SELECT G_ID FROM STORE_GOODS_INFO WHERE sup_id='"+user+"')");
                         jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
                     }
 

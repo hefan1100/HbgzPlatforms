@@ -1,16 +1,83 @@
 <script type="text/javascript">
+    var filepath;
+    $(function(){
+        gettype("article_type","type");
+    })
+    $("#file-1").fileinput({
+        uploadUrl: '#', // you must set a valid URL here else you will get an error
+        allowedFileExtensions : ['jpg', 'png','gif'],
+        overwriteInitial: false,
+        maxFileSize: 1000,
+        maxFilesNum: 10,
+        //allowedFileTypes: ['image', 'video', 'flash'],
+        slugCallback: function(filename) {
+            filepath=filename;
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+    $("#file-2").fileinput({
+        uploadUrl: '#', // you must set a valid URL here else you will get an error
+        allowedFileExtensions : ['jpg', 'png','gif'],
+        overwriteInitial: false,
+        maxFileSize: 1000,
+        maxFilesNum: 10,
+        //allowedFileTypes: ['image', 'video', 'flash'],
+        slugCallback: function(filename) {
+            filepath=filename;
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+    function performAjaxSubmit1() {
+        var res="";
+        var sampleFile = document.getElementById("file-1").files[0];
+        var formdata = new FormData();
+        formdata.append("sampleFile", sampleFile);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST","/file", true);
+        xhr.send(formdata);
+        xhr.onload = function(e) {
+            if (this.status == 200) {
+                res=this.responseText;
+                performAjaxSubmit2(res)
+            }
+        };
+        return res;
+    }
+    function performAjaxSubmit2(res1) {
+        var sampleFile = document.getElementById("file-2").files[0];
+        var formdata = new FormData();
+        var res="";
+        formdata.append("sampleFile", sampleFile);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST","/file", true);
+        xhr.send(formdata);
+        xhr.onload = function(e) {
+            if (this.status == 200) {
+                res=this.responseText;
+                save(res1,res);
+            }
+        };
+        return res;
+    }
+    function QueryString(val) {
+        var uri = window.location.search;
+        var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
+        return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+    }
+    var title;
+    var id;
 
-    function save() {
+    function save(res1,res2) {
+        var id=QueryString("id");
+        var type=$('#type').val();
+        var title=$('#title').val();
         var content=$('#summernote').summernote('code');
-        var radiotype=$("input[name='radiotype']:checked").val();
-        var msgtype="welcome";
-        var user=QueryString("userid");
-        var id=QueryString("pid");
-        var pic= $('#file51').val();
-        alert(pic);
-        var params = "{\"content\":\""+content+"\",\"radiotype\":\""+radiotype+"\",\"msgtype\":\""+msgtype+"\",\"user\":\""+user+"\",\"id\":\""+id+"\"}";
+        var url=$('#url').val();
+        res1=res1.replace(".","test");
+        res2=res2.replace(".","test");
+        var params = "{\"user\":\""+id+"\",\"type\":\""+type+"\",\"title\":\""+title+"\",\"content\":\""+content+"\",\"url\":\""+url+"\",\"coverpic\":\""+res1+"\",\"logopic\":\""+res2+"\"}";
         $.ajax({
-            url:'/serv?domain=saveMsgs&params='+encodeURIComponent(params),
+            url:'/manage?domain=saveAdvert&params='+encodeURIComponent(params),
             type:'post',
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             dataType:'html',
@@ -22,6 +89,16 @@
                     top.window.location ="/pageWeb/sign-in.html";
                 }
 
+                alert("添加成功！")
+                changeTarget('/pageStore/enjoyLifeMenu/advertList.html');
+                $.each(JSON.parse(resultJSON), function (i, enjoyList) {
+                    var status= "";
+                    if(enjoytList["STATUS"]=="1"){
+                        status="邮商联盟";
+                    } else{
+                        status="广告区";
+                    }
+                });
             }
         });
     }
@@ -33,8 +110,14 @@
             <div class="tab-pane active in" id="home">
                 <form id="tab">
                     <div class="form-group">
+                        <label>请选择上传区域：</label>
+                        <select name="请选择上传区域" id="type">
+
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label>广告标题:</label>
-                        <input class="form-control"  id="adtitle" name="adtitle" style="width:80%">
+                        <input class="form-control"  id="title" name="title" style="width:80%">
                     </div>
                     <div class="form-group">
                         <label>广告内容:</label>
@@ -49,21 +132,40 @@
                                 });
                             });
                         </script>
+                        <div class="form-group">
+                            <label>广告链接:</label>
+                            <input class="form-control"  id="url" name="title" style="width:80%">
+                        </div>
 
-                        <img id="imgView" src=""  alt="" height="170" /><br>
-                        上传大图<input type="file" name="file5" id="file5" onchange="PreviewImage(this,'imgView','divNewPreview')"/>
-                        <div id="divNewPreview"></div>
+                        <!-- <img id="imgView" src=""  alt="" height="170" /><br>
+                       上传大图<input type="file" name="file5" id="file5" onchange="PreviewImage(this,'imgView','divNewPreview')"/>
+                       <div id="divNewPreview"></div>
 
-                        <img id="imgView1" src=""  alt="" height="170" /><br>
-                        上传小图<input type="file" name="file51" id="file51" onchange="PreviewImage(this,'imgView1','divNewPreview')"/>
-                        <div id="divNewPreview1"></div>
+                       <img id="imgView1" src=""  alt="" height="170" /><br>
+                       上传小图<input type="file" name="file51" id="file51" onchange="PreviewImage(this,'imgView1','divNewPreview')"/>
+                       <div id="divNewPreview1"></div>-->
+                    <div class="form-group">
+                        <div class="form-group1" style="float:left">
+                            <label>上传封面图片：</label>
+                            <form enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <input id="file-1" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form-group2" style="float:right">
+                            <label>上传logo图片：</label>
+                            <form enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <input id="file-2" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">
+                                </div>
+                            </form>
+                        </div>
                     </div>
-
+                   </div>
                 </form>
             </div>
-
             <div class="tab-pane fade" id="profile">
-
                 <form id="tab2">
                     <div class="form-group">
                         <label>New Password</label>
@@ -75,9 +177,8 @@
                 </form>
             </div>
         </div>
-
         <div class="btn-toolbar list-toolbar">
-            <button class="btn btn-primary" onclick="save();"><i class="fa fa-save"></i> 保存</button>
+            <button class="btn btn-primary" onclick="performAjaxSubmit1();"><i class="fa fa-save"></i> 保存</button>
         </div>
     </div>
 </div>

@@ -1,0 +1,27 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>JavaScript获取客户端IP[利用新浪接口]</title>
+    <script>
+        var x=document.getElementById("demo");
+        function getLocation(){
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(showPosition);
+            }else{
+                x.innerHTML="Geolocation is not supported by this browser.";
+            }
+        }
+        function showPosition(position){
+            x.innerHTML="Latitude: " + position.coords.latitude + "<br />Longitude: " + position.coords.longitude;
+        }
+    </script>
+</head>
+<body>
+<script src="/lib/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="/lib/jQuery-Knob/js/jquery.knob.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://counter.sina.com.cn/ip/" charset="utf-8"></script>       <!--获取接口数据，注意charset -->
+
+<p id="demo">点击这个按钮，获得您的坐标：</p>
+<button onclick="getLocation()">试一下</button>
+</body>
+</html>

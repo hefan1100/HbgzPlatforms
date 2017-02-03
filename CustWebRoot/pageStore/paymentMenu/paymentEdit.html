@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    function QueryString(val) {
+    function GetQueryString(val) {
         var uri = window.location.search;
         var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
         return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
@@ -14,7 +14,7 @@
             id=$("#hiddenid").val()
         }
 
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var params = "{\"user\":\""+user+"\",\"SUP_ID\":\""+id+"\"}";
         $.ajax({
             url:'/serv?domain=paymentList&params='+encodeURIComponent(params),
@@ -32,7 +32,7 @@
     })
 
     function save() {
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var SUP_NAME=$('#SUP_NAME').val();
         var SUP_TYPE_ID=$('#SUP_TYPE_ID').val();
         var params = "{\"user\":\""+user+"\",\"SUP_NAME\":\""+SUP_NAME+"\",\"SUP_TYPE_ID\":\""+SUP_TYPE_ID+"\":\"saveOrUpdatePayment\"}";

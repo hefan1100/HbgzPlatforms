@@ -93,18 +93,18 @@
 <script src="../lib/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript">
     $("[rel=tooltip]").tooltip();
-    function QueryString(val) {
+    function GetQueryString(val) {
         var uri = window.location.search;
         var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
         return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
     }
 
     $(function() {
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         $('.demo-cancel-click').click(function(){return false;});
         $('#btn_next').click(function(){
-            //     var username=QueryString("username");
-            //     var password=QueryString("password");
+            //     var username=GetQueryString("username");
+            //     var password=GetQueryString("password");
             var username=$("#form_username").val();
             var password=$("#form_password").val();
             var params = "{\"user\":\""+user+"\",\"username\":\""+username+"\",\"password\":\""+password+"\"}";

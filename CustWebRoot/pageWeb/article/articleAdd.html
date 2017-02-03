@@ -2,7 +2,7 @@
 
     function save() {
         var content=$('#summernote').summernote('code');
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var category_id=$("#articleclassify").val();
         var title=$("#category_title").val();
         var key=$("#article_key").val();

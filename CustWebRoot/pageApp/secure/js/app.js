@@ -1,24 +1,53 @@
-// Ionic Starter App
+angular.module("indexApp", ["ionic","ui.router","ionic-datepicker","indexApp.controllers","indexApp.services"])
+    .config(function ($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+        $ionicConfigProvider.platform.ios.tabs.style('standard');
+        $ionicConfigProvider.platform.ios.tabs.position('bottom');
+        $ionicConfigProvider.platform.android.tabs.style('standard');
+        $ionicConfigProvider.platform.android.tabs.position('bottom');
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        $ionicConfigProvider.platform.ios.navBar.alignTitle('center');
+        $ionicConfigProvider.platform.android.navBar.alignTitle('center');
 
-      // Don't remove this line unless you know what you are doing. It stops the viewport
-      // from snapping when text inputs are focused. Ionic handles this internally for
-      // a much nicer keyboard experience.
-      cordova.plugins.Keyboard.disableScroll(true);
-    }
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
-    }
-  });
-})
-angular.module('myApp', ['ionic-citypicker']);
+        $ionicConfigProvider.platform.ios.backButton.previousTitleText('').icon('ion-ios-arrow-thin-left');
+        $ionicConfigProvider.platform.android.backButton.previousTitleText('').icon('ion-android-arrow-back');
+
+        $ionicConfigProvider.platform.ios.views.transition('ios');
+        $ionicConfigProvider.platform.android.views.transition('android');
+
+
+
+        $stateProvider
+            .state('main', {
+                url:"/main",
+                cache:false,
+                templateUrl:"secureIndex.html",
+                controller: 'mainCtrl'
+            })
+            .state('customereg', {
+                url:"/customereg",
+                cache:false,
+                templateUrl:"customReg.html",
+                controller: 'RegCtrl'
+            })
+            .state('managerlist', {
+                url:"/managerlist",
+                cache:false,
+                templateUrl:"managerList.html",
+                controller: 'ManCusCtrl'
+            })
+            .state('salesreg', {
+                url:"/salesreg",
+                cache:false,
+                templateUrl:"salesRegister.html",
+                controller: 'RegCtrl'
+            })
+            .state('secureDetail', {
+                url:'/secureDetail?sdid',
+                cache:false,
+                templateUrl: 'secureDetail.html',
+                controller: 'SecureDetailCtrl'
+            })
+        ;
+        //两个模块控制器不能一样，或者控制器有问题
+        $urlRouterProvider.otherwise("/main");
+    });

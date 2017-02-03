@@ -1,6 +1,4 @@
 <script type="text/javascript">
-    $('#pagetitle')[0].innerHTML="菜单列表";
-    $('#path')[0].innerHTML="菜单列表";
     var data="";
     function QueryStrings(uri,val) {
         var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
@@ -26,7 +24,7 @@
 
     function supMenuList(){
         $("#retable").empty();
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var supMenuName=$("#supMenuName").val();
         var page=1;
         var params = "{\"user\":\""+user+"\",\"page\":\""+page+"\",\"supMenuName\":\""+supMenuName+"\"}";
@@ -46,10 +44,7 @@
                 var reg=new RegExp("null","g");
                 var a =resultJSON.replace(reg,"\" \"");
                 $.each(JSON.parse(a), function (i, reportList) {
-                    if(i==10){
-                       alert(10);
-                    }
-                    $("#retable").append("<tr><td>"+reportList["MENU_NAME"]+"</td><td>"+reportList["MENU_CODE"]+"</td><td>"+reportList["MENU_URL"]+"</td><td>"+reportList["MENU_PARENT"]+"</td><td><a onclick=\"changeTargets('/pageStore/authorityMenu/supMenuEdit.html?user="+user+"&title="+reportList["MENU_NAME"]+"&id="+reportList["MENU_ID"]+"')\"><i class=\"fa fa-pencil\"></i></a><a href=\"#myModal\" role=\"button\" data-toggle=\"modal\"><i class=\"fa fa-trash-o\" onclick='del('"+reportList["MENU_ID"]+"')'></i></a></td></tr>");
+                    $("#retable").append("<tr><td>"+reportList["MENU_NAME"]+"</td><td>"+reportList["MENU_CODE"]+"</td><td>"+reportList["MENU_URL"]+"</td><td>"+reportList["MENU_PARENT"]+"</td><td><a onclick=\"changeTargets('/pageStore/authorityMenu/supMenuEdit.html?user="+user+"&title="+reportList["MENU_NAME"]+"&id="+reportList["MENU_ID"]+"')\"><i class=\"fa fa-pencil\"></i></a><a href=\"#myModal\" role=\"button\" data-toggle=\"modal\">&nbsp;&nbsp;<i class=\"fa fa-trash-o\" onclick='del('"+reportList["MENU_ID"]+"')'></i></a></td></tr>");
                 });
 
             }
@@ -61,15 +56,6 @@
 </script>
 <div id="resJson"></div>
 <button onclick="changeTargets('/pageStore/authorityMenu/supMenuEdit.html')"  class="btn btn-primary"><i class="fa fa-plus"></i>新增页面</button>
-     <table style="border-collapse:separate; border-spacing:0px 5px;">
-         <tr>
-             <td>商品名称：</td>
-             <td><input type="text" id="goodname" name="goodname" style="width:80%" /></td>
-             <td  align="center">
-                 <button onclick="getOrderDetailList()"   class="btn btn-primary">查询</button>
-             </td>
-         </tr>
-     </table>
 <script type="text/javascript">
     $('.form_date').datetimepicker({
         language:  'zh-CN',

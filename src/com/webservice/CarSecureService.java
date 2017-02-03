@@ -17,7 +17,7 @@ import java.util.UUID;
 
 /**
  * Created by swt on 2015/10/13.
- * sql处理方式：
+ * sql处理方式：
 
 
 
@@ -42,6 +42,9 @@ public class CarSecureService extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin","*");
+        response.setHeader("Access-Control-Allow-Methods","POST");
+        response.setHeader("Access-Control-Max-Age","60");
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
         String domain = request.getParameter("domain") == null ? "" : request.getParameter("domain");
@@ -49,7 +52,90 @@ public class CarSecureService extends HttpServlet {
         HttpSession session=request.getSession();
         String params = new String((request.getParameter("params") == null ? "" : request.getParameter("params")));
         String jsonStr = "";
-        JSONObject objs = JSONObject.fromObject(params);
+        if(domain.equals("getSecure")){
+            JSONObject obj = JSONObject.fromObject(params);
+            obj.get("id");
+            String sql="select id,content,url,logopic,title,coverpic from wx_article where type=8";
+            ui = new UserHttpImpl();
+            jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
+        }
+        if(domain.equals("getSecureDetail")){
+            JSONObject obj = JSONObject.fromObject(params);
+            String sdid=obj.get("sdid").toString();
+            String sql="select id,content,url,logopic,title,coverpic from wx_article where id='"+sdid+"'";
+            ui = new UserHttpImpl();
+            jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
+        }
+        if(domain.equals("SalesReg")){
+            JSONObject obj = JSONObject.fromObject(params);
+            String name =obj.get("name").toString();
+            String province =obj.get("province").toString();
+            String city =obj.get("city").toString();
+            String openid=obj.get("openid").toString();
+            UUID uid=UUID.randomUUID();
+            String u_id=uid.toString().replaceAll("-","");
+            String picurl="/upload/"+obj.get("picurl").toString();
+            //先生成一个用户
+            String sql="insert INTO store_user_info VALUES('"+u_id+"','','','"+openid+"','')";
+            //再给用户填充信息
+            UUID did=UUID.randomUUID();
+            String d_id=did.toString().replaceAll("-","");
+            String insertcus="insert INTO store_user_details values('"+d_id+"','"+u_id+"','"+name+"','','','"+province+"','"+city+"','','','','','','','','',sysdate(),'','1','"+picurl+"')";
+            ui = new UserHttpImpl();
+            jsonStr = ui.addAny(getJsonSql("addAnySQL",sql));
+            if(jsonStr.equals("true")){
+                ui.addAny(getJsonSql("addAnySQL",insertcus));
+            }
+            System.out.println(jsonStr);
+
+        }
+        if(domain.equals("cusReg")){
+            JSONObject obj = JSONObject.fromObject(params);
+            String name =obj.get("name").toString();
+            String province =obj.get("province").toString();
+            String city =obj.get("city").toString();
+            String vin =obj.get("vin").toString();
+            String platenum =obj.get("platenum").toString();
+            String enginenum =obj.get("enginenum").toString();
+            String startdate =obj.get("startDate").toString();
+            String enddate =obj.get("endDate").toString();
+            String openid=obj.get("openid").toString();
+            UUID uid=UUID.randomUUID();
+            String u_id=uid.toString().replaceAll("-","");
+            //先生成一个用户
+            String sql="insert INTO store_user_info VALUES('"+u_id+"','','','"+openid+"','')";
+            //再给用户填充信息
+            UUID did=UUID.randomUUID();
+            String d_id=did.toString().replaceAll("-","");
+            String insertcus="insert INTO store_user_details values('"+d_id+"','"+u_id+"','"+name+"','','','"+province+"','"+city+"','','','"+platenum+"','"+vin+"','','"+enginenum+"','"+startdate+"','"+enddate+"',sysdate(),'','2','')";
+            ui = new UserHttpImpl();
+            jsonStr = ui.addAny(getJsonSql("addAnySQL",sql));
+            if(jsonStr.equals("true")){
+                ui.addAny(getJsonSql("addAnySQL",insertcus));
+            }
+            System.out.println(jsonStr);
+        }
+        if(domain.equals("getMangerList")){
+            JSONObject obj = JSONObject.fromObject(params);
+            String openid=obj.get("openid").toString();
+            ui = new UserHttpImpl();
+            String sql="SELECT * FROM STORE_USER_DETAILS WHERE U_USERID IN (SELECT MANAGER_ID FROM STORE_USER_DETAILS WHERE U_USERID IN (SELECT U_USERID FROM STORE_USER_INFO  WHERE OPENID='"+openid+"'))";
+            jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
+        }
+        if(domain.equals("CheckReg")){
+            JSONObject obj = JSONObject.fromObject(params);
+            String openid=obj.get("openid").toString();
+            String type=obj.get("type").toString();
+            ui = new UserHttpImpl();
+            String sql="SELECT * FROM STORE_USER_DETAILS WHERE U_USERID IN (SELECT U_USERID FROM STORE_USER_INFO WHERE OPENID='"+openid+"' AND D_TYPE='"+type+"')";
+            jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
+        }
+        if(domain.equals("branchPosition")){
+            ui = new UserHttpImpl();
+            String sql = "SELECT * FROM BRANCH_POSITION";
+            jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
+
+        }
 
         if(domain.equals("getDic")){
             JSONObject obj = JSONObject.fromObject(params);

@@ -1,0 +1,36 @@
+<ion-view>
+
+ <ion-content style="background-color: #dcdcdc;">
+     <ion-list >
+              <ion-item style="height: 290px;width: 100%; "   ng-repeat="x in records">
+
+                      <div  style="width: 100%;">
+                            <a style="height:80px;width:200px;float: right;background-image: url(img/dialog_box@2x.png);background-size: 100% 100%;background-repeat: no-repeat;" >
+                               {{x.s}}
+                            </a>
+                      </div>
+                      <div  style="width: 100%;">
+                            <a style="height:80px;width:200px;float: left;background-image: url(img/dialog_kf@2x.png);background-size: 100%;background-repeat: no-repeat;">
+                                {{x.r}}
+                            </a>
+                      </div>
+
+
+              </ion-item>
+
+          </ion-list>
+
+
+    </ion-content>
+
+    <ion-footer-bar>
+        <div class="row row-wrap row-no-padding">
+            <div class="col col-80 col-center">
+                 <input type="text" ng-model="searchtext" style="width: 100%;">
+            </div>
+            <div class="col col-center">
+                <button class="button" ng-click="send()">Send</button>
+            </div>
+       </div>
+    </ion-footer-bar>
+</ion-view>

@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    function QueryString(val) {
+    function GetQueryString(val) {
         var uri = window.location.search;
         var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
         return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
@@ -15,7 +15,7 @@
         }
         gettype("goods_type","g_type");
         gettype("goods_status","g_status");
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var params = "{\"user\":\""+user+"\",\"g_id\":\""+id+"\",\"page\":1}";
         $.ajax({
             url:'/manage?domain=goodsList&params='+encodeURIComponent(params),
@@ -36,7 +36,7 @@
     })
 
     function save() {
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var g_name=$('#g_name').val();
         var g_price=$('#g_price').val();
         var g_amount=$('#g_amount').val();

@@ -42,6 +42,7 @@ public class FileUploader extends HttpServlet {
                     String rootpath = request.getRealPath(request.getRequestURI());
                     rootpath = rootpath.substring(0, rootpath.lastIndexOf("file"));
                     String serverpath = rootpath + "upload/"+filename+"."+tt;
+                    ajaxUpdateResult=filename+"."+tt;
                     System.out.println(serverpath);
                     File f=new File(serverpath);
                     //保存
@@ -50,8 +51,6 @@ public class FileUploader extends HttpServlet {
                     InputStream content = item.getInputStream();
                     response.setContentType("text/plain");
                     response.setCharacterEncoding("UTF-8");
-                    System.out.println(Streams.asString(content));
-                    ajaxUpdateResult += "File " + fileName + " is successfully uploaded\n\r";
                 }
             }
         } catch (FileUploadException e) {

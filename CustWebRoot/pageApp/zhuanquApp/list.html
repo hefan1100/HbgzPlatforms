@@ -1,0 +1,32 @@
+<ion-view>
+    <ion-header-bar class="bar-positive">
+
+        <h1 class="title">{{citytitle}}</h1>
+
+    </ion-header-bar>
+  <ion-content style="background-color:#ffffff; ">
+
+       <div ng-style="imgheaderStyle">
+          <img src="{{imginfo.introducepic}}" ng-style="imgheaderStyle">
+       </div>
+        <div ng-style="linkStyle" class="row row-no-padding" ng-click="doLink()">
+            <div class="col col-center" style="text-align: center;">
+                <a style="display: inline;margin:0 auto;">积分资讯</a>
+            </div>
+        </div>
+       <ion-list style="padding: 0px;">
+           <ion-item ng-style="itemStyle" ng-repeat="i in articlelist" ng-click="goDetail(i.ID)">
+               <div class="row row-wrap row-no-padding" style="height:100%;padding: 0px;">
+                   <div class="col col-34 col-center" style="text-align: center;height:100%;">
+                       <img src="{{i.LOGOPIC}}" style="display: inline;height:80%;width:80%;">
+                   </div>
+                   <div class="col col-center" style="text-align: center;height:100%;">
+                       <div style="white-space:normal;width: 100%;text-align: left;font-size: 1em;">{{i.CONTENT}}
+                       </div>
+                   </div>
+               </div>
+           </ion-item>
+
+        </ion-list>
+    </ion-content>
+</ion-view>

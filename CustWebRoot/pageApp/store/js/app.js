@@ -153,6 +153,13 @@ angular.module("indexApp", ["ionic","ui.router","indexApp.controllers","indexApp
                 templateUrl:"evaluate.html",
                 controller: 'evaluateCtrl'
             })
+
+            .state('addresslist', {
+                url:"/addresslist",
+                cache:false,
+                templateUrl:"addressadminister.html",
+                controller: 'addressadministerCtrl'
+            })
         ;
         //两个模块控制器不能一样，或者控制器有问题
         $urlRouterProvider.otherwise("/tab/main");

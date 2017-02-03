@@ -1,0 +1,39 @@
+<ion-view>
+<ion-content>
+       <div class="list">
+           <label class="item item-input" ng-style="itemStyle">
+               <span class="input-label">姓名：</span>
+               <input type="text" ng-model="form.name">
+           </label>
+
+           <label class="item item-input" ng-style="itemStyle">
+               <span class="input-label">性别：</span>
+               <input type="text" ng-model="form.sex">
+           </label>
+
+           <label class="item item-input" ng-style="itemStyle">
+               <span class="input-label">联系方式：</span>
+               <input type="text" ng-model="form.phonenumber">
+           </label>
+
+           <label class="item item-input" ng-style="itemStyle">
+               <span class="input-label">订单号：</span>
+               <input type="text" ng-model="form.ordernumber">
+           </label>
+
+           <label class="item item-input" ng-style="itemContentStyle">
+               <span class="input-label">投诉内容：</span>
+               <textarea placeholder="请输入您的投诉内容" ng-model="form.advisecontent"></textarea>
+           </label>
+
+
+       </div>
+
+    <div ng-style="itemButtonStyle" class="row row-wrap row-no-padding">
+        <div class="col col-center" style="text-align: center;height: 100%;">
+            <button class="button button-balanced" ng-click="submitInfo()" style="width: 80%;height: 100%;display: inline;margin: 0 auto;">提交信息</button>
+        </div>
+    </div>
+
+</ion-content>
+</ion-view>

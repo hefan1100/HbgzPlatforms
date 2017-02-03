@@ -14,6 +14,7 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,u
     ser-scalable=no,width=device-width,height=device-height">
     <link rel="stylesheet" type="text/css" href="../../lib/ionic/css/ionic.min.css">
+
  <!--   <script src="../lib/jquery-1.11.1.min.js"></script>   -->
 
     <title>湖北邮政微商城</title>
@@ -25,9 +26,9 @@
             height:100%;
         }
     </style>
-
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>         <!--      JSSDK引入文件           -->
     <script src="../../lib/ionic/js/ionic.bundle.min.js"></script>
-
+   <script src="../../lib/sql/sql.js"></script>
 
     <script type="text/javascript">
             var s=Math.random()*100;
@@ -39,7 +40,7 @@
 </head>
 <body ng-app="indexApp">
 
-<ion-nav-bar  no-tap-scroll="false" class="bar-dark">
+<ion-nav-bar  no-tap-scroll="false" class="bar-dark" id="nav">
 
 </ion-nav-bar>
 <ion-nav-view></ion-nav-view>        <!--试验一下-->

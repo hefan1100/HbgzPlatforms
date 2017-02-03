@@ -7,7 +7,7 @@ angular.module("indexApp.services", [])
         return {
             getCount: function getCount(userId){
                 var deferred = $q.defer();
-                var url = 'http://192.168.15.17:8118/service?domain=queryAllCount&userId='+userId;
+                var url = 'http://192.168.15.20:8118/service?domain=queryAllCount&userId='+userId;
                 $http.post(url).success(function (response) {
                     deferred.resolve(response);
                 }).error(function (data) {
@@ -22,7 +22,7 @@ angular.module("indexApp.services", [])
             },
             getList: function getList(domain,userId){
                 var deferred = $q.defer();
-                var url = 'http://192.168.15.17:8118/service?domain='+domain+'&userId='+userId;
+                var url = 'http://192.168.15.20:8118/service?domain='+domain+'&userId='+userId;
                 $http.post(url).success(function (response) {
                     var resultJson = response;
                     if(resultJson.toString().trim() == 'null') {
@@ -46,7 +46,7 @@ angular.module("indexApp.services", [])
             },
             getListByDomain: function getListByDomain(domain,uid){
                 var deferred = $q.defer();
-                var url = 'http://192.168.15.17:8080/store?domain='+domain;
+                var url = 'http://192.168.15.20:8080/store?domain='+domain;
                 if(uid!=null)
                      url=url+"&uid="+uid;
                 $ionicLoading.show({
@@ -82,7 +82,7 @@ angular.module("indexApp.services", [])
             },
             getcartList: function getcartList(domain){
                 var deferred = $q.defer();
-                var url = 'http://192.168.15.17:8080/store?domain='+domain;
+                var url = 'http://192.168.15.20:8080/store?domain='+domain;
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
@@ -125,7 +125,7 @@ angular.module("indexApp.services", [])
         return {
             getList: function getList(domain,demdId){
                 var deferred = $q.defer();
-                var url = 'http://192.168.15.17:8118/service?domain='+domain+'&demdId='+demdId;
+                var url = 'http://192.168.15.20:8118/service?domain='+domain+'&demdId='+demdId;
                 $http.post(url).success(function (response) {
                     var resultJson = response;
                     var array = [];
@@ -145,7 +145,7 @@ angular.module("indexApp.services", [])
                 var deferred = $q.defer();
                 var JName = { "queryBidInfoDetail":"bid_info","queryBidMoneyDetail":"bid_money_info","queryCttInfoDetail":"ctt_info","queryPurcConDetail":"purc_order_info","queryStoCkDetail":"sto_ck_info","queryIndecDetail":"inc_rec_billing","queryInvAppDetail":"invoice_apply_info","queryPayAppDetail":"pay_apply_info" };
                 var DName = eval('JName.'+name);
-                var url = 'http://192.168.15.17:8118/service?domain=queryWorkRel&name='+DName+'&demdId='+demdId;
+                var url = 'http://192.168.15.20:8118/service?domain=queryWorkRel&name='+DName+'&demdId='+demdId;
                 $http.post(url).success(function (response) {
                     var resultJson = response;//return like {"WORKFLOW_ID":2140,"STATE":"C0C","NODE_DOMAIN":"bid_info","OBJE_ID":122,"WORKFLOW_REL_ID":9581}
                     deferred.resolve(resultJson);
@@ -161,7 +161,7 @@ angular.module("indexApp.services", [])
             },
             getWorkList: function getWorkList(demdId){
                 var deferred = $q.defer();
-                var url = 'http://192.168.15.17:8118/service?domain=queryWorkDetail&demdId='+demdId;
+                var url = 'http://192.168.15.20:8118/service?domain=queryWorkDetail&demdId='+demdId;
                 $http.post(url).success(function (response) {
                     var resultJson = response;//return like [{"ACTION":"C0W-C0C","TARG_USER_ID":"232","CURR_NODE_ID":"node_1","POINTER":null,"STATE_DATE":"2015-12-14 16:23:04","REMARKS":"同意！","WORKFLOW_LOG_ID":25901,"DEAL_USER_ID":"232","DEAL_USER_NAME":"陈少蓉","LAST_NODE_ID":null,"TARG_USER_NAME":"陈少蓉","WORKFLOW_REL_ID":9581}]
                     deferred.resolve(resultJson);
@@ -177,7 +177,7 @@ angular.module("indexApp.services", [])
             },
             getCurrentWork: function getCurrentWork(name,demdId){
                 var deferred = $q.defer();
-                var url = 'http://192.168.15.17:8118/service?domain=queryCurWorkDetail&name=' + name + '&demdId=' + demdId;
+                var url = 'http://192.168.15.20:8118/service?domain=queryCurWorkDetail&name=' + name + '&demdId=' + demdId;
                 $http.post(url).success(function (response) {
                     var resultJson = response;//return like {"ACTION":null,"TARG_USER_ID":"255","CURR_NODE_ID":"node_2","POINTER":"P","STATE_DATE":null,"REMARKS":null,"WORKFLOW_LOG_ID":25902,"DEAL_USER_ID":null,"DEAL_USER_NAME":null,"LAST_NODE_ID":"node_1","TARG_USER_NAME":"汪振华","WORKFLOW_REL_ID":9581}
                     deferred.resolve(resultJson);
@@ -195,7 +195,7 @@ angular.module("indexApp.services", [])
                 var deferred = $q.defer();
                 var JName = { "queryBidInfoDetail":"bid_info","queryBidMoneyDetail":"bid_money_info","queryCttInfoDetail":"ctt_info","queryPurcConDetail":"purc_order_info","queryStoCkDetail":"sto_ck_info","queryIncRecDetail":"inc_rec_billing","queryInvAppDetail":"invoice_apply_info","queryPayAppDetail":"pay_apply_info" };
                 var DName = eval('JName.'+name);
-                var url = 'http://192.168.15.17:8118/service?domain=queryNextOp&name='+DName+'&lanId='+lanId+'&userId='+currNodeid+'&demdId='+workLogId;
+                var url = 'http://192.168.15.20:8118/service?domain=queryNextOp&name='+DName+'&lanId='+lanId+'&userId='+currNodeid+'&demdId='+workLogId;
                 alert(url)
                 $http.post(url).success(function (response) {
                     var resultJson = response;//return like {"CONTACT":"18907181688","USER_ID":613,"USER_NAME":"闵春林"}
@@ -214,7 +214,7 @@ angular.module("indexApp.services", [])
                 var deferred = $q.defer();
                 var JName = { "queryBidInfoDetail":"bid_info","queryBidMoneyDetail":"bid_money_info","queryCttInfoDetail":"ctt_info","queryPurcConDetail":"purc_order_info","queryStoCkDetail":"sto_ck_info","queryIncRecDetail":"inc_rec_billing","queryInvAppDetail":"invoice_apply_info","queryPayAppDetail":"pay_apply_info" };
                 var DName = eval('JName.'+doWhat);
-                var url = 'http://192.168.15.17:8118/service?domain=doWork&state=' + state + '&userId=' + userId + '&currNodeId=' + currNodeId + '&workLogId=' + workLogId + '&lastNodeId=' + lastNodeId + '&name=' + DName + '&demdId=' + doId + '&lanId=' + lanId + '&yornToStart=' + yornToStart + '&workRelId=' + workRelId + '&remarks=' + remarks + '&yornSms=' + yornSms;
+                var url = 'http://192.168.15.20:8118/service?domain=doWork&state=' + state + '&userId=' + userId + '&currNodeId=' + currNodeId + '&workLogId=' + workLogId + '&lastNodeId=' + lastNodeId + '&name=' + DName + '&demdId=' + doId + '&lanId=' + lanId + '&yornToStart=' + yornToStart + '&workRelId=' + workRelId + '&remarks=' + remarks + '&yornSms=' + yornSms;
                 $http.post(url).success(function (response) {
                     var resultJson = response;//return like
                     deferred.resolve(resultJson);
@@ -257,7 +257,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=doLogin&username='+username+'&password='+password;
+                var url = 'http://192.168.15.20:8080/store?domain=doLogin&username='+username+'&password='+password;
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
 
@@ -278,7 +278,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=getCategorylist&dicid='+dicid;
+                var url = 'http://192.168.15.20:8080/store?domain=getCategorylist&dicid='+dicid;
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
                     var resultJson = response;
@@ -303,7 +303,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=getMain';
+                var url = 'http://192.168.15.20:8080/store?domain=getMain';
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
 
@@ -336,7 +336,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=getGoodslist&clarifyId='+clarifyId+'&startpage='+startpage+'&endpage='+curpage;
+                var url = 'http://192.168.15.20:8080/store?domain=getGoodslist&clarifyId='+clarifyId+'&startpage='+startpage+'&endpage='+curpage;
                 if(param!=null)
                     url=url+"&orderparam="+param;
                 $http.post(url).success(function (response) {
@@ -375,7 +375,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=addCart&gid='+gid;
+                var url = 'http://192.168.15.20:8080/store?domain=addCart&gid='+gid;
 
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
@@ -408,7 +408,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=addCartNumber&gid='+gid;
+                var url = 'http://192.168.15.20:8080/store?domain=addCartNumber&gid='+gid;
 
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
@@ -442,7 +442,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=minusCartNumber&gid='+gid;
+                var url = 'http://192.168.15.20:8080/store?domain=minusCartNumber&gid='+gid;
 
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
@@ -476,7 +476,7 @@ angular.module("indexApp.services", [])
               $ionicLoading.show({
                   template: 'Loading...'
               });
-              var url = 'http://192.168.15.17:8080/store?domain=delCart&gid='+gid;
+              var url = 'http://192.168.15.20:8080/store?domain=delCart&gid='+gid;
 
               $http.post(url).success(function (response) {
                   $ionicLoading.hide();
@@ -513,7 +513,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=getGoodsdetail&gid='+gid;
+                var url = 'http://192.168.15.20:8080/store?domain=getGoodsdetail&gid='+gid;
 //                if(param!=null)
 //                    url=url+"&orderparam="+param;
                 $http.post(url).success(function (response) {
@@ -542,7 +542,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=acquireConfirmOrderInfo&idlist='+cartidlist;
+                var url = 'http://192.168.15.20:8080/store?domain=acquireConfirmOrderInfo&idlist='+cartidlist;
 //                if(param!=null)
 //                    url=url+"&orderparam="+param;
                 $http.post(url).success(function (response) {
@@ -590,10 +590,12 @@ angular.module("indexApp.services", [])
         };
     })
     //优惠券
+
     .factory('DiscountFactory', function($http, $q,$ionicPopup,$ionicLoading){
 
         return {
             //之间的传值，优惠券，优惠券列表和确认订单列表之间的传值
+
             discount:null,
             //把所有购物车的id用''括起来拼接成字符串传到后台去
             setCoupon:function setCoupon(coupon)
@@ -610,7 +612,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=getDiscountByUser';
+                var url = 'http://192.168.15.20:8080/store?domain=getDiscountByUser';
                 if(status!=null)
                      status=status+'&status='+status;
 //                if(param!=null)
@@ -701,6 +703,7 @@ angular.module("indexApp.services", [])
 
         return {
             //生成为支付订单
+
             orderprice:null,//实际付的金额
             orderid:null,   //orderid ID        正在支付的订单id,金额
             detailorderid:null,     //当前进入订单详情的orderid
@@ -728,7 +731,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=produceNotPayOrder';
+                var url = 'http://192.168.15.20:8080/store?domain=produceNotPayOrder';
                 if(cartidlist!=null)
                     url=url+"&cartidlist="+cartidlist;
                 if(cartallprice!=null)
@@ -779,12 +782,13 @@ angular.module("indexApp.services", [])
 
             },
             //改变订单状态
+
             getPayOrderByStatus:function getPayOrderByStatus(orderstatus){
                 var deferred = $q.defer();
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=getPayOrderByStatus';
+                var url = 'http://192.168.15.20:8080/store?domain=getPayOrderByStatus';
                 if(orderstatus!=null)
                      url=url+"&orderstatus="+orderstatus;
                     $http.post(url).success(function (response) {
@@ -823,10 +827,12 @@ angular.module("indexApp.services", [])
 
             },
            //改变订单状态
+
             /**
              *
              * @param O_ORDERID             订单ID
              * @param orderstatus           新的状态
+
              * @param allprice              需要付款总价参数
              * @return {*}
              */
@@ -835,7 +841,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=modifyPayOrder';
+                var url = 'http://192.168.15.20:8080/store?domain=modifyPayOrder';
                 if(O_ORDERID==null||orderstatus==null)
                 {
                     alert("系统错误");
@@ -881,7 +887,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.17:8080/store?domain=getOrderDetailById';
+                var url = 'http://192.168.15.20:8080/store?domain=getOrderDetailById';
                 if(O_ORDERID==null)
                 {
                     alert("系统错误");
@@ -934,6 +940,32 @@ angular.module("indexApp.services", [])
             }
 
 
+        };
+    })
+
+    .factory('sqlFactory', function(){
+
+        return {
+           test1:function test1(){
+               var db = new SQL.Database();
+               // Run a query without reading the results
+               db.run("CREATE TABLE test (col1, col2);");
+               // Insert two rows: (1,111) and (2,222)
+               db.run("INSERT INTO test VALUES (?,?), (?,?)", [1,111,2,222]);
+
+               // Prepare a statement
+               var stmt = db.prepare("SELECT * FROM test WHERE col1 BETWEEN $start AND $end");
+               stmt.getAsObject({$start:1, $end:1}); // {col1:1, col2:111}
+
+               // Bind new values
+               stmt.bind({$start:1, $end:2});
+               while(stmt.step()) { //
+                   var row = stmt.getAsObject();
+                   console.log("row:"+row.col1);
+                   // [...] do something with the row of result
+               }
+               db.close();
+           }
         };
     })
 

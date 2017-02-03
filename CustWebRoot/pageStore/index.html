@@ -21,10 +21,7 @@
     <script type="text/javascript" src="../lib/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
     <link href="../lib/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
     <script src="../lib/bootstrap-treeview/js/bootstrap-treeview.js"></script>
-    <style type="text/css">
-        .htmleaf-header{margin-bottom: 15px;font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", "FontAwesome", sans-serif;}
-        .htmleaf-icon{color: #fff;}
-    </style>
+    <script src="../js/web/comm.js?v=1.0" type="text/javascript"></script>
     <style type="text/css">
         .htmleaf-header{margin-bottom: 15px;font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", "FontAwesome", sans-serif;}
         .htmleaf-icon{color: #fff;}
@@ -48,12 +45,9 @@
         }
     </style>
     <script type="text/javascript">
-        var userid=QueryString('userid');
-        function QueryString(val) {
-            var uri = window.location.search;
-            var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
-            return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
-        }
+        var userid=GetQueryString('userid');
+        var username=GetQueryString('username');
+
         function getDateTime(date) {
             var year = date.getFullYear();
             var month = date.getMonth() + 1;
@@ -82,14 +76,14 @@
             getUserMenu();
         })
         function getUserMenu(){
-            var user=QueryString("userid");
+            var user=GetQueryString("userid");
             var params = "{\"user\":\""+user+"\"}";
             $.ajax({
                 url:'/manage?domain=getUserMenu&params='+encodeURIComponent(params),
                 type:'post',
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 dataType:'html',
-                error: function(){alert('error');},
+                error: function(){},
                 success:function(resultJSON){
                     var data='';
                     data+='<ul>';
@@ -118,14 +112,14 @@
             });
         }
         function gettype(dic_type,selectname){
-            var user=QueryString("userid");
+            var user=GetQueryString("userid");
             var tparams = "{\"user\":\""+user+"\",\"dic_type\":\""+dic_type+"\"}";
             $.ajax({
                 url:'/manage?domain=getDicTpye&params='+encodeURIComponent(tparams),
                 type:'post',
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 dataType:'html',
-                error: function(){alert('error');},
+                error: function(){},
                 success:function(resultJSON){
                     var select = $("#"+selectname+"");
                     select.empty();
@@ -137,9 +131,7 @@
             });
         }
         function PreviewImage(obj, imgPreviewId, divPreviewId) {
-            var allowExtention = ".jpg,.bmp,.gif,.png"; //,允许上传文件的后缀名
-
-
+            var allowExtention = ".jpg,.bmp,.gif,.png"; //,允许上传文件的后缀名
             var extention = obj.value.substring(obj.value.lastIndexOf(".") + 1).toLowerCase();
             var browserVersion = window.navigator.userAgent.toUpperCase();
             if (allowExtention.indexOf(extention) > -1) {
@@ -214,35 +206,25 @@
             $('#main-menu').append(uls.clone());
         }
         $(function () {
-            var user=QueryString("userid");
-            var params = "{\"user\":\""+user+"\"}";
-
-        })
-        $(function () {
-            var url=QueryString('url');
+            var url=GetQueryString('url');
             if(url==null){
-                url="pageWeb/main.html" ;
+                url="../pageWeb/main.html" ;
             }
-
             if(userid!=null){
-                $("#nickname").html(userid);
+                $("#nickname").html(username);
             }else{
-                top.window.location="/pageWeb/sign-in.html";
+                top.window.location="../pageWeb/sign-in.html";
             }
             var uri = window.location.search;
             changeTarget(url+uri);
-//            var param = encodeURI(encodeURI("大苏打"));
-//            $("#tagetDiv").load("pageWeb/main.html?param="+param);
         });
         function changeTarget(url){
-            var parames={"type1":"paramer1","type2":"paramer2"};
             $.ajax({
                 url:''+url+'?userid='+userid+'',
                 type:'post',
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 dataType:'html',
-                data:parames,
-                error: function(){alert('error');},
+                error: function(){},
                 success:function(data){
                     $("#tagetDiv").html(data);
                 }
@@ -268,7 +250,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <span class="navbar-brand"><span class="fa fa-paper-plane"></span>  商户管理平台</span>
+        <span class="navbar-brand"><span class=""></span>  微信服务号后台管理系统</span>
     </div>
 
     <div class="navbar-collapse collapse" style="height: 1px;">
@@ -279,131 +261,19 @@
                           style="position:relative;top: 3px;"></span>
                     <i class="fa fa-caret-down"></i>
                 </a>
-
                 <ul class="dropdown-menu">
-                    <li><a href="" >我的账号</a></li>
+                    <li><a href="#">我的账号</a></li>
                     <li class="divider"></li>
-                    <li><a tabindex="-1" href="pageWeb/sign-in.html">登出</a></li>
+                    <li><a tabindex="-1" href="../pageWeb/sign-in.html">登出</a></li>
                 </ul>
             </li>
         </ul>
-
-    </div>
+     </div>
 </div>
-
 <div id="userMenu" class="sidebar-nav">
-
-    <!--<ul>-->
-        <!--<li><a href="#" data-target=".dashboard-menu" class="nav-header" data-toggle="collapse"><i-->
-                <!--class="fa fa-fw fa-dashboard"></i> 菜单<i class="fa fa-collapse"></i></a></li>-->
-        <!--<li>-->
-            <!--<ul class="dashboard-menu nav nav-list collapse in">-->
-                <!--<li><a href="/pageStore/index.html"><span class="fa fa-caret-right"></span> 首页</a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-
-        <!--<li><a href="#" data-target=".goods-menu" class="nav-header collapsed" data-toggle="collapse"><i-->
-                <!--class="fa fa-fw fa-briefcase"></i> 商品管理 </a></li>-->
-        <!--<li>-->
-            <!--<ul class="goods-menu nav nav-list collapse">-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/goodsMenu/goodsList.html')"><span class="fa fa-caret-right"></span> 商品列表</a></li>-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/discountMenu/discountList.html')"><span class="fa fa-caret-right"></span> 优惠券列表</a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-        <!--<li><a href="#" data-target=".commission-menu" class="nav-header collapsed" data-toggle="collapse"><i-->
-                <!--class="fa fa-fw fa-briefcase"></i> 分佣管理 </a></li>-->
-        <!--<li>-->
-            <!--<ul class="commission-menu nav nav-list collapse">-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/commissionMenu/commissionList.html')"><span class="fa fa-caret-right"></span> 分佣列表</a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-        <!--<li><a href="#" data-target=".order1-menu" class="nav-header collapsed" data-toggle="collapse"><i-->
-                <!--class="fa fa-fw fa-briefcase"></i> 订单管理 </a></li>-->
-        <!--<li>-->
-            <!--<ul class="order1-menu nav nav-list collapse">-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/orderMenu/orderDetailList.html')"><span class="fa fa-caret-right"></span> 订单列表 </a></li>-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/orderMenu/approveList.html')"><span class="fa fa-caret-right"></span> 订单审批 </a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-        <!--<li><a href="#" data-target=".cx-menu" class="nav-header collapsed" data-toggle="collapse"><i-->
-                <!--class="fa fa-fw fa-briefcase"></i> 促销管理 </a></li>-->
-        <!--<li>-->
-            <!--<ul class="cx-menu nav nav-list collapse">-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/orderMenu/orderDetailList.html')"><span class="fa fa-caret-right"></span> 促销列表 </a></li>-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/goodsMenu/goodsEdit.html')"><span class="fa fa-caret-right"></span> 新增促销 </a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-        <!--<li><a href="#" data-target=".order-menu" class="nav-header collapsed" data-toggle="collapse"><i-->
-                <!--class="fa fa-fw fa-briefcase"></i> 会员管理 </a></li>-->
-        <!--<li>-->
-            <!--<ul class="order-menu nav nav-list collapse">-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/orderMenu/orderDetailList.html')"><span class="fa fa-caret-right"></span> 订单列表 </a></li>-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/orderMenu/approveList.html')"><span class="fa fa-caret-right"></span> 退款单审批 </a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-        <!--<li><a href="#" data-target=".order-menu" class="nav-header collapsed" data-toggle="collapse"><i-->
-                <!--class="fa fa-fw fa-briefcase"></i> 广告公告管理 </a></li>-->
-        <!--<li>-->
-            <!--<ul class="order-menu nav nav-list collapse">-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/orderMenu/orderDetailList.html')"><span class="fa fa-caret-right"></span> 订单列表 </a></li>-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/orderMenu/approveList.html')"><span class="fa fa-caret-right"></span> 退款单审批 </a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-
-        <!--<li><a href="#" data-target=".wl-menu" class="nav-header collapsed" data-toggle="collapse"><i-->
-                <!--class="fa fa-fw fa-briefcase"></i> 物流配送 </a></li>-->
-        <!--<li>-->
-            <!--<ul class="wl-menu nav nav-list collapse">-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/financialMenu/financialIncome.html')"><span class="fa fa-caret-right"></span> 收入报表 </a></li>-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/financialMenu/financialExpenses.html')"><span class="fa fa-caret-right"></span> 支出报表 </a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-        <!--<li><a href="#" data-target=".zf-menu" class="nav-header collapsed" data-toggle="collapse"><i-->
-                <!--class="fa fa-fw fa-briefcase"></i> 支付信息 </a></li>-->
-        <!--<li>-->
-            <!--<ul class="zf-menu nav nav-list collapse">-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/financialMenu/financialIncome.html')"><span class="fa fa-caret-right"></span> 支付信息 </a></li>-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/financialMenu/financialExpenses.html')"><span class="fa fa-caret-right"></span> 支出报表 </a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-
-        <!--<li><a href="#" data-target=".authority-menu" class="nav-header collapsed" data-toggle="collapse"><i-->
-                <!--class="fa fa-fw fa-briefcase"></i> 数据统计 </a></li>-->
-        <!--<li>-->
-            <!--<ul class="authority-menu nav nav-list collapse">-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/financialMenu/financialIncome.html')"><span class="fa fa-caret-right"></span> 收入报表 </a></li>-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/financialMenu/financialExpenses.html')"><span class="fa fa-caret-right"></span> 支出报表 </a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-        <!--<li><a href="#" data-target=".authority-menu" class="nav-header collapsed" data-toggle="collapse"><i-->
-                <!--class="fa fa-fw fa-briefcase"></i> 结算中心 </a></li>-->
-        <!--<li>-->
-            <!--<ul class="authority-menu nav nav-list collapse">-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/financialMenu/financialIncome.html')"><span class="fa fa-caret-right"></span> 收入报表 </a></li>-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/financialMenu/financialExpenses.html')"><span class="fa fa-caret-right"></span> 支出报表 </a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-        <!--<li><a href="#" data-target=".pl-menu" class="nav-header collapsed" data-toggle="collapse"><i-->
-                <!--class="fa fa-fw fa-briefcase"></i> 评论管理 </a></li>-->
-        <!--<li>-->
-            <!--<ul class="pl-menu nav nav-list collapse">-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/authorityMenu/supMenuList.html')"><span class="fa fa-caret-right"></span> 页面列表 </a></li>-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/authorityMenu/supMenuEdit.html')"><span class="fa fa-caret-right"></span> 页面编辑 </a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-        <!--<li><a href="#" data-target=".financial-menu" class="nav-header collapsed" data-toggle="collapse"><i-->
-                <!--class="fa fa-fw fa-briefcase"></i> 权限 </a></li>-->
-        <!--<li>-->
-            <!--<ul class="financial-menu nav nav-list collapse">-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/authorityMenu/supMenuList.html')"><span class="fa fa-caret-right"></span> 页面列表 </a></li>-->
-                <!--<li><a class="" onclick="changeTarget('/pageStore/authorityMenu/supplyTypeList.html')"><span class="fa fa-caret-right"></span> 权限管理 </a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-        <!--<li class="nav-header" onclick="changeTarget('pageWeb/help.html');"><i class="fa fa-fw fa-question-circle"></i> 帮助</li>-->
-    <!--</ul>-->
 </div>
 <div class="content">
-    <div class="header">
+    <!--<div class="header">-->
         <!--<div class="stats">-->
             <!--<p class="stat"><span class="label label-info">5</span> Tickets</p>-->
 
@@ -411,13 +281,11 @@
 
             <!--<p class="stat"><span class="label label-danger">15</span> Overdue</p>-->
         <!--</div>-->
-
-        <h1 id="pagetitle" class="page-title">工作台</h1>
-        <ul id="paths" class="breadcrumb">
-            <li><a href="index.html">主页</a></li>
-            <li id="path" class="active">工作台</li>
-        </ul>
-    </div>
+        <!--<ul id="paths" class="breadcrumb">-->
+            <!--<li><a href="#">主页</a></li>-->
+            <!--<li id="path" class="active">工作台</li>-->
+        <!--</ul>-->
+    <!--</div>-->
     <div class="main-content">
         <div id="tagetDiv"></div>
         <footer>

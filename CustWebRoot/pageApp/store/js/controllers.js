@@ -1,5 +1,5 @@
 angular.module("indexApp.controllers",[])
-    .controller('mainCtrl', function ($scope,$rootScope,$ionicHistory,$http, $ionicPopup, $state,$cacheFactory,listFactory,commendlistFactory,CookieFactory) {
+    .controller('mainCtrl', function ($scope,$rootScope,$ionicHistory,$http, $ionicPopup, $state,$cacheFactory,listFactory,commendlistFactory,CookieFactory,sqlFactory) {
         $scope.staff ="测试用户";
         $scope.dept ="ICT支撑中心";
         $scope.outline=":";
@@ -29,6 +29,7 @@ angular.module("indexApp.controllers",[])
             $state.go('goodsdetail', {gid: goodsid});
         }
         $scope.getCommendGoodsList();
+  //      sqlFactory.test1();
     })
     .controller('clarifyCtrl', function ($scope, $http, $ionicPopup, $state,$ionicLoading,listFactory,categorylistFactory) {
         //     var url="http://192.168.15.52:7001/serv?domain=getClassifyTpye";
@@ -206,7 +207,7 @@ angular.module("indexApp.controllers",[])
         };
 
         /**
-         * 全选按钮
+         * 全选按钮
          */
          $scope.selectAll=function(){
              if($scope.lastcheckall.checked)
@@ -221,16 +222,16 @@ angular.module("indexApp.controllers",[])
                      scopeitems[i].check=false;
              }
           };
-        $scope.checkItem=function(index)      //由于已经绑定了每个item的check属性，每次点击的时候都要检查一遍
+        $scope.checkItem=function(index)      //由于已经绑定了每个item的check属性，每次点击的时候都要检查一遍
         {
             var itemarrays=$scope.items;
             if(itemarrays[index].check)
                 itemarrays[index].check=false;
             else
                 itemarrays[index].check=true;
-            var ischeckall=true; //初始化全选为真
-            var notcheckall=true;//初始化没有全选为真
-   //         var collection=$scope.items;   //获取所有数据
+            var ischeckall=true; //初始化全选为真
+            var notcheckall=true;//初始化没有全选为真
+   //         var collection=$scope.items;   //获取所有数据
             //检查有没有全部选中
              for(var i=0;i<itemarrays.length;i++)
              {
@@ -247,7 +248,7 @@ angular.module("indexApp.controllers",[])
 
 
         }
-        //点击结算再更改,点击结算之后再
+        //点击结算再更改,点击结算之后再
         $scope.delCart= function(gid){
 //            cartFactory.delCart(gid).then(function(response){
 //                $scope.doRefresh();
@@ -293,7 +294,7 @@ angular.module("indexApp.controllers",[])
 
         }
 
-        $scope.goConfirm=function(){         //看有那几个选中的
+        $scope.goConfirm=function(){         //看有那几个选中的
             var collection=$scope.items;
             var cartarray=[];
             var cartstr='';
@@ -308,7 +309,7 @@ angular.module("indexApp.controllers",[])
             cartstr=cartstr.substring(0,cartstr.length-1);
 
 
-            //确认订单controller里面需要
+            //确认订单controller里面需要
             cartFactory.setCartidlist(cartstr);
      //       $rootScope.cartidlist=cartstr;
             $state.go("confirmorder");
@@ -524,7 +525,7 @@ angular.module("indexApp.controllers",[])
         $scope.closeModal = function() {
             $scope.modal.hide();
         };
-        //当我们用完模型时，清除它！
+        //当我们用完模型时，清除它！
 
 
 
@@ -556,25 +557,25 @@ angular.module("indexApp.controllers",[])
             $scope.model.activeIndex = index;
         };
 
-//当图片切换后，触发此事件，注意参数
+//当图片切换后，触发此事件，注意参数
 
 
         $scope.slideHasChanged = function($index){
             //     alert($index);
 
         };
-        //这是属性delegate-handle的验证使用的，其实没必要重定义，直接使用$ionicSlideBoxDelegate就可以
+        //这是属性delegate-handle的验证使用的，其实没必要重定义，直接使用$ionicSlideBoxDelegate就可以
 
 
         $scope.delegateHandle = $ionicSlideBoxDelegate;
     })
-    .controller('goodslistCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$timeout,goodslistFactory) {
+    .controller('goodslistCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicSideMenuDelegate,$ionicHistory,$cacheFactory,$timeout,goodslistFactory) {
     //数量弹窗没做
         var param={
             curPage:5,
             loadPage:0,   //加载了多少条记录
-            hasMore:true,  //有没有更多数据
-            orderparam:null     //按照什么排序
+            hasMore:true,  //有没有更多数据
+            orderparam:null     //按照什么排序
         };
         $scope.parameter=param;
         $scope.alertLoadMore = function(){
@@ -584,6 +585,10 @@ angular.module("indexApp.controllers",[])
             });
         }; //$都是要依赖注入的变量
         $scope.goodsitems=[];
+
+        $scope.toggleMenu = function() {
+            $ionicSideMenuDelegate.toggleRight();
+        };
 
         goodslistFactory.getGoodslist($stateParams.clarifyId,$scope.parameter.loadPage,$scope.parameter.curPage).then(function(response){
             $scope.parameter.loadPage += response.length;
@@ -671,7 +676,12 @@ angular.module("indexApp.controllers",[])
             $scope.laststyleobj.style=unselectPstyle;
             styleitemobj.style=selectPstyle;
             $scope.laststyleobj=styleitemobj;
-            $scope.getGoodslistBySort(styleitemobj.orderparam);
+            if(styleitemobj!=$scope.stylelist[3])
+                 $scope.getGoodslistBySort(styleitemobj.orderparam);
+            else
+            {
+                $ionicSideMenuDelegate.toggleRight();
+            }
         };
 
         $scope.loadMore = function() {
@@ -710,13 +720,13 @@ angular.module("indexApp.controllers",[])
             var status=null;
             //全部略去
             if(index==1)
-                status='0';       //待付款
+                status='0';       //待付款
             else if(index==2)
-                status='1';       //已付款
+                status='1';       //已付款
             else if(index==3)
-                status='2';       //已发货
+                status='2';       //已发货
             else if(index==4)
-                status='8';       //已完成
+                status='8';       //已完成
             OrderFactory.getPayOrderByStatus(status).then(function(response){
                 $scope.orderlist=response;
             });
@@ -764,9 +774,9 @@ angular.module("indexApp.controllers",[])
         };
         $scope.laststyle=$scope.allstyle;
         /**
-         * 换标题样式
+         * 换标题样式
          * @param obj   选中的那个状态对象，全部对应allstyle,待付款对应Fkstyle.......
-         * @param i     tab选中的索引，选中第几页
+         * @param i     tab选中的索引，选中第几页
          */
          $scope.changestyle=function(obj,i)
         {
@@ -781,7 +791,7 @@ angular.module("indexApp.controllers",[])
         $scope.lastindex=0;
 
         /**
-         * 滑屏切换，调整标题
+         * 滑屏切换，调整标题
          * @param index
          */
         $scope.slideHasChanged=function(index)
@@ -919,13 +929,32 @@ angular.module("indexApp.controllers",[])
         $scope.entersetting=function(){
            $state.go("setting");
         }
-        $scope.enteraccountadminister=function(){
-           $state.go("accountadminister");
+        $scope.enterpersonalinfo=function(){
+            $state.go("personalinfo");
         }
        
         $scope.enterdiscount=function () {
             $state.go('discount');
         }
+        $scope.init=function(){
+            var screenHeight= window.screen.height;
+            $scope.gainheight={
+                'height':screenHeight*0.4+'px'
+            };
+            $scope.gain={
+                "height": screenHeight*0.6-50,//-document.getElementById("nav").offsetHeight,
+                "background-color":"white",
+                "padding-top":"5%",
+                "padding-bottom":"5%",
+                "width":"100%"
+            };
+        }
+
+        $scope.goAddress=function(){
+            $state.go("addresslist");
+        };
+
+        $scope.init();
 
     })
     .controller('settingCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory) {
@@ -934,17 +963,34 @@ angular.module("indexApp.controllers",[])
     })
     .controller('accountadministerCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory) {
         //数量弹窗没做
-        $scope.enterpersonalinfo=function(){
-            $state.go("personalinfo");
-        }
+
     })
-    .controller('personalinfoCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory) {
+    .controller('personalinfoCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicPopover) {
+        $scope.screenHeight=window.screen.height;
+        $scope.avatarheight={
+          "background-color":"white",
+           "height": $scope.screenHeight*0.2+"px"
+        };
+        $scope.nichengheight={
+            "background-color":"white",
+            "height": $scope.screenHeight*0.1+"px"
+        };
+        $scope.sexheight={
+            "background-color":"white",
+            "height": $scope.screenHeight*0.1+"px"
+        };
+        $scope.birthheight={
+            "background-color":"white",
+            "height": $scope.screenHeight*0.1+"px"
+        };
+
+
 
     }) //一旦退回到购物车页面的时候，购物车id列表清空
     .controller('orderconfirmCtrl', function ($scope,$rootScope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,ConfirmOrderFactory,DiscountFactory,cartFactory,OrderFactory) {
         $scope.showPopup = function(text) {
 
-            // 自定义弹窗
+            // 自定义弹窗
             var myPopup = $ionicPopup.show({
                 title: '您还没有收货地址,请立即到个人中心那儿设置',
                 scope: $scope,
@@ -965,7 +1011,7 @@ angular.module("indexApp.controllers",[])
         };
         $scope.acquirePersonalInfo=function(){
             var cartidlist=cartFactory.getCartidlist();
-            OrderFactory.setOrderId(null);//每次进来之前都清一下缓存
+            OrderFactory.setOrderId(null);//每次进来之前都清一下缓存
             OrderFactory.setOrderprice(null);  //清空订单总价缓存
             ConfirmOrderFactory.acquirePersonalInfo(cartidlist).then(function(response){
                   if(response.code=='NoAddress')
@@ -1109,17 +1155,17 @@ angular.module("indexApp.controllers",[])
         var unselectPStyle = {
             "color" : "#000000"
         };
-        //未使用
+        //未使用
         $scope.WSYstyle= {
             colstyle:selectColstyle,
             pstyle:selectPStyle
         };
-        //已使用
+        //已使用
         $scope.YSYstyle={
             colstyle:unselectColstyle,
             pstyle:unselectPStyle
         };
-        //已过期
+        //已过期
         $scope.YGQstyle={
             colstyle:unselectColstyle,
             pstyle:unselectPStyle
@@ -1181,7 +1227,7 @@ angular.module("indexApp.controllers",[])
         };
         $scope.selectedTab(0);
 
-        //获取优惠券列表，status：三种状态的标识码
+        //获取优惠券列表，status：三种状态的标识码
         $scope.getCouponlist=function(status){
             DiscountFactory.getCouponlist(status).then(function(response){
                $scope.discountlist=response;
@@ -1190,7 +1236,7 @@ angular.module("indexApp.controllers",[])
         $scope.getCouponlist();
 
 
-        //三个tab点击时候相互切换
+        //三个tab点击时候相互切换
         $scope.doselectCondition=function(status){
             $scope.getCouponlist(status);
         };
@@ -1225,7 +1271,7 @@ angular.module("indexApp.controllers",[])
        //点击一个，如果他没被选中，那就到他这为止都选中
         $scope.chooseDescription=function(index)
         {
-            if(index==4)//选中最后一个
+            if(index==4)//选中最后一个
             {
                if($scope.description[index])
                {
@@ -1263,7 +1309,7 @@ angular.module("indexApp.controllers",[])
 
         $scope.chooseWuliu=function(index)
         {
-            if(index==4)//选中最后一个
+            if(index==4)//选中最后一个
             {
                 if($scope.wuliu[index])
                 {
@@ -1301,7 +1347,7 @@ angular.module("indexApp.controllers",[])
 
         $scope.chooseFuwu=function(index)
         {
-            if(index==4)//选中最后一个
+            if(index==4)//选中最后一个
             {
                 if($scope.fuwu[index])
                 {
@@ -1442,5 +1488,16 @@ angular.module("indexApp.controllers",[])
         };
 
         $scope.init();
+    })
+    .controller('addressadministerCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,DiscountFactory,OrderFactory) {
+       $scope.screenHeight=window.screen.height;
+       $scope.liststyle={
+          "height":$scope.screenHeight*0.2+'px',
+          'border':'none',
+          'padding':'5px',
+          'background-color':'white'
+       };
+
+
     })
 ;

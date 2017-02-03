@@ -11,196 +11,82 @@
     <ion-nav-buttons side="left">
         <button class="button button-clear icon ion-ios-arrow-back" ng-click="httpback()"> 返回</button>
     </ion-nav-buttons>
-    <ion-content style="background-color: gainsboro;">
-        <!--        <ion-slide-box on-slide-changed="slidHasChanged($index)"  style="width:100%;height: 100%;"  show-pager="false" active-slide="myActiveSlide">
-                    <ion-slide style="width: 100%;height:100%;">
-                        <div>
+ <!--   <ion-content >        -->
+            <ion-content style="background-color: gainsboro;">
+                        <ion-slide-box style="width:100%;height: 300px;" auto-play="true" does-continue="true"
+                                       slide-interval=2000 show-pager="true" pager-click="pageClick(index)"
+                                       active-slide="model.activeIndex" delegate-handle="delegateHandler">
+                            <ion-slide style="width: 100%;height:100%;">
+                                <img src="img/store/image_vp_1.png" width="100%;" height="100%;">
+                            </ion-slide>
+                            <ion-slide style="width: 100%;height:100%;">
+                                <img src="img/store/image_vp_1.png" width="100%;"
+                                     height="100%;">
+                            </ion-slide>
+                            <ion-slide style="width: 100%;height:100%;">
+                                <img src="img/store/image_vp_1.png" width="100%;"
+                                     height="100%;">
+                            </ion-slide>
+                            <ion-slide style="width: 100%;height:100%;">
+                                <img src="img/store/image_vp_1.png" width="100%;"
+                                     height="100%;">
+                            </ion-slide>
+                            <ion-slide style="width: 100%;height:100%;">
+                                <img src="img/store/image_vp_1.png" width="100%;"
+                                     height="100%;">
+                            </ion-slide>
+                        </ion-slide-box>
+                    </ion-item>
 
-                                  <img src="img/store/title_image.png" width="100%" height="260px">
 
-                                <div class="list">
-                                    <div class="item" style="padding: 10px;">
-                                        <a style="text-decoration: none;">（测试）香港美心月饼</a>
+                        <div class="list">
+                            <div class="item" style="padding: 10px;height: 60px;">
+                                <div class="row row-wrap row-no-padding" style="height: 100%;padding: 0px;">
+                                    <div class="col col-80 col-center" style="padding: 0px;">
+                                         <a style="text-decoration: none;font-size: 14px;font-weight: bold;">{{goodsdetail.G_NAME}}</a>
                                     </div>
-                                    <div class="item" style="padding:0px;background-color: gainsboro;height: 1px;"></div>
-                                    <div class="item" style="padding: 10px;">
-                                        <a style="text-decoration: none;font-size: 20px;color: red;">￥9999.00/盒</a>
+                                    <div class="col col-center" style="padding: 0px;">
+                                         <img src="img/store/image_shoucang.png" >
                                     </div>
-                                    <div class="item" style="padding: 10px;">
-                                        <div class="row row-wrap row-no-padding">
-                                            <div class="col col-10">
-                                                送至
-                                            </div>
-                                            <div class="col col-50">
-                                                <p>
-                                                    <i class="icon ion-android-pin assertive" ></i>
-                                                    北京>朝阳区>三环到四环之间
-                                                </p>
-                                                <p style="color: red;margin-top: 10px;">现货</p>
-                                                <p style="margin-top: 10px;">在线支付599元</p>
-                                            </div>
-                                            <div class="col col-center">
-                                                <img src="img/store/icon-message.png" style="float: right;">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row row-wrap row-no-padding" style="background-color: white;">
-                                        <div class="col col-75 col-center" style="padding: 10px;">
-                                            <a style="font-size: 18px;color: gainsboro;">评价(102)</a>
-                                        </div>
-                                        <div class="col col-center" style="padding: 0px;">
-                                            <div class="list" style="width: 260px;float: right;">
-                                                <div class="item item-icon-right" style="border: none;">
-                                                    <p>
-                                                        <a style="text-decoration: none;font-size: 20px;">好评</a>
-                                                        <a style="text-decoration: none;color: red;margin-left: 10px;font-size: 20px;">91%</a>
-                                                    </p>
-                                                    <i class="icon ion-chevron-right"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                 </div>
+                                </div>
                             </div>
-                    </ion-slide>
-                    <ion-slide style="width: 100%;height:100%;">
-                            <div style="width: 100%;height:100%;">
-            `                   <h1>sdfdsfdsfdsfdsf</h1>
+                            <div class="item" style="padding: 10px;border: none;">
+                                <p>
+                                    <a style="text-decoration: none;font-size: 14px;font-weight: bold;color: #808080;">本商品由</a>
+                                    <a style="text-decoration: none;font-size: 14px;font-weight: bold;color: orange;margin-left: 5px;">{{goodsdetail.SUP_NAME}}</a>
+                                    <a style="text-decoration: none;font-size: 14px;font-weight: bold;color: #808080;margin-left: 5px;">配送并提供售后服务</a>
+                                </p>
                             </div>
-                    </ion-slide>
-                    <ion-slide style="width: 100%;height:100%;">
-                        <div style="width: 100%;height:100%;">
-                            `                   <h1>sdfdsfdsfdsfdsf</h1>
+                            <div class="item" style="padding: 10px;border: none;">
+                                <p style="text-decoration: none;font-size: 12px;color: #808080;">本商品由邮乐网入驻商家提供
+                                </p>
+                            </div>
+                            <div class="item" style="padding: 10px;">
+                                <div class="row row-wrap row-no-padding">
+                                      <div class="col col-50">
+                                            <p style="font-size: 20px;color: #ff4500;">￥{{goodsdetail.G_PRICE}}</p>
+                                      </div>
+                                      <div class="col col-center">
+                                            <p style="float: right;">
+                                                <a style="color: #808080;text-decoration: none;">运费：</a>
+                                                <a style="color: #ff4500;text-decoration: none;">0</a>
+                                                <a style="color: #808080;text-decoration: none;">元</a>
+                                            </p>
+                                      </div>
+                                </div>
+                            </div>
+
+                            <div class="item" style="padding: 0px;border: none;">
+                                <div style="height: 5px;background-color: gainsboro"></div>
+                            </div>
+
                         </div>
-                    </ion-slide>
-                </ion-slide-box>-->
-   <!--
-        <ion-slide-box on-slide-changed="slidHasChanged($index)" active-slide="myActiveSlide" show-pager="false"  style="width:100%;height: 100%;">
-            <ion-slide>
-
-            </ion-slide>
-            <ion-slide>
-                <ion-list>
-                    <ion-item>
-                        dsfdsfdsfdsfdssz
-                    </ion-item>
-                    <ion-item>
-                        dsfdsfdsfdsfdssz
-                    </ion-item>
-                    <ion-item>
-                        dsfdsfdsfdsfdssz
-                    </ion-item>
-                    <ion-item>
-                        dsfdsfdsfdsfdssz
-                    </ion-item>
-                    <ion-item>
-                        dsfdsfdsfdsfdssz
-                    </ion-item>
-                    <ion-item>
-                        dsfdsfdsfdsfdssz
-                    </ion-item>
-                    <ion-item>
-                        dsfdsfdsfdsfdssz
-                    </ion-item>
-                    <ion-item>
-                        dsfdsfdsfdsfdssz
-                    </ion-item>
-                    <ion-item>
-                        dsfdsfdsfdsfdssz
-                    </ion-item>
-                </ion-list>
-            </ion-slide>
-        </ion-slide-box>
-         -->
-                <ion-slide-box style="width:100%;height: 300px;" auto-play="true" does-continue="true"
-                               slide-interval=2000 show-pager="true" pager-click="pageClick(index)"
-                               active-slide="model.activeIndex" delegate-handle="delegateHandler">
-                    <ion-slide style="width: 100%;height:100%;">
-                        <img src="img/store/image_vp_1.png" width="100%;" height="100%;">
-                    </ion-slide>
-                    <ion-slide style="width: 100%;height:100%;">
-                        <img src="img/store/image_vp_1.png" width="100%;"
-                             height="100%;">
-                    </ion-slide>
-                    <ion-slide style="width: 100%;height:100%;">
-                        <img src="img/store/image_vp_1.png" width="100%;"
-                             height="100%;">
-                    </ion-slide>
-                    <ion-slide style="width: 100%;height:100%;">
-                        <img src="img/store/image_vp_1.png" width="100%;"
-                             height="100%;">
-                    </ion-slide>
-                    <ion-slide style="width: 100%;height:100%;">
-                        <img src="img/store/image_vp_1.png" width="100%;"
-                             height="100%;">
-                    </ion-slide>
-                </ion-slide-box>
-            </ion-item>
+            </ion-content>
 
 
-                <div class="list">
-                    <div class="item" style="padding: 10px;height: 60px;">
-                        <div class="row row-wrap row-no-padding" style="height: 100%;padding: 0px;">
-                            <div class="col col-80 col-center" style="padding: 0px;">
-                                 <a style="text-decoration: none;font-size: 14px;font-weight: bold;">{{goodsdetail.G_NAME}}</a>
-                            </div>
-                            <div class="col col-center" style="padding: 0px;">
-                                 <img src="img/store/image_shoucang.png" >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item" style="padding: 10px;border: none;">
-                        <p>
-                            <a style="text-decoration: none;font-size: 14px;font-weight: bold;color: #808080;">本商品由</a>
-                            <a style="text-decoration: none;font-size: 14px;font-weight: bold;color: orange;margin-left: 5px;">{{goodsdetail.SUP_NAME}}</a>
-                            <a style="text-decoration: none;font-size: 14px;font-weight: bold;color: #808080;margin-left: 5px;">配送并提供售后服务</a>
-                        </p>
-                    </div>
-                    <div class="item" style="padding: 10px;border: none;">
-                        <p style="text-decoration: none;font-size: 12px;color: #808080;">本商品由邮乐网入驻商家提供
-                        </p>
-                    </div>
-                    <div class="item" style="padding: 10px;">
-                        <div class="row row-wrap row-no-padding">
-                              <div class="col col-50">
-                                    <p style="font-size: 20px;color: #ff4500;">￥{{goodsdetail.G_PRICE}}</p>
-                              </div>
-                              <div class="col col-center">
-                                    <p style="float: right;">
-                                        <a style="color: #808080;text-decoration: none;">运费：</a>
-                                        <a style="color: #ff4500;text-decoration: none;">0</a>
-                                        <a style="color: #808080;text-decoration: none;">元</a>
-                                    </p>
-                              </div>
-                        </div>
-                    </div>
-
-                    <div class="item" style="padding: 0px;border: none;">
-                        <div style="height: 5px;background-color: gainsboro"></div>
-                    </div>
-     <!--
-                    <div class="item item-icon-right" style="padding: 10px;border: none;">
-                        <p style="font-size: 12px;color: #808080;font-weight: bold;">已选：5KG 1个</p>
-                        <i class="icon ion-chevron-right"></i>
-                    </div>
-
-                    <div class="item" style="padding: 0px;border: none;">
-                        <div style="height: 5px;background-color: gainsboro"></div>
-                    </div>
-
-                    <div class="item item-icon-right" style="padding: 10px;border: none;">
-                        <p style="font-size: 12px;color: #808080;font-weight: bold;">送至：湖北省 武汉市 江汉区 京汉大道 XX小区 1栋 2304</p>
-                        <i class="icon ion-chevron-right"></i>
-                    </div>
-
-                <!--    <div class="item" style="padding: 0px;background-color: #dcdcdc;">
-
-                    </div>      -->
-                </div>
 
 
-    </ion-content>
+<!--    </ion-content>        -->
 
     <ion-footer-bar style="padding: 0px;height:40px;">
         <div class="row row-wrap row-no-padding" style="padding: 0px;background-color: #dcdcdc;">

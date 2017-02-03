@@ -1,0 +1,56 @@
+<ion-view>
+
+<ion-content style="background-color: #EEEEEE;">
+	<div ng-style="titleStyle">
+		<img src="img/title_image.jpg" style="height: 100%;display: inline;">
+	</div>
+	<div style="background-color: #adff2f;height: 5px;margin-top: 10px;">
+	</div>
+	<div style="margin-top: 10px;width: 100%;padding-left: 2%;padding-right: 2%;">
+			<div class="row row-wrap row-no-padding"  ng-style="titleitemStyle">
+				<div class="col col-center" style="padding: 0px;">
+				您可能关注以下相关问题:
+				</div>
+			</div>
+			<div class="row row-wrap row-no-padding"  ng-style="titleitemgStyle">
+				<div class="col col-center" style="padding: 0px;" ng-click="sendMessage(1)">
+					[1]寄递服务
+				</div>
+			</div>
+			<div class="row row-wrap row-no-padding"  ng-style="titleitemgStyle">
+				<div class="col col-center" style="padding: 0px;" ng-click="sendMessage(2)">
+					[2]邮件到哪里了，什么时候可以到
+				</div>
+			</div>
+
+			<div class="row row-wrap row-no-padding"  ng-style="titleitemgStyle">
+				<div class="col col-center" style="padding: 0px;" ng-click="sendMessage(3)">
+					[3]投诉和建议
+				</div>
+			</div>
+		<div class="row row-wrap row-no-padding"  ng-style="titleitemStyle">
+			<div class="col col-center" style="padding: 0px;">
+				请直接回复数字进行了解：
+			</div>
+		</div>
+
+	</div>
+
+	<ion-list id="listid" style="background-color: #EEEEEE;">
+
+    </ion-list>
+
+</ion-content>
+
+<ion-footer-bar id="footer">
+	<div class="row row-wrap row-no-padding">
+		<div class="col col-80 col-center">
+			<input type="text" ng-model="sendText" style="width: 100%;">
+		</div>
+		<div class="col col-center" style="text-align: center;">
+			<button class="button button-balanced" style="display: inline;" ng-click="send()">发送</button>
+		</div>
+	</div>
+</ion-footer-bar>
+
+</ion-view>

@@ -1,124 +1,68 @@
 <!-- 隐藏头部  试试ng-hide         -->
-<ion-view hide-nav-bar="true" style="z-index: 9999">
-    <ion-content>
+<ion-view>
+    <ion-nav-title><h1 class="title"><b>个人信息</b></h1></ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon ion-ios-arrow-back" ng-click="httpback()"> 返回</button>
+    </ion-nav-buttons>
+    <ion-content style="background-color: white;">
+               <!--  要实现百分比布局，最好是在外面包一层，里面要是有图片的话，就设置好高度   -->
+        <div ng-style="gainheight" id="vicky">
+            <div style="height: 100%;background-image: url(img/store/bg_personal.png);background-size: 100% 100%;background-repeat:no-repeat;padding-top: 5%;padding-bottom: 10%;">
+                 <div style="height:40%;width:100%;text-align: center;">
+                     <img src="img/store/vicky.png"  height="60px" style="display: inline">
+                 </div>
+                <div style="height:20%;width:100%;text-align: center;">
+                    <a style="display: inline;color: white;">Vicky</a>
+                </div>
 
-        <div class="row row-wrap " style="height: 120px;background-color: #ff7043;position:relative;">
-            <div class="col col-33 text-center" style="padding: 10px;">
-                <img src="img/store/icon_avatar.png" width="80px" height="80px"   />
-            </div>
-            <div class="col col-33 text-left">
-                <h5 style="color: white;font-weight: bold;">jd_181711f</h5>
-                <img src="img/store/img_register-member.png" style="position: absolute;bottom: 0px;"/>
-            </div>
-            <div class="col">
-                <p style="float: right;">
-                    <img src="img/store/ion-setting.png" style="width: 30px;height: 30px;" ng-click="entersetting()"/>
-                    <img src="img/store/ion-message.png" style="width: 30px;height: 30px;margin-left: 10px;"/>
-                </p>
-                <a class="button icon-right ion-chevron-right" ng-click="enteraccountadminister()" style="border: none;font-size: 14px;background: none;float:right;color: white;">账户管理</a>
-            </div>
-
+                <div style="width:100%;height:25%;padding-left: 10%;padding-right:10%;">
+                    <button class="button icon-left ion-ios-cart-outline" style="border:1px solid white;color: white;font-size: 16px;height: 80%;width:40%;background-color: transparent;" ng-click="entermyorder()">我的订单</button>
+                    <button class="button icon-left ion-android-person" style="border:1px solid white;color: white;font-size: 16px;height: 80%;float:right;width:40%;background-color: transparent;" ng-click="enterpersonalinfo()">账号管理</button>
+                </div>
+           </div>
         </div>
-        <div style="height: 100px;">
-            <div class="row row-wrap">
-                <div class="col col-20 text-center">
-                    <table width="100%">
-                        <tr style="height: 36px;">
-                            <td style="text-align: center;">
-                                <img src="img/store/image_1.png" width="30px" height="30px">
-                            </td>
-                        </tr>
-                        <tr style="margin-top: 10px;" >
-                            <td style="text-align: center;">
-                                <p>待付款1</p>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
 
-                <div class="col col-20">
-                    <table width="100%">
-                        <tr style="height: 36px;">
-                            <td style="text-align: center;">
-                                <img src="img/store/image_2.png" width="30px" height="30px">
-                            </td>
-                        </tr>
-                        <tr style="margin-top: 10px;">
-                            <td style="text-align: center;">
-                                <p>待收货</p>
-                            </td>
-                        </tr>
-                    </table>
+        <div ng-style="gain">
+            <div class="row row-wrap row-no-padding" style="height: 45%;padding-left:10%;padding-right:10%;">
+                <div class="col" style="height: 100%;padding-bottom: 5%;border-right: 1px solid #dcdcdc;border-bottom: 1px solid #dcdcdc;">
+                    <div style="height: 50%;width: 100%;text-align: center;">
+                         <img src="img/store/icon_mine_coupon.png"  height="30px" style="display: inline;">
+                    </div>
+                    <div style="height: 42%;width: 100%;text-align: center;">
+                        <a style="display: inline;font-size: 16px;margin-top: 20px;">我的优惠券</a>
+                    </div>
                 </div>
-
-                <div class="col col-20">
-                    <table width="100%">
-                        <tr style="height: 36px;">
-                            <td style="text-align: center;">
-                                <img src="img/store/image_3.png"  width="30px" height="30px">
-                            </td>
-                        </tr>
-                        <tr style="margin-top: 10px;">
-                            <td style="text-align: center;">
-                                <p>待评价</p>
-                            </td>
-                        </tr>
-                    </table>
+                <div class="col" style="height: 100%;padding-bottom: 5%;border-bottom: 1px solid #dcdcdc;">
+                    <div style="height: 50%;width: 100%;text-align: center;">
+                        <img src="img/store/icon_mine_history.png"  height="30px" style="display: inline;">
+                    </div>
+                    <div style="height: 42%;width: 100%;text-align: center;">
+                        <a style="display: inline;font-size: 16px;margin-top: 20px;">浏览记录</a>
+                    </div>
                 </div>
+            </div>
 
-                <div class="col col-20">
-                    <table width="100%">
-                        <tr style="height: 36px;">
-                            <td style="text-align: center;">
-                                <img src="img/store/image_4.png"  width="30px" height="30px">
-                            </td>
-                        </tr>
-                        <tr style="margin-top: 10px;">
-                            <td style="text-align: center;">
-                                <p>返修/退换</p>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
 
-                <div class="col col-20" ng-click="entermyorder()">
-                    <table width="100%">
-                        <tr style="height: 36px;">
-                            <td style="text-align: center;">
-                                <img src="img/store/image_5.png"  width="30px" height="30px">
-                            </td>
-                        </tr>
-                        <tr style="margin-top: 10px;" >
-                            <td style="text-align: center;" >
-                                <p>我的订单</p>
-                            </td>
-                        </tr>
-                    </table>
+            <div class="row row-wrap row-no-padding" style="height: 45%;width: 100%;padding-left:10%;padding-right:10%;">
+
+                <div class="col" style="height: 100%;padding-top: 10%;border-right: 1px solid #dcdcdc;">
+                         <div style="height: 50%;width: 100%;text-align: center;">
+                            <img src="img/store/icon_mine_favorite.png" height="30px" width="30px" style="display: inline;">
+                        </div>
+                        <div style="height: 38%;width: 100%;text-align: center;">
+                            <a style="display: inline;font-size: 16px;margin-top: 20px;">收藏夹</a>
+                        </div>
+                 </div>
+                <div class="col" style="height: 100%;padding-top: 10%;" ng-click="goAddress()">
+                        <div style="height: 50%;width: 100%;text-align: center;">
+                            <img src="img/store/icon_mine_address.png" height="30px" width="30px" style="display: inline;">
+                        </div>
+                        <div style="height: 38%;width: 100%;text-align: center;" >
+                            <a style="display: inline;font-size: 16px;margin-top: 20px;">地址管理</a>
+                        </div>
                 </div>
             </div>
         </div>
-        <ion-list>
-            <ion-item class="item-icon-right" style="padding: 10px;background-color: #dcdcdc;" ng-click="enterdiscount()">
-                我的优惠券
 
-                <i class="icon ion-ios-arrow-forward"></i>
-            </ion-item>
-
-            <ion-item class="item-icon-right" style="padding: 10px;background-color: #dcdcdc;">
-                商品关注
-                <i class="icon ion-ios-arrow-forward"></i>
-            </ion-item>
-
-            <ion-item class="item-icon-right" style="padding: 10px;background-color: #dcdcdc;">
-                店铺关注
-                <i class="icon ion-ios-arrow-forward"></i>
-            </ion-item>
-
-            <ion-item class="item-icon-right" style="padding: 10px;background-color: #dcdcdc;">
-                浏览记录
-                <i class="icon ion-ios-arrow-forward"></i>
-            </ion-item>
-
-        </ion-list>
     </ion-content>
 </ion-view>

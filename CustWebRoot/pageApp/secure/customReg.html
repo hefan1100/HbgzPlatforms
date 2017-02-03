@@ -1,0 +1,60 @@
+<script type="text/javascript">
+    $(function () {
+        $("#openid").val(QueryString());
+        $("#openid").append(QueryString());
+    });
+</script>
+<ion-view ng-controller="RegCtrl">
+    <ion-content style="background-color:#f3f3f3;">
+        <div style="width: 95%;padding-top:8px;margin:0 auto;" class="list radius">
+            <div class="item item-input item-select radius-top">
+                <div class="input-label">省:</div>
+                <select id="province" ng-model="data.province">
+                    <option>北京</option>
+                    <option selected="selected">湖北</option>
+                </select>
+            </div>
+            <div class="item item-input item-select">
+                <div class="input-label">市:</div>
+                <select id="city" ng-model="data.city">
+                    <option>武汉</option>
+                    <option>仙桃</option>
+                    <option>十堰</option>
+                    <option>襄阳</option>
+                </select>
+            </div>
+            <div class="item item-input">
+                <div class="input-label">车牌号码:</div>
+                鄂<input id="platenum" type="text"  ng-model="data.platenum"/>
+            </div>
+            <div class="item item-input">
+                <div class="input-label">车主姓名:</div>
+                <input id="name" type="text"  ng-model="data.name"/>
+                <input id="openid" type="hidden" ng-model="data.openid" />
+            </div>
+            <div class="item item-input">
+                <span class="input-label">起保日期:</span>
+                <ionic-datepicker idate="startDate" >
+                    <button id="startDate" class="button button-clear" style="width: 100%;"> {{startDate | date:'yyyy/MM/dd'}} </button>
+                </ionic-datepicker>
+            </div>
+            <div class="item item-input">
+                <span class="input-label">终保日期:</span>
+                <ionic-datepicker idate="endDate" >
+                    <button id="endDate" class="button button-clear" style="width: 100%;"> {{endDate | date:'yyyy/MM/dd'}} </button>
+                </ionic-datepicker>
+            </div>
+            <div class="item item-input">
+                <div class="input-label">车架号:</div>
+                <input id="vin" type="text"  ng-model="data.vin"/>
+            </div>
+            <div class="item item-input radius-button">
+                <div class="input-label">发动机号:</div>
+                <input id="enginenum" type="text"  ng-model="data.enginenum"/>
+            </div>
+            <div >
+                <button class="button button-block radius" style="color:white;font-weight:bold;background-image: url('img/btn.png');background-repeat: no-repeat;background-size:100%; " ng-click="doReg(data)">注册</button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

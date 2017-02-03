@@ -5,8 +5,8 @@
         var title=$('#category_title').val();
         var categoryurl=$('#category_url').val();
         var keyword=$('#category_keyword').val();
-        var user=QueryString("userid");
-        var pid=QueryString("pid");
+        var user=GetQueryString("userid");
+        var pid=GetQueryString("pid");
         var params = "{\"content\":\""+content+"\",\"keyword\":\""+keyword+"\",\"user\":\""+user+"\",\"pid\":\""+pid+"\",\"categoryurl\":\""+categoryurl+"\",\"categorytitle\":\""+title+"\"}";
         $.ajax({
             url:'/serv?domain=saveCategory&params='+encodeURIComponent(params),

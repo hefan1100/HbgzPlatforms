@@ -1,6 +1,4 @@
 <script type="text/javascript">
-    $('#pagetitle')[0].innerHTML="待审批订单";
-    $('#path')[0].innerHTML="待审批订单";
     function check_all(obj, cName) {
         var checkboxs = document.getElementsByName(cName);
         var gids="";
@@ -9,7 +7,7 @@
         }
     }
     function updateDetail(){
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var page=1;
         var checkboxs = document.getElementsByName("infoid");
         var infoids="";
@@ -43,7 +41,7 @@
     }
     function getOrderDetailList(){
         $("#retable").empty();
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var infoid=$("#infoid").val();
         var username=$("#username").val();
         var goodname=$("#goodname").val();

@@ -1,7 +1,7 @@
 <script type="text/javascript">
     $(function () {
-        var user=QueryString("userid");
-        var id=QueryString("pid");
+        var user=GetQueryString("userid");
+        var id=GetQueryString("pid");
         var params = "{\"user\":\""+user+"\",\"id\":\""+id+"\"}";
         $.ajax({
             url:'/serv?domain=queryTest&params='+encodeURIComponent(params),
@@ -29,9 +29,9 @@
         var appID=$('#AppID').val();
         var appSecret=$('#AppSecret').val();
         var encodingAESKey=$('#EncodingAESKey').val();
-        var wxcode=QueryString("wxcode");
-        var user=QueryString("userid");
-        var pid=QueryString("pid");
+        var wxcode=GetQueryString("wxcode");
+        var user=GetQueryString("userid");
+        var pid=GetQueryString("pid");
         var params = "{\"appID\":\""+appID+"\",\"appSecret\":\""+appSecret+"\",\"encodingAESKey\":\""+encodingAESKey+"\",\"wxcode\":\""+wxcode+"\",\"user\":\""+user+"\",\"id\":\""+pid+"\"}";
         $.ajax({
             url:'/serv?domain=saveConfigureSec&params='+encodeURIComponent(params),

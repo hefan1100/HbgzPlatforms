@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    function QueryString(val) {
+    function GetQueryString(val) {
         var uri = window.location.search;
         var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
         return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
@@ -13,7 +13,7 @@
         }
         gettype("discount_type","discount_type");
         gettype("goods_type","C_GOODTYPE");
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var params = "{\"user\":\""+user+"\",\"c_id\":\""+id+"\"}";
         $.ajax({
             url:'/manage?domain=discountList&params='+encodeURIComponent(params),
@@ -37,7 +37,7 @@
     })
 
     function save() {
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var name=$('#C_NAME').val();
         var money=$('#C_MONEY').val();
         var detail=$('#C_DETAIL').val();

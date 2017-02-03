@@ -1,6 +1,4 @@
 <script type="text/javascript">
-    $('#pagetitle')[0].innerHTML="权限列表";
-    $('#path')[0].innerHTML="权限列表";
     function QueryStrings(uri,val) {
         var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
         return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
@@ -24,7 +22,7 @@
     }
     function sypplyTypeList(){
         $("#retable").empty();
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var page=1;
         var params = "{\"user\":\""+user+"\",\"page\":\""+page+"\"}";
         $.ajax({

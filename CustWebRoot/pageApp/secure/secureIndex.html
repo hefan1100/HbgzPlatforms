@@ -1,105 +1,35 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+<ion-view>
+    <ion-content>
+        <div ng-style="headerStyle">
+            <img src="img/banner.png" style="height: 100%;width: 100%;">
+        </div>
+        <div>
+            <div class="row row-wrap row-no-padding" style="padding: 0px;height: 80%;">
+                <div class="col col-center" style="padding: 0px;height:80%;" ng-click="goCusReg()">
+                    <img src="img/khdl.png" style="height: 100%;width: 100%;">
+                </div>
+                <div class="col col-center" style="padding: 0px;height:80%;" ng-click="goSalesReg()">
+                    <img src="img/shdl.png" style="height: 100%;width: 100%;">
+                </div>
+            </div>
+        </div>
+        <div style="background-color: #cccccc;height:30px;" >
+            <div align="center">
+                <img src="img/hzsj.png" height="20px" style="padding-top: 5px;"> 合作商家
+            </div>
+        </div>
 
-    <link rel="manifest" href="manifest.json">
+        <ion-list ng-controller="MyCtrl">
+            <ion-item ng-repeat="item in items" item="item" class="item-remove-animate" ng-click="itemClicked(item.id)">
+                <div style="width: 30%;height: 100%;float: left">
+                    <img ng-src="{{ item.logopic }}" width="100%" height="100%" />
+                </div>
+                <div style="width: 70%;height: 100%;float: right;font-size: 12px"  class="warp">
+                    {{ item.title }}
+                </div>
+            </ion-item>
 
-    <!-- un-comment this code to enable service worker
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(() => console.log('service worker installed'))
-          .catch(err => console.log('Error', err));
-      }
-    </script>-->
+        </ion-list>
+    </ion-content>
+</ion-view>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
-
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
-
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
-
-    <!-- your app's js -->
-    <script src="js/app.js"></script>
-  </head>
-  <body ng-app="starter">
-
-    <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank aaa</h1>     WW
-      </ion-header-bar>
-      <ion-content>
-	    <table width="100%"  border="0" cellspacing="0" cellpadding="0">
-             <tr>
-                <td  colspan="2" align="center">
-                        <img height="auto" width="100%" src='/upload/test.png' />
-                </td>
-             </tr>
-             <tr >
-                 <td align="center">
-                         <img width="100%" height="auto" src='/upload/khdl.png' />
-                 </td>
-                 <td align="center">
-                         <img width="100%" height="auto" src='/upload/shdl.png' />
-                 </td>
-            </tr>
-            <tr>
-                <td  colspan="2">
-                    <img width="100%" height="auto" src='/upload/hzsj.png' />
-                </td>
-            </tr>
-            <tr>
-                <td  colspan="2">
-                    <img width="100%" height="auto" src='/upload/hezuo.png' />
-                </td>
-            </tr>
-            <tr>
-                <td  colspan="2">
-                    <img width="100%" height="auto" src='/upload/hezuo.png' />
-                </td>
-            </tr>
-            <tr>
-                <td  colspan="2">
-                    <img width="100%" height="auto" src='/upload/hezuo.png' />
-                </td>
-            </tr>
-            <tr>
-                <td  colspan="2">
-                    <img width="100%" height="auto" src='/upload/hezuo.png' />
-                </td>
-            </tr>
-            <tr>
-                <td  colspan="2">
-                    <img width="100%" height="auto" src='/upload/hezuo.png' />
-                </td>
-            </tr>
-            <tr>
-                <td  colspan="2">
-                    <img width="100%" height="auto" src='/upload/hezuo.png' />
-                </td>
-            </tr>
-            <tr>
-                <td  colspan="2">
-                    <img width="100%" height="auto" src='/upload/hezuo.png' />
-                </td>
-            </tr>
-            <tr>
-                <td  colspan="2">
-                    <img width="100%" height="auto" src='/upload/hezuo.png' />
-                </td>
-            </tr>
-		</table>
-      </ion-content>
-    </ion-pane>
-  </body>
-</html>

@@ -42,7 +42,7 @@
             org.springframework.web.util.IntrospectorCleanupListener
         </listener-class>
     </listener>
-    <!--  session超时定义,单位为分钟
+    <!--  session超时定义,单位为分钟
 
 
 
@@ -86,13 +86,23 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>StoreService</servlet-name>
-        <servlet-class>com.webservice.StoreService</servlet-class>
+        <servlet-name>CityService</servlet-name>
+        <servlet-class>com.webservice.CityService</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>StoreService</servlet-name>
-        <url-pattern>/store</url-pattern>
+        <servlet-name>CityService</servlet-name>
+        <url-pattern>/city</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>YxsService</servlet-name>
+        <servlet-class>com.webservice.YxsService</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>YxsService</servlet-name>
+        <url-pattern>/yxs</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>FileUploader</servlet-name>
@@ -102,7 +112,14 @@
         <servlet-name>FileUploader</servlet-name>
         <url-pattern>/file</url-pattern>
     </servlet-mapping>
-
+    <servlet>
+        <servlet-name>TokenService</servlet-name>
+        <servlet-class>com.webservice.TokenService</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TokenService</servlet-name>
+        <url-pattern>/Token.jsp</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>/pageWeb/sign-in.html</welcome-file>
     </welcome-file-list>
@@ -114,6 +131,7 @@
         <error-code>500</error-code>
         <location>/404.html</location>
     </error-page>
+
 
     <!--实现浏览器根据文件类型自动打开  start  -->
     <mime-mapping>

@@ -1,7 +1,7 @@
 <script type="text/javascript">
     $(function () {
-        var user=QueryString("userid");
-        var id=QueryString("pid");
+        var user=GetQueryString("userid");
+        var id=GetQueryString("pid");
         var params = "{\"user\":\""+user+"\",\"id\":\""+id+"\"}";
         $.ajax({
             url:'/serv?domain=queryTest&params='+encodeURIComponent(params),
@@ -35,8 +35,8 @@
         var type=jQuery("#type option:selected").val();
         var publicname=$('#public_name').val();
         var publicid=$('#public_id').val();
-        var userid=QueryString("userid");
-        var pid=QueryString("pid");
+        var userid=GetQueryString("userid");
+        var pid=GetQueryString("pid");
 
         if(pid==null){
             var newid=getUuid();

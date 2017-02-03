@@ -1,7 +1,7 @@
 <script type="text/javascript">
 
     $(function () {
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var page=1;
         var params = "{\"user\":\""+user+"\",\"page\":\""+page+"\"}";
         $.ajax({
@@ -32,7 +32,7 @@
     })
 
     $(function () {
-        var user=QueryString("userid");
+        var user=GetQueryString("userid");
         var page=1;
         var params = "{\"user\":\""+user+"\",\"page\":\""+page+"\"}";
         $.ajax({

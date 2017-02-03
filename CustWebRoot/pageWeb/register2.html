@@ -94,7 +94,7 @@
 </div>
 <script src="../lib/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript">
-    function QueryString(val) {
+    function GetQueryString(val) {
         var uri = window.location.search;
         var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
         return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
@@ -104,8 +104,8 @@
     $(function() {
 
         $('#btn_register').click(function(){
-            var user=QueryString("userid");   //是给AppService的初步接口调用的，判断session
-            var newuserid=QueryString("newuserid");
+            var user=GetQueryString("userid");   //是给AppService的初步接口调用的，判断session
+            var newuserid=GetQueryString("newuserid");
             var realname=$('#form_realname').val();
             var tel=$('#form_tel').val();
             var address=$('#form_address').val();
