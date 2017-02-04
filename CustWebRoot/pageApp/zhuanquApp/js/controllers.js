@@ -20,7 +20,7 @@ angular.module("indexApp.controllers",[])
         };
 
         $scope.itemavatarstyle={
-            "height":$scope.allheight*0.5+'px',
+            "height":$scope.allheight*0.7+'px',
             "width":$scope.screenWidth+'px'
         }
 
@@ -38,21 +38,30 @@ angular.module("indexApp.controllers",[])
         IndexFactory.getIndexList().then(function(response){
             var infolist=response.infolist;
             var districtlist=response.district;
-            $scope.myName=districtlist[0];
+            $scope.mycityid="";
             $scope.list=infolist;
             $scope.districtlist=districtlist;
         });
 
         $scope.goList=function(cid){
-            $state.go("list",{cid:cid,cityname:$scope.myName.name});
+            var cityname="";
+            for(var i=0;i<$scope.districtlist.length;i++)
+            {
+                var item=$scope.districtlist[i];
+                if(item.id==cid) {
+                    cityname = item.name;
+                    break;
+                }
+            }
+            $state.go("list",{cid:cid,cityname:cityname});
         };
 
-        $scope.$watch('myName',  function(newValue, oldValue) {
+        $scope.$watch('mycityid',  function(newValue, oldValue) {
             if((newValue==null)||(oldValue==null)||(newValue === oldValue))
                 return;
 
-            IndexFactory.getIndexListByCity(newValue.id).then(function (response) {
-                    $scope.list = response;
+            IndexFactory.getIndexListByCity(newValue).then(function (response) {
+                $scope.list = response;
             });
 
         });

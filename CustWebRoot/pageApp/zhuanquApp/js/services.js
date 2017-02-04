@@ -3,7 +3,7 @@ angular.module("indexApp.services", [])
         return {
             getIndexList: function getIndexList() {
                 var deferred = $q.defer();
-                var url = 'http://172.16.8.159:8080/city?domain=getIndexList';
+                var url = 'http://120.27.221.0/city?domain=getIndexList';
 
                 $ionicLoading.show({
                     template: 'Loading...'
@@ -39,7 +39,7 @@ angular.module("indexApp.services", [])
             },
             getIndexListByCity: function getIndexListByCity(cityid) {
                 var deferred = $q.defer();
-                var url = 'http://172.16.8.159:8080/city?domain=getIndexListByCityName';
+                var url = 'http://120.27.221.0/city?domain=getIndexListByCityName';
                 if(cityid!=null)
                     url+='&cityid='+cityid;
                 $ionicLoading.show({
@@ -74,7 +74,7 @@ angular.module("indexApp.services", [])
             },
             getLink: function getLink(cityid) {
                 var deferred = $q.defer();
-                var url = 'http://172.16.8.159:8080/city?domain=getLink';
+                var url = 'http://120.27.221.0/city?domain=getLink';
                 if(cityid!=null)
                     url+='&cityid='+cityid;
                 $ionicLoading.show({
@@ -98,7 +98,7 @@ angular.module("indexApp.services", [])
             },
             getArticleDetails: function getArticleDetails(cityid) {
                 var deferred = $q.defer();
-                var url = 'http://172.16.8.159:8080/city?domain=getArticleDetails';
+                var url = 'http://120.27.221.0/city?domain=getArticleDetails';
                 if(cityid!=null)
                     url+='&cityid='+cityid;
                 $ionicLoading.show({
@@ -133,7 +133,7 @@ angular.module("indexApp.services", [])
             },
             getArticleDetailsInfo: function getArticleDetailsInfo(aid) {
                 var deferred = $q.defer();
-                var url = 'http://172.16.8.159:8080/city?domain=getArticleDetailsInfo';
+                var url = 'http://120.27.221.0/city?domain=getArticleDetailsInfo';
                 if(aid!=null)
                     url+='&aid='+aid;
                 $ionicLoading.show({

@@ -1,38 +1,36 @@
 <ion-view>
     <ion-header-bar style="background-color: #ffffff;">
-        <div class="buttons" style="width: 120px;background: none;border: none;padding-left: 0px;">
-            <a class="button list" style="border: none;width:100%;padding-left: 0px;background:none;text-align: center;">
-                <div class="item item-select" style="border: none;padding-left: 0px;">
-                    <select style="border: none; width: 120px;padding-left: 0px;background:none;" ng-model="myName" ng-options="i.name for i in districtlist">
+        <div class="buttons" style="background: none;border: none;padding: 0px;height: 100%;">
+            <a class="button list" style="border: none;width:100%;height:100%;padding: 0px;background:none;text-align: center;float:left;">
+                <div class="item" style="border: none;height:100%;padding: 0px;">
+                    <select style="border: none; width: 80px;height:100%;padding-left: 0px;background:none;" ng-model="myName" >
+                        <option value="" disabled selected>请选择</option>
+                        <option value="{{i.id}}" ng-repeat="i in districtlist">{{i.name}}</option>
                     </select>
                 </div>
             </a>
         </div>
-        <h1 class="title">市州专区</h1>
-
+        <h1 class="title">邮商联盟</h1>
     </ion-header-bar>
-
-
-
     <ion-content style="background-color: #dcdcdc;">
       <ion-list>
-              <ion-item ng-style="itemStyle" ng-repeat="i in list" ng-click="goList(i.id)">
-                  <div class="row row-wrap row-no-padding" ng-style="itemtitleStyle">
-                     <div class="col col-center" style="padding: 0px;">
-                        <p style="color: #adff2f;font-size: 18px;">{{i.name}}邮政</p>
-                     </div>
-                  </div>
-                  <img src="{{i.mainpic}}" ng-style="itemavatarstyle"/>
-                  <div ng-style="itemdescriptionstyle">
-                      <p style="font-size: 16px;">更多精彩尽在{{i.name}}邮政微邮局</p>
-                      <p style="font-size: 13px;margin-top:2%;color: #dcdcdc;">来源：{{i.name}}邮政微邮局</p>
+              <ion-item  ng-repeat="i in list" ng-click="goList(i.id)" style="border: none;padding: 0px;">
+                  <!--<div class="row row-wrap row-no-padding" ng-style="itemtitleStyle">-->
+                     <!--<div class="col col-center" style="padding: 0px;">-->
+                        <!--<p style="color: #adff2f;font-size: 18px;">{{i.name}}邮政</p>-->
+                     <!--</div>-->
+                  <!--</div>-->
+                  <div ng-style="itemStyle">
+                      <img src="{{i.mainpic}}" ng-style="itemavatarstyle"/>
+                      <div ng-style="itemdescriptionstyle">
+                          <p style="font-size: 16px;">更多精彩尽在{{i.name}}邮政微邮局</p>
+                          <p style="font-size: 13px;margin-top:2%;color: #dcdcdc;">来源：{{i.name}}邮政微邮局</p>
+                      </div>
                   </div>
                   <div ng-style="itemdivider">
 
                   </div>
               </ion-item>
-
           </ion-list>
-
     </ion-content>
 </ion-view>

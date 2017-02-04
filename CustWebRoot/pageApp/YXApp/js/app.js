@@ -48,6 +48,6 @@ angular.module("indexApp", ["ionic","ui.router","indexApp.controllers","indexApp
                 controller: 'articleCtrl'
             })
         ;
-        //两个模块控制器不能一样，或者控制器有问题
+        //两个模块控制器不能一样，或者控制器有问题
         $urlRouterProvider.otherwise("/main");
     });

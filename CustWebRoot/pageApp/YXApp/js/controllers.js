@@ -1,6 +1,6 @@
 angular.module("indexApp.controllers",[])
     .controller('mainCtrl', function ($scope,$rootScope,$ionicHistory,$http, $ionicPopup, $state,$cacheFactory,$ionicSlideBoxDelegate,IndexFactory) {
-        $scope.screenHeight=window.screen.availHeight;
+        $scope.screenHeight=window.innerHeight;
         $scope.screenWidth=window.screen.availWidth;
         $scope.itemStyle={
              "height":$scope.screenHeight*0.15+'px',
@@ -17,7 +17,7 @@ angular.module("indexApp.controllers",[])
         });
 
         $scope.rowStyle={
-            "height":$scope.screenHeight*0.11+'px',
+            "height":$scope.screenHeight*0.13+'px',
             "border":"none",
             "width":'100%',
             "background-color":"#ffffff"
@@ -35,7 +35,7 @@ angular.module("indexApp.controllers",[])
 
 
         $scope.itembottomimageStyle={
-            "height":$scope.screenHeight*0.3+'px',
+            "height":($scope.screenHeight-$scope.screenHeight*0.7)+'px',
             "width":$scope.screenWidth+'px'
         };
 
@@ -47,6 +47,8 @@ angular.module("indexApp.controllers",[])
         IndexFactory.getIndexList().then(function(response){
             $scope.articlelist=response.articlelist;
             $scope.imagelist=response.imagelist;
+            $ionicSlideBoxDelegate.update();
+            $ionicSlideBoxDelegate.$getByHandle("slideboximgs").loop(true);
         });
 
 
@@ -73,7 +75,7 @@ angular.module("indexApp.controllers",[])
     .controller('yxslistCtrl', function ($scope,$rootScope,$ionicHistory,$http, $ionicPopup, $state,$cacheFactory,$stateParams,IndexFactory) {
         $scope.screenHeight=window.screen.availHeight;
         $scope.screenWidth=window.screen.availWidth;
-        $scope.allheight= $scope.screenHeight*0.35;
+        $scope.allheight= $scope.screenHeight*0.25;
         $scope.itemStyle={
             "height":$scope.allheight+'px',
             "border":"none",
@@ -91,13 +93,13 @@ angular.module("indexApp.controllers",[])
         };
 
         $scope.itemavatarstyle={
-            "height":$scope.allheight*0.5+'px',
+            "height":$scope.allheight*0.6+'px',
             "width":$scope.screenWidth+'px'
         }
 
         $scope.itemdescriptionstyle={
             "padding":"5px",
-            "height": $scope.allheight*0.25+'px',
+            "height": $scope.allheight*0.3+'px',
             "width":$scope.screenWidth+'px'
         }
         $scope.itemdivider={
@@ -107,13 +109,9 @@ angular.module("indexApp.controllers",[])
         }
 
         IndexFactory.getIndexMain().then(function(response){
-            //var district_response= response.district;
-            //$scope.myName=district_response[0];
-            //$scope.districtlist=response.district;
-            //$scope.articlelist=response.article;
             var infolist=response.infolist;
             var districtlist=response.district;
-            $scope.myName=districtlist[0];
+            $scope.myName="";
             $scope.list=infolist;
             $scope.districtlist=districtlist;
         });
@@ -132,7 +130,7 @@ angular.module("indexApp.controllers",[])
 
             if((newValue==null)||(oldValue==null)||(newValue === oldValue))
                 return;
-            IndexFactory.getIndexListByCity(newValue.id).then(function(response){
+            IndexFactory.getIndexListByCity(newValue).then(function(response){
                 $scope.list = response;
             });
         });

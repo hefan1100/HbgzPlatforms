@@ -1,7 +1,8 @@
 <ion-view>
 
     <ion-content style="background-color: #ffffff;">
-        <ion-slide-box on-slide-changed="slideHasChanged($index)" ng-style="itemtitleimageStyle" auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" pager-click="pageClick(index)" active-slide="model.activeIndex"  delegate-handle="delegateHandler">
+        <ion-slide-box on-slide-changed="slideHasChanged($index)" ng-style="itemtitleimageStyle" auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" pager-click="pageClick(index)"
+                       delegate-handle="slideboximgs">
             <ion-slide style="width: 100%;height:100%;" ng-repeat="i in imagelist" ng-click="goDetail(i.ID)">
                 <img id="img" src="{{i.LOGOPIC}}" ng-style="itemtitleimageStyle">
             </ion-slide>
@@ -11,7 +12,7 @@
                     <img src="img/item-left.png" style="width:100%;display: inline;">
                 </div>
                 <div class="col col-33 col-center" style="text-align: center;">
-                    <a style="font-size: 15px;display: inline;">新产品发布</a>
+                    <a style="font-size: 1.3em;display: inline;">新产品发布</a>
                 </div>
                 <div class="col col-center" style="text-align: center;">
                     <img src="img/item-right.png" style="width:100%;display: inline;">
@@ -27,8 +28,8 @@
                           </div>
                       </div>
 
-                      <div class="col col-20 col-center" style="text-align: center;height:100%;">
-                          <img src="img/item_rightimage.png" style="display: inline;height: 60%;">
+                      <div class="col col-20 col-center" style="height:100%;">
+                          <img src="{{i.LOGOPIC}}" style="display: inline;height: 80%;float: right;">
                       </div>
                   </div>
                   <div style="height: 1px;width:100%;background-color: #dcdcdc;">
@@ -38,7 +39,7 @@
           </ion-list>
 
         <div ng-style="itembottomimageStyle" ng-click="goListMain()">
-           <img src="img/icon_bottomimage.png" ng_style="itembottomimageStyle">
+           <img src="img/yx_bottom.png" ng_style="itembottomimageStyle">
         </div>
 
     </ion-content>
