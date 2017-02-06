@@ -1,0 +1,23 @@
+<ion-pane>
+    <ion-content style="background-color:#f3f3f3;">
+
+        <ion-list ng-controller="AllManCtrl">
+            <ion-item ng-repeat="item in items"
+                      item="item"
+                      href="#/item/{{item.id}}" class="item-remove-animate">
+                <div style="width:100%;height: 100%;float: right;font-size: 12px"  class="warp">
+                    <div style="float: left" width="40%">
+                        经理姓名：{{ item.D_NAME }}
+                        </br>
+                        所在城市：{{ item.D_CITY }}
+                        </br>
+                        所属门店：{{ item.D_BRANCH }}
+                    </div>
+                    <div style="float: right" >
+                        <img ng-src="{{ item.D_CODEPIC }}" width="100px" />
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-pane>

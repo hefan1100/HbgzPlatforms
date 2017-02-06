@@ -29,11 +29,29 @@ angular.module("indexApp", ["ionic","ui.router","ionic-datepicker","indexApp.con
                 templateUrl:"customReg.html",
                 controller: 'RegCtrl'
             })
+            .state('allManager', {
+                url:"/allManager",
+                cache:false,
+                templateUrl:"allManager.html",
+                controller: 'AllManCtrl'
+            })
             .state('managerlist', {
                 url:"/managerlist",
                 cache:false,
                 templateUrl:"managerList.html",
                 controller: 'ManCusCtrl'
+            })
+            .state('userList', {
+                url:"/userList",
+                cache:false,
+                templateUrl:"userList.html",
+                controller: 'UserCtrl'
+            })
+            .state('allUsers', {
+                url:"/allUsers",
+                cache:false,
+                templateUrl:"allUsers.html",
+                controller: 'AllUserCtrl'
             })
             .state('salesreg', {
                 url:"/salesreg",
@@ -47,7 +65,14 @@ angular.module("indexApp", ["ionic","ui.router","ionic-datepicker","indexApp.con
                 templateUrl: 'secureDetail.html',
                 controller: 'SecureDetailCtrl'
             })
+            .state('cusEdit', {
+                url:'/cusEdit?sdid',
+                cache:false,
+                templateUrl: 'cusEdit.html',
+                controller: 'cusEditCtrl'
+            })
         ;
-        //两个模块控制器不能一样，或者控制器有问题
+        //两个模块控制器不能一样，或者控制器有问题
+
         $urlRouterProvider.otherwise("/main");
     });

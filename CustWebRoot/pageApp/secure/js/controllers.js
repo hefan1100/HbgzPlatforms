@@ -64,9 +64,14 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
         $scope.itemClick=function(){
             $scope.showPopup();
         };
-
+        $scope.goAllMan=function(){
+            $state.go("allManager");
+        };
+        $scope.goAllUsers=function(){
+            console.log("asdasd")
+            $state.go("allUsers");
+        };
         $scope.goSalesReg=function(){
-            console.log(QueryString())
             listFactory.CheckReg(QueryString(),'1').then(function(response){
                     console.log(response+"asdasdsad");
                     if(response=="[]"){
@@ -74,14 +79,12 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
                     }else{
                         $state.go("salesreg");
                     }
-
                 }
             );
         };
         $scope.goCusReg=function(){
 //            $state.go("customereg");
 //            判断是否已注册
-
             console.log(QueryString())
             listFactory.CheckReg(QueryString(),'2').then(function(response){
                     console.log(response+"asdasdsad");
@@ -97,8 +100,6 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
         $scope.goSecureDetail=function(url){
             $state.go('securedetail', {sdid: url});
         }
-
-
     })
     .controller('RegCtrl', function ($scope,$rootScope,$ionicHistory,$http,$ionicModal, $ionicPopup, $timeout,$state,$cacheFactory,listFactory) {
         $scope.screenHeight=window.screen.height;
@@ -108,7 +109,6 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
         $scope.data = {'openid':'','city':'','enginenum':'','name':'','platenum':'','province':'','vin':'','startDate':'','endDate':'','branch':'','password':'','picurl':''};
         $scope.salesuccess = function() {
             // 自定义弹窗
-
             var myPopup = $ionicPopup.show({
                 title: '注册成功！',
                 scope: $scope,
@@ -186,6 +186,50 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
         };
 
     })
+    .controller('cusEditCtrl', function ($scope,$rootScope,$ionicHistory,$http,$ionicModal, $ionicPopup, $timeout,$state,$cacheFactory,listFactory) {
+        $scope.screenHeight=window.screen.height;
+        $scope.screenWidth=window.screen.width;
+        $scope.startDate = new Date();
+        $scope.endDate = new Date();
+        $scope.data = {'openid':'','city':'','enginenum':'','name':'','platenum':'','province':'','vin':'','startDate':'','endDate':'','branch':'','password':'','picurl':''};
+        $scope.salesuccess = function() {
+            // 自定义弹窗
+            var myPopup = $ionicPopup.show({
+                title: '编辑成功！',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>确定</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            return 'reg';
+                        }
+                    }
+                ]
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); // 3秒后关闭弹窗
+            }, 3000);
+        };
+        listFactory.getSecure().then(function(response){
+                $scope.items =response;
+            }
+        );
+        $scope.doEdit=function(data){
+            $scope.data.openid=$("#openid").val();
+            $scope.data.startDate=startDate.innerText;
+            $scope.data.endDate=endDate.innerText;
+            listFactory.cusEdit(data).then(function(response){
+                    console.log(response);
+                    $scope.salesuccess();
+                }
+            );
+//            $scope.showPopup();
+        };
+    })
     .controller('MyCtrl', function($scope, $http, $ionicPopup, $state,$ionicLoading,listFactory) {
 
         $scope.data = {
@@ -243,6 +287,33 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
             }
         );
     })
+    .controller('AllManCtrl', function($scope,$stateParams, $http, $ionicPopup, $state,$ionicLoading,listFactory) {
+
+        $scope.data = {
+            showDelete: false
+        };
+
+        $scope.edit = function(item) {
+            alert('Edit Item: ' + item.id);
+        };
+        $scope.share = function(item) {
+            alert('Share Item: ' + item.id);
+        };
+
+        $scope.moveItem = function(item, fromIndex, toIndex) {
+            $scope.items.splice(fromIndex, 1);
+            $scope.items.splice(toIndex, 0, item);
+        };
+
+        $scope.onItemDelete = function(item) {
+            $scope.items.splice($scope.items.indexOf(item), 1);
+        };
+        listFactory.getMangerList("").then(function(response){
+                console.log(response);
+                $scope.items =response;
+            }
+        );
+    })
     .controller('ManCusCtrl', function($scope,$stateParams, $http, $ionicPopup, $state,$ionicLoading,listFactory) {
 
         $scope.data = {
@@ -264,6 +335,9 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
         $scope.onItemDelete = function(item) {
             $scope.items.splice($scope.items.indexOf(item), 1);
         };
+        $scope.goAllMan=function(){
+            $state.go("allManager");
+        };
         var openid=QueryString();
         listFactory.getMangerList(openid).then(function(response){
                 console.log(response);
@@ -271,5 +345,88 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
             }
         );
     })
-;
+    .controller('UserCtrl', function($scope,$stateParams, $http, $ionicPopup, $state,$ionicLoading,listFactory) {
+        $scope.data = {
+            showDelete: false
+        };
 
+        $scope.edit = function(item) {
+            alert('Edit Item: ' + item.id);
+        };
+        $scope.share = function(item) {
+            alert('Share Item: ' + item.id);
+        };
+
+        $scope.moveItem = function(item, fromIndex, toIndex) {
+            $scope.items.splice(fromIndex, 1);
+            $scope.items.splice(toIndex, 0, item);
+        };
+
+        $scope.onItemDelete = function(item) {
+            $scope.items.splice($scope.items.indexOf(item), 1);
+        };
+        $scope.goAllUsers=function(){
+            console.log("asdasd")
+            $state.go("allUsers");
+        };
+        var openid=QueryString();
+        listFactory.getUserInfo(QueryString(),'').then(function(response){
+                console.log(response);
+                $scope.items =response;
+            }
+        );
+    })
+    .controller('UserListCtrl', function($scope,$stateParams, $http, $ionicPopup, $state,$ionicLoading,listFactory) {
+        $scope.data = {
+            showDelete: false
+        };
+
+        $scope.edit = function(item) {
+            alert('Edit Item: ' + item.id);
+        };
+        $scope.share = function(item) {
+            alert('Share Item: ' + item.id);
+        };
+
+        $scope.moveItem = function(item, fromIndex, toIndex) {
+            $scope.items.splice(fromIndex, 1);
+            $scope.items.splice(toIndex, 0, item);
+        };
+
+        $scope.onItemDelete = function(item) {
+            $scope.items.splice($scope.items.indexOf(item), 1);
+        };
+        var openid=QueryString();
+        listFactory.getUserList(openid).then(function(response){
+                console.log(response);
+                $scope.items =response;
+            }
+        );
+    })
+    .controller('AllUserCtrl', function($scope,$stateParams, $http, $ionicPopup, $state,$ionicLoading,listFactory) {
+        $scope.data = {
+            showDelete: false
+        };
+
+        $scope.edit = function(item) {
+            alert('Edit Item: ' + item.id);
+        };
+        $scope.share = function(item) {
+            alert('Share Item: ' + item.id);
+        };
+
+        $scope.moveItem = function(item, fromIndex, toIndex) {
+            $scope.items.splice(fromIndex, 1);
+            $scope.items.splice(toIndex, 0, item);
+        };
+
+        $scope.onItemDelete = function(item) {
+            $scope.items.splice($scope.items.indexOf(item), 1);
+        };
+        listFactory.getUserList("").then(function(response){
+                console.log(response);
+                $scope.items =response;
+            }
+        );
+    })
+;

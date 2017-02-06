@@ -1,23 +1,43 @@
 <ion-pane>
     <ion-content style="background-color:#f3f3f3;">
-        <ion-list ng-controller="ManCusCtrl">
+        <ion-list ng-controller="UserCtrl">
             <ion-item ng-repeat="item in items"
                       item="item"
-                      href="#/item/{{item.id}}" class="item-remove-animate">
+                      href="#/item/{{item.D_DETAILID}}" class="item-remove-animate">
                 <div style="width:100%;height: 100%;float: right;font-size: 12px"  class="warp">
+                    <div style="font-size: 15px;font-weight: bold;" >用户信息：</div>
                     <div style="float: left" width="40%">
-                        经理姓名：{{ item.D_NAME }}
+                        用户姓名：{{ item.D_NAME }}
                         </br>
                         所在城市：{{ item.D_CITY }}
                         </br>
-                        所属门店：{{ item.D_BRANCH }}
+                        保险开始时间：{{ item.D_STARTDATE }}
+                        </br>
+                        保险到期时间：{{ item.D_ENDDATE }}
+                        </br>
+                        车牌号：{{ item.D_PLATENUM }}
+                    </div>
+                    <div style="float: right" >
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+        <ion-list ng-controller="ManCusCtrl">
+            <div><button ng-click="goAllMan()">所有经理</button></div>
+            <ion-item ng-repeat="item in items"
+                      item="item"
+                      href="#/item/{{item.D_DETAILID}}" class="item-remove-animate">
+                <div style="width:100%;height: 100%;float: right;font-size: 12px"  class="warp">
+                    <div style="float: left" width="40%">
+                        经理姓名：{{ item.D_NAME }}   所在城市：{{ item.D_CITY }}
+                        </br>
+                        所属门店：{{ item.D_BRANCH }}   联系方式：{{ item.D_MOBILE }}
                     </div>
                     <div style="float: right" >
                         <img ng-src="{{ item.D_CODEPIC }}" width="100px" />
                     </div>
                 </div>
             </ion-item>
-
         </ion-list>
     </ion-content>
 </ion-pane>

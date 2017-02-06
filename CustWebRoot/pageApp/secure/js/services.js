@@ -20,10 +20,44 @@ angular.module("indexApp.services", [])
                     });
                 return deferred.promise;
             },
+            getUser: function getList(userid){
+                var deferred = $q.defer();
+                console.log(userid);
+                var params="{\"userid\":\""+userid+"\"}";
+                var url = '/car?domain=getUser&params='+encodeURIComponent(params);
+                $http.post(url).success(function (response) {
+                    deferred.resolve(response);
+                }).error(function (data) {
+                        console.log("getList网络联接失败!");
+                        $ionicPopup.alert({
+                            title:'<b>错误!</b>',
+                            template:'网络联接失败!'
+                        })
+                        deferred.reject();
+                    });
+                return deferred.promise;
+            },
             getSecure: function getList(){
                 var deferred = $q.defer();
                 var params="{\"sdid\":\"sdid\"}";
                 var url = '/car?domain=getSecure&params='+encodeURIComponent(params);
+                $http.post(url).success(function (response) {
+                    deferred.resolve(response);
+                }).error(function (data) {
+                        console.log("getList网络联接失败!");
+                        $ionicPopup.alert({
+                            title:'<b>错误!</b>',
+                            template:'网络联接失败!'
+                        })
+                        deferred.reject();
+                    });
+                return deferred.promise;
+            },
+            queryReg: function getList(openid,type){
+                var deferred = $q.defer();
+                console.log(openid);
+                var params="{\"openid\":\""+openid+"\",\"type\":\""+type+"\"}";
+                var url = '/car?domain=QueryReg&params='+encodeURIComponent(params);
                 $http.post(url).success(function (response) {
                     deferred.resolve(response);
                 }).error(function (data) {
@@ -51,10 +85,57 @@ angular.module("indexApp.services", [])
                             $state.go("customereg");
                         }
                     }  else{
-                        $state.go("managerlist");
-
+                        if(type==1){
+                            $state.go("userList");
+                        }else{
+                            $state.go("managerlist");
+                        }
                     }
 
+                }).error(function (data) {
+                        console.log("getList网络联接失败!");
+                        $ionicPopup.alert({
+                            title:'<b>错误!</b>',
+                            template:'网络联接失败!'
+                        })
+                        deferred.reject();
+                    });
+                return deferred.promise;
+            },
+            getUserInfo: function getList(openid,type){
+                var deferred = $q.defer();
+                console.log(openid);
+                var params="{\"openid\":\""+openid+"\",\"type\":\""+type+"\"}";
+                var url = '/car?domain=CheckReg&params='+encodeURIComponent(params);
+                $http.post(url).success(function (response) {
+                    console.log(response.length);
+                    deferred.resolve(response);
+                }).error(function (data) {
+                        console.log("getList网络联接失败!");
+                        $ionicPopup.alert({
+                            title:'<b>错误!</b>',
+                            template:'网络联接失败!'
+                        })
+                        deferred.reject();
+                    });
+                return deferred.promise;
+            },
+            cusEdit: function getList(data){
+                var deferred = $q.defer();
+                console.log(data);
+                var params="{\"startDate\":\""+data["startDate"]+"\",\"endDate\":\""+data["endDate"]+"\",\"openid\":\""+data["openid"]+"\",\"name\":\""+data["name"]+"\",\"city\":\""+data["city"]+"\",\"province\":\""+data["province"]+"\",\"platenum\":\""+data["platenum"]+"\",\"vin\":\""+data["vin"]+"\",\"enginenum\":\""+data["enginenum"]+"\"}";
+                var url = '/car?domain=cusReg&params='+encodeURIComponent(params);
+                $http.post(url).success(function (response) {
+                    if(response.trim()=="true"){
+                        deferred.resolve(response);
+                    } else{
+                        $ionicPopup.alert({
+                            title:'<b>错误!</b>',
+                            template:'网络联接失败!'
+                        })
+                        deferred.reject();
+                    }
+                    deferred.resolve(response);
                 }).error(function (data) {
                         console.log("getList网络联接失败!");
                         $ionicPopup.alert({
@@ -71,7 +152,7 @@ angular.module("indexApp.services", [])
                 var params="{\"startDate\":\""+data["startDate"]+"\",\"endDate\":\""+data["endDate"]+"\",\"openid\":\""+data["openid"]+"\",\"name\":\""+data["name"]+"\",\"city\":\""+data["city"]+"\",\"province\":\""+data["province"]+"\",\"platenum\":\""+data["platenum"]+"\",\"vin\":\""+data["vin"]+"\",\"enginenum\":\""+data["enginenum"]+"\"}";
                 var url = '/car?domain=cusReg&params='+encodeURIComponent(params);
                 $http.post(url).success(function (response) {
-                    if(response=="true"){
+                    if(response.trim()=="true"){
                         deferred.resolve(response);
                     } else{
                         $ionicPopup.alert({
@@ -122,6 +203,22 @@ angular.module("indexApp.services", [])
                 console.log(openid);
                 var params="{\"openid\":\""+openid+"\"}";
                 var url = '/car?domain=getMangerList&params='+encodeURIComponent(params);
+                $http.post(url).success(function (response) {
+                    deferred.resolve(response);
+                }).error(function (data) {
+                        console.log("getList网络联接失败!");
+                        $ionicPopup.alert({
+                            title:'<b>错误!</b>',
+                            template:'网络联接失败!'
+                        })
+                        deferred.reject();
+                    });
+                return deferred.promise;
+            },
+            getUserList:function getList(openid){
+                var deferred = $q.defer();
+                var params="{\"openid\":\""+openid+"\"}";
+                var url = '/car?domain=getUserList&params='+encodeURIComponent(params);
                 $http.post(url).success(function (response) {
                     deferred.resolve(response);
                 }).error(function (data) {

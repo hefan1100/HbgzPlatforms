@@ -1,23 +1,45 @@
+<ion-header-bar style="background-color: #ffffff;" >
+    <button ng-click="goAllUsers()">点击显示所有用户</button>
+</ion-header-bar>
 <ion-pane>
     <ion-content style="background-color:#f3f3f3;">
-        <ion-list ng-controller="ManCusCtrl">
-            <ion-item ng-repeat="item in items"
+        <ion-list ng-controller="UserCtrl">
+            <ion-item id="userInfo" ng-repeat="item in items"
                       item="item"
-                      href="#/item/{{item.id}}" class="item-remove-animate">
+                       class="item-remove-animate">
                 <div style="width:100%;height: 100%;float: right;font-size: 12px"  class="warp">
                     <div style="float: left" width="40%">
-                        经理姓名：{{ item.D_NAME }}
+                        <div>客户经理姓名：{{ item.D_NAME }}</div>
                         </br>
                         所在城市：{{ item.D_CITY }}
                         </br>
-                        所属门店：{{ item.D_BRANCH }}
+                        联系方式： {{ item.D_MOBILE }}
                     </div>
-                    <div style="float: right" >
-                        <img ng-src="{{ item.D_CODEPIC }}" width="100px" />
-                    </div>
+                    <div style="float: right" width="40%"><img ng-src="{{item.D_CODEPIC}}"></div>
                 </div>
             </ion-item>
-
+        </ion-list>
+        <ion-list ng-controller="UserListCtrl">
+            <ion-item ng-repeat="item in items"
+                      item="item"
+                      ng-click="goCusEdit({{item.D_DETAILID}})"
+                       class="item-remove-animate">
+                <div style="width:100%;height: 100%;float: right;font-size: 12px"  class="warp">
+                    <div style="float: left" width="45%">
+                        用户姓名：{{ item.D_NAME }}
+                        </br>
+                        保险开始时间：{{ item.D_STARTDATE }}
+                        </br>
+                        车牌号：{{ item.D_PLATENUM }}
+                    </div>
+                    <div style="float: right" width="45%">
+                        所在城市：{{ item.D_CITY }}
+                        </br>
+                        保险到期时间：{{ item.D_ENDDATE }}
+                        </br>
+                        提醒时间：{{ item.D_REMINDTIME }} 天
+                </div>
+            </ion-item>
         </ion-list>
     </ion-content>
 </ion-pane>
