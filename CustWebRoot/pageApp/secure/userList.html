@@ -22,7 +22,7 @@
         <ion-list ng-controller="UserListCtrl">
             <ion-item ng-repeat="item in items"
                       item="item"
-                      ng-click="goCusEdit({{item.D_DETAILID}})"
+                      ng-click="itemClicked(item.D_DETAILID)"
                        class="item-remove-animate">
                 <div style="width:100%;height: 100%;float: right;font-size: 12px"  class="warp">
                     <div style="float: left" width="45%">

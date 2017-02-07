@@ -17,7 +17,8 @@ import java.util.UUID;
 
 /**
  * Created by swt on 2015/10/13.
- * sql处理方式：
+ * sql处理方式：
+
 
 
 
@@ -75,7 +76,8 @@ public class CarSecureService extends HttpServlet {
             UUID uid=UUID.randomUUID();
             String u_id=uid.toString().replaceAll("-","");
             String picurl="/upload/"+obj.get("picurl").toString();
-            //先生成一个用户
+            //先生成一个用户
+
             String sql="insert INTO store_user_info VALUES('"+u_id+"','','','"+openid+"','')";
             //再给用户填充信息
             UUID did=UUID.randomUUID();
@@ -102,7 +104,8 @@ public class CarSecureService extends HttpServlet {
             String openid=obj.get("openid").toString();
             UUID uid=UUID.randomUUID();
             String u_id=uid.toString().replaceAll("-","");
-            //先生成一个用户
+            //先生成一个用户
+
             String sql="insert INTO store_user_info VALUES('"+u_id+"','','','"+openid+"','')";
             //再给用户填充信息
             UUID did=UUID.randomUUID();
@@ -115,11 +118,29 @@ public class CarSecureService extends HttpServlet {
             }
             System.out.println(jsonStr);
         }
+        if(domain.equals("getUserList")){
+            JSONObject obj = JSONObject.fromObject(params);
+            String openid=obj.get("openid").toString();
+            ui = new UserHttpImpl();
+            StringBuffer sql=new StringBuffer();
+            sql.append("SELECT D_DETAILID,U_USERID,D_NAME,D_GENDER,D_BIRTHDAY,D_PROVINCE,D_CITY,D_BRANCH,D_ADDRESS,D_PLATENUM,D_VIN,D_DRIVERLICENCE,D_ENGINENUM,D_STARTDATE,D_ENDDATE,D_INSERTDATE,MANAGER_ID,D_TYPE,D_CODEPIC,D_MOBILE,D_REMINDTIME FROM STORE_USER_DETAILS WHERE D_TYPE=2 ");
+            if(StringUtil.isBlank(openid)){
+
+            } else{
+                sql.append(" AND MANAGER_ID='"+openid+"'");
+            }
+            jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
+        }
         if(domain.equals("getMangerList")){
             JSONObject obj = JSONObject.fromObject(params);
             String openid=obj.get("openid").toString();
             ui = new UserHttpImpl();
-            String sql="SELECT * FROM STORE_USER_DETAILS WHERE U_USERID IN (SELECT MANAGER_ID FROM STORE_USER_DETAILS WHERE U_USERID IN (SELECT U_USERID FROM STORE_USER_INFO  WHERE OPENID='"+openid+"'))";
+            String sql="";
+            if(StringUtil.isBlank(openid)){
+                sql="SELECT D_DETAILID,U_USERID,D_NAME,D_GENDER,D_BIRTHDAY,D_PROVINCE,D_CITY,D_BRANCH,D_ADDRESS,D_PLATENUM,D_VIN,D_DRIVERLICENCE,D_ENGINENUM,D_STARTDATE,D_ENDDATE,D_INSERTDATE,MANAGER_ID,D_TYPE,D_CODEPIC,D_MOBILE,D_REMINDTIME FROM STORE_USER_DETAILS WHERE D_TYPE=1";
+            } else{
+                sql="SELECT D_DETAILID,U_USERID,D_NAME,D_GENDER,D_BIRTHDAY,D_PROVINCE,D_CITY,D_BRANCH,D_ADDRESS,D_PLATENUM,D_VIN,D_DRIVERLICENCE,D_ENGINENUM,D_STARTDATE,D_ENDDATE,D_INSERTDATE,MANAGER_ID,D_TYPE,D_CODEPIC,D_MOBILE,D_REMINDTIME FROM STORE_USER_DETAILS WHERE U_USERID IN (SELECT MANAGER_ID FROM STORE_USER_DETAILS WHERE U_USERID IN (SELECT U_USERID FROM STORE_USER_INFO  WHERE OPENID='"+openid+"'))";
+            }
             jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
         }
         if(domain.equals("CheckReg")){
@@ -127,8 +148,16 @@ public class CarSecureService extends HttpServlet {
             String openid=obj.get("openid").toString();
             String type=obj.get("type").toString();
             ui = new UserHttpImpl();
-            String sql="SELECT * FROM STORE_USER_DETAILS WHERE U_USERID IN (SELECT U_USERID FROM STORE_USER_INFO WHERE OPENID='"+openid+"' AND D_TYPE='"+type+"')";
-            jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
+            StringBuffer sb=new StringBuffer("");
+            sb.append("SELECT D_DETAILID,U_USERID,D_NAME,D_GENDER,D_BIRTHDAY,D_PROVINCE,D_CITY,D_BRANCH,D_ADDRESS,D_PLATENUM,D_VIN,D_DRIVERLICENCE,D_ENGINENUM,D_STARTDATE,D_ENDDATE,D_INSERTDATE,MANAGER_ID,D_TYPE,D_CODEPIC,D_MOBILE,D_REMINDTIME FROM STORE_USER_DETAILS WHERE U_USERID IN (SELECT U_USERID FROM STORE_USER_INFO WHERE 1=1 ");
+            if(!StringUtil.isEmpty(openid)){
+                 sb.append(" AND OPENID='"+openid+"'");
+            }
+            if(!StringUtil.isEmpty(type)){
+                sb.append(" AND D_TYPE='"+type+"'");
+            }
+            sb.append(")");
+            jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sb.toString()));
         }
         if(domain.equals("branchPosition")){
             ui = new UserHttpImpl();
@@ -136,7 +165,14 @@ public class CarSecureService extends HttpServlet {
             jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
 
         }
-
+        if(domain.equals("getUser")){
+            JSONObject obj = JSONObject.fromObject(params);
+            String userid=obj.get("userid").toString();
+            ui = new UserHttpImpl();
+            StringBuffer sql=new StringBuffer();
+            sql.append("SELECT D_DETAILID,U_USERID,D_NAME,D_GENDER,D_BIRTHDAY,D_PROVINCE,D_CITY,D_BRANCH,D_ADDRESS,D_PLATENUM,D_VIN,D_DRIVERLICENCE,D_ENGINENUM,D_STARTDATE,D_ENDDATE,D_INSERTDATE,MANAGER_ID,D_TYPE,D_CODEPIC,D_MOBILE,D_REMINDTIME FROM STORE_USER_DETAILS WHERE D_DETAILID='"+userid+"'");
+            jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
+        }
         if(domain.equals("getDic")){
             JSONObject obj = JSONObject.fromObject(params);
             ui = new UserHttpImpl();

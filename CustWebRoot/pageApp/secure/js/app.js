@@ -66,9 +66,9 @@ angular.module("indexApp", ["ionic","ui.router","ionic-datepicker","indexApp.con
                 controller: 'SecureDetailCtrl'
             })
             .state('cusEdit', {
-                url:'/cusEdit?sdid',
+                url:'/customEdit?did',
                 cache:false,
-                templateUrl: 'cusEdit.html',
+                templateUrl: 'customEdit.html',
                 controller: 'cusEditCtrl'
             })
         ;

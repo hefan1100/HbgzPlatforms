@@ -9,56 +9,56 @@
         $("#userid").append(getuserid());
     });
 </script>
+
 <ion-view ng-controller="cusEditCtrl">
     <ion-content style="background-color:#f3f3f3;">
+
         <div style="width: 95%;padding-top:8px;margin:0 auto;" class="list radius">
             <div class="item item-input item-select radius-top">
-                <div class="input-label">省:</div>
-                <select id="province" ng-model="data.province">
+                <div class="input-label">* 省:</div>
+                <select id="province" ng-model="item.D_PROVINCE">
                     <option selected="selected">湖北</option>
                 </select>
             </div>
             <div class="item item-input item-select">
-                <div class="input-label">市:</div>
-                <select id="city" ng-model="data.city">
-                    <option>武汉</option>
-                    <option>仙桃</option>
-                    <option>十堰</option>
-                    <option>襄阳</option>
+                <div class="input-label">* 市:</div>
+                    <!--<option value="{{$index}}" ng-repeat="t in city" ng-selected="number==$index">{{t}}</option>-->
+                <select ng-model="item.D_CITY" ng-options="city.name as city.name for city in citys">
                 </select>
             </div>
             <div class="item item-input">
-                <div class="input-label">车牌号码:</div>
-                鄂<input id="platenum" type="text"  ng-model="data.platenum"/>
+                <div class="input-label">* 车牌号码:</div>
+                鄂<input id="platenum" type="text"  ng-model="items.D_PLATENUM" />
             </div>
             <div class="item item-input">
-                <div class="input-label">车主姓名:</div>
-                <input id="name" type="text"  ng-model="data.name"/>
-                <input id="userid" type="hidden" ng-model="data.userid" />
+                <div class="input-label">* 车主姓名:</div>
+                <input id="name" type="text"  ng-model="items.D_NAME" />
+                <input id="userid" type="hidden" ng-model="items.D_DETAILID" />
             </div>
             <div class="item item-input">
-                <span class="input-label">起保日期:</span>
+                <span class="input-label">* 起保日期:</span>
                 <ionic-datepicker idate="startDate" >
                     <button id="startDate" class="button button-clear" style="width: 100%;"> {{startDate | date:'yyyy/MM/dd'}} </button>
                 </ionic-datepicker>
             </div>
             <div class="item item-input">
-                <span class="input-label">终保日期:</span>
+                <span class="input-label">* 终保日期:</span>
                 <ionic-datepicker idate="endDate" >
                     <button id="endDate" class="button button-clear" style="width: 100%;"> {{endDate | date:'yyyy/MM/dd'}} </button>
                 </ionic-datepicker>
             </div>
             <div class="item item-input">
-                <div class="input-label">车架号:</div>
-                <input id="vin" type="text"  ng-model="data.vin"/>
+                <div class="input-label">* 车架号:</div>
+                <input id="vin" type="text"  ng-model="items.D_VIN"/>
             </div>
             <div class="item item-input radius-button">
-                <div class="input-label">发动机号:</div>
-                <input id="enginenum" type="text"  ng-model="data.enginenum"/>
+                <div class="input-label">* 发动机号:</div>
+                <input id="enginenum" type="text"  ng-model="items.D_ENGINENUM"/>
             </div>
             <div >
                 <button class="button button-block radius" style="color:white;font-weight:bold;background-image: url('img/btn.png');background-repeat: no-repeat;background-size:100%; " ng-click="cusEdit(data)">提交</button>
             </div>
         </div>
+
     </ion-content>
 </ion-view>

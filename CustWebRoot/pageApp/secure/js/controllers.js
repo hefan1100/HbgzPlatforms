@@ -186,11 +186,26 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
         };
 
     })
-    .controller('cusEditCtrl', function ($scope,$rootScope,$ionicHistory,$http,$ionicModal, $ionicPopup, $timeout,$state,$cacheFactory,listFactory) {
+    .controller('cusEditCtrl', function ($scope,$rootScope,$stateParams,$ionicHistory,$http,$ionicModal, $ionicPopup, $timeout,$state,$cacheFactory,listFactory) {
         $scope.screenHeight=window.screen.height;
         $scope.screenWidth=window.screen.width;
-        $scope.startDate = new Date();
-        $scope.endDate = new Date();
+        $scope.citys = [
+            {name:'请选择', cid:'0'},
+            {name:'武汉', cid:'1'},
+            {name:'宜昌', cid:'2'},
+            {name:'襄阳', cid:'3'},
+            {name:'荆州', cid:'4'},
+            {name:'黄冈', cid:'5'},
+            {name:'仙桃', cid:'6'},
+            {name:'十堰', cid:'7'},
+            {name:'恩施', cid:'8'},
+            {name:'孝感', cid:'9'},
+            {name:'咸宁', cid:'10'},
+            {name:'随州', cid:'11'},
+            {name:'神农架', cid:'12'},
+            {name:'天门', cid:'13'},
+            {name:'潜江', cid:'14'}
+        ];
         $scope.data = {'openid':'','city':'','enginenum':'','name':'','platenum':'','province':'','vin':'','startDate':'','endDate':'','branch':'','password':'','picurl':''};
         $scope.salesuccess = function() {
             // 自定义弹窗
@@ -214,8 +229,12 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
                 myPopup.close(); // 3秒后关闭弹窗
             }, 3000);
         };
-        listFactory.getSecure().then(function(response){
-                $scope.items =response;
+        var did = $stateParams.did;
+        listFactory.getUser(did).then(function(response){
+                $scope.items =response[0];
+                $scope.startDate = new Date(response[0].D_STARTDATE);
+                $scope.endDate = new Date(response[0].D_ENDDATE);
+                console.log($scope.items.D_NAME );
             }
         );
         $scope.doEdit=function(data){
@@ -261,11 +280,9 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
         );
     })
     .controller('SecureDetailCtrl', function($scope,$stateParams, $http, $ionicPopup, $state,$ionicLoading,listFactory) {
-
         $scope.data = {
             showDelete: false
         };
-
         $scope.edit = function(item) {
             alert('Edit Item: ' + item.id);
         };
@@ -308,7 +325,7 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
         $scope.onItemDelete = function(item) {
             $scope.items.splice($scope.items.indexOf(item), 1);
         };
-        listFactory.getMangerList("").then(function(response){
+        listFactory.getUserList("").then(function(response){
                 console.log(response);
                 $scope.items =response;
             }
@@ -377,6 +394,10 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
         );
     })
     .controller('UserListCtrl', function($scope,$stateParams, $http, $ionicPopup, $state,$ionicLoading,listFactory) {
+        $scope.screenHeight=window.screen.height;
+        $scope.screenWidth=window.screen.width;
+        $scope.data = {'openid':'','city':'','enginenum':'','name':'','platenum':'','province':'','vin':'','startDate':'','endDate':'','branch':'','password':'','picurl':''};
+
         $scope.data = {
             showDelete: false
         };
@@ -395,6 +416,10 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
 
         $scope.onItemDelete = function(item) {
             $scope.items.splice($scope.items.indexOf(item), 1);
+        };
+        $scope.itemClicked = function(url){
+            //url是从article.html页面中传递过来的参数;第一个参数是路由的路径，第二个参数是给属性赋值的值；
+            $state.go('cusEdit',{did:url});
         };
         var openid=QueryString();
         listFactory.getUserList(openid).then(function(response){
