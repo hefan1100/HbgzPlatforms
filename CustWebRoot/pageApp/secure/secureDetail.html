@@ -13,14 +13,16 @@
             </ion-item>
         </ion-list>
         <ion-list ng-controller="SecureDetailCtrl">
-            <ion-item ng-repeat="item in items"
-                      item="item"
-                      href="#/item/{{item.id}}" class="item-remove-animate">
-                <div ng-style="headerStyle">
-                    <img ng-src="{{ item.logopic }}" width="100%" height="100%" />
-                </div>
+            <ion-item ng-repeat="detailitem in detailitems"
+                      item="detailitem"
+                      ng-click="itemClicked(detailitem.id)" class="item-remove-animate">
                 <div style="width:100%;height: 100%;float: right;font-size: 12px"  class="warp">
-                    {{ item.content }}
+                    <div style="float: left;" >
+                        <img ng-src="{{ detailitem.logopic }}" width="100px" />
+                    </div>
+                    <div style="width:50%;float: right;font-size: 12px" class="warp"  >
+                        {{ detailitem.title }}
+                    </div>
                 </div>
             </ion-item>
         </ion-list>

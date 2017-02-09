@@ -1,5 +1,6 @@
 <ion-pane>
     <ion-content style="background-color:#f3f3f3;">
+        <div><button ng-click="goAllMan()">所有经理</button></div>
         <ion-list ng-controller="UserCtrl">
             <ion-item ng-repeat="item in items"
                       item="item"
@@ -23,18 +24,21 @@
             </ion-item>
         </ion-list>
         <ion-list ng-controller="ManCusCtrl">
-            <div><button ng-click="goAllMan()">所有经理</button></div>
             <ion-item ng-repeat="item in items"
                       item="item"
                       href="#/item/{{item.D_DETAILID}}" class="item-remove-animate">
                 <div style="width:100%;height: 100%;float: right;font-size: 12px"  class="warp">
-                    <div style="float: left" width="40%">
-                        经理姓名：{{ item.D_NAME }}   所在城市：{{ item.D_CITY }}
+                    <div style="float: left;width: 60%" >
+                        经理姓名：{{ item.D_NAME }}
                         </br>
-                        所属门店：{{ item.D_BRANCH }}   联系方式：{{ item.D_MOBILE }}
+                        所在城市：{{ item.D_CITY }}
+                        </br>
+                        所属门店：{{ item.D_BRANCH }}
+                        </br>
+                        联系方式：{{ item.D_MOBILE }}
                     </div>
-                    <div style="float: right" >
-                        <img ng-src="{{ item.D_CODEPIC }}" width="100px" />
+                    <div style="float: right;width: 30%"  >
+                        <img width="100" ng-src="{{ item.D_CODEPIC }}" />
                     </div>
                 </div>
             </ion-item>

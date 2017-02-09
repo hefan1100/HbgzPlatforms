@@ -206,7 +206,23 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
             {name:'天门', cid:'13'},
             {name:'潜江', cid:'14'}
         ];
-        $scope.data = {'openid':'','city':'','enginenum':'','name':'','platenum':'','province':'','vin':'','startDate':'','endDate':'','branch':'','password':'','picurl':''};
+        $scope.provinces = [
+            {name:'请选择', pid:'0'},
+            {name:'湖北', pid:'1'}
+        ];
+        $scope.usertypes = [
+            {name:'请选择', utid:'0'},
+            {name:'新用户', utid:'1'},
+            {name:'老用户', utid:'1'},
+            {name:'潜在客户', utid:'1'}
+        ];
+        $scope.remindtimes = [
+            {name:'请选择', utid:'0'},
+            {name:'15天', utid:'1'},
+            {name:'30天', utid:'1'},
+            {name:'90天', utid:'1'}
+        ];
+        $scope.data = {'userid':'','city':'','enginenum':'','name':'','platenum':'','province':'','vin':'','startDate':'','endDate':'','branch':'','usertype':'','picurl':'','managerid':''};
         $scope.salesuccess = function() {
             // 自定义弹窗
             var myPopup = $ionicPopup.show({
@@ -234,11 +250,23 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
                 $scope.items =response[0];
                 $scope.startDate = new Date(response[0].D_STARTDATE);
                 $scope.endDate = new Date(response[0].D_ENDDATE);
+                $scope.items.D_DETAILID=response[0].D_DETAILID;//如果想要第一个值
+                $scope.items.D_CITY=response[0].D_CITY;//如果想要第一个值
+                $scope.items.D_USERTYPE=response[0].D_USERTYPE;//如果想要第一个值
+                $scope.items.D_PROVINCE=response[0].D_PROVINCE;//如果想要第一个值
                 console.log($scope.items.D_NAME );
             }
         );
-        $scope.doEdit=function(data){
-            $scope.data.openid=$("#openid").val();
+        $scope.cusEdit=function(data){
+            $scope.data.managerid=QueryString();
+            $scope.data.userid=$scope.items.D_DETAILID;
+            $scope.data.name=$("#name").val();
+            $scope.data.vin=$("#vin").val();
+            $scope.data.platenum=$("#platenum").val();
+            $scope.data.enginenum=$("#enginenum").val();
+            $scope.data.city=$("#city").find("option:selected").text();
+            $scope.data.usertype=$("#usertype").find("option:selected").text();
+            $scope.data.province=$("#province").find("option:selected").text();
             $scope.data.startDate=startDate.innerText;
             $scope.data.endDate=endDate.innerText;
             listFactory.cusEdit(data).then(function(response){
@@ -246,7 +274,6 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
                     $scope.salesuccess();
                 }
             );
-//            $scope.showPopup();
         };
     })
     .controller('MyCtrl', function($scope, $http, $ionicPopup, $state,$ionicLoading,listFactory) {
@@ -298,9 +325,17 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
         $scope.onItemDelete = function(item) {
             $scope.items.splice($scope.items.indexOf(item), 1);
         };
+        $scope.itemClicked = function(url){
+            //url是从article.html页面中传递过来的参数;第一个参数是路由的路径，第二个参数是给属性赋值的值；
+            $state.go('secureDetail',{sdid:url});
+        }
         var sdid = $stateParams.sdid;
         listFactory.getSecureDtail(sdid).then(function(response){
                 $scope.items =response;
+            }
+        );
+        listFactory.getDetailItem(sdid).then(function(response){
+                $scope.detailitems =response;
             }
         );
     })

@@ -1,13 +1,4 @@
 <script type="text/javascript">
-    function getuserid(){
-        var uri = window.location.search;
-        var re = new RegExp("openid\=([^\&\?]*)", "ig");
-        return ((uri.match(re))?(uri.match(re)[0].substr("userid".length+1)):null);
-    }
-    $(function () {
-        $("#userid").val(getuserid());
-        $("#userid").append(getuserid());
-    });
 </script>
 
 <ion-view ng-controller="cusEditCtrl">
@@ -16,14 +7,18 @@
         <div style="width: 95%;padding-top:8px;margin:0 auto;" class="list radius">
             <div class="item item-input item-select radius-top">
                 <div class="input-label">* 省:</div>
-                <select id="province" ng-model="item.D_PROVINCE">
-                    <option selected="selected">湖北</option>
+                <select id="province" ng-model="items.D_PROVINCE" ng-options="province.name as province.name for province in provinces"  ng-init="item.D_PROVINCE = province.name">
                 </select>
             </div>
             <div class="item item-input item-select">
                 <div class="input-label">* 市:</div>
                     <!--<option value="{{$index}}" ng-repeat="t in city" ng-selected="number==$index">{{t}}</option>-->
-                <select ng-model="item.D_CITY" ng-options="city.name as city.name for city in citys">
+                <select id="city" ng-model="items.D_CITY" ng-options="city.name as city.name for city in citys"  ng-init="item.D_CITY = city.name">
+                </select>
+            </div>
+            <div class="item item-input item-select">
+                <div class="input-label">* 用户标识:</div>
+                <select id="usertype" ng-model="items.D_USERTYPE" ng-options="usertype.name as usertype.name for usertype in usertypes"  ng-init="item.D_USERTYPE = usertype.name">
                 </select>
             </div>
             <div class="item item-input">
@@ -55,8 +50,13 @@
                 <div class="input-label">* 发动机号:</div>
                 <input id="enginenum" type="text"  ng-model="items.D_ENGINENUM"/>
             </div>
+            <div class="item item-input radius-button">
+                <div class="input-label">* 提醒时间:</div>
+                <select id="remindtime" ng-model="items.D_REMIND" ng-options="remindtime.name as remindtime.name for remindtime in remindtimes" >
+                </select>
+            </div>
             <div >
-                <button class="button button-block radius" style="color:white;font-weight:bold;background-image: url('img/btn.png');background-repeat: no-repeat;background-size:100%; " ng-click="cusEdit(data)">提交</button>
+                <button class="button button-block radius" style="color:white;font-weight:bold;background-image: url('img/btn.png');background-repeat: no-repeat;background-size:100% 100%; " ng-click="cusEdit(data)">提交</button>
             </div>
         </div>
 

@@ -20,6 +20,22 @@ angular.module("indexApp.services", [])
                     });
                 return deferred.promise;
             },
+            getDetailItem: function getList(sdid){
+                var deferred = $q.defer();
+                var params="{\"sdid\":\""+sdid+"\"}";
+                var url = '/car?domain=getDetailItem&params='+encodeURIComponent(params);
+                $http.post(url).success(function (response) {
+                    deferred.resolve(response);
+                }).error(function (data) {
+                        console.log("getList网络联接失败!");
+                        $ionicPopup.alert({
+                            title:'<b>错误!</b>',
+                            template:'网络联接失败!'
+                        })
+                        deferred.reject();
+                    });
+                return deferred.promise;
+            },
             getUser: function getList(userid){
                 var deferred = $q.defer();
                 console.log(userid);
@@ -122,9 +138,8 @@ angular.module("indexApp.services", [])
             },
             cusEdit: function getList(data){
                 var deferred = $q.defer();
-                console.log(data);
-                var params="{\"startDate\":\""+data["startDate"]+"\",\"endDate\":\""+data["endDate"]+"\",\"openid\":\""+data["openid"]+"\",\"name\":\""+data["name"]+"\",\"city\":\""+data["city"]+"\",\"province\":\""+data["province"]+"\",\"platenum\":\""+data["platenum"]+"\",\"vin\":\""+data["vin"]+"\",\"enginenum\":\""+data["enginenum"]+"\"}";
-                var url = '/car?domain=cusReg&params='+encodeURIComponent(params);
+                var params="{\"startDate\":\""+data["startDate"]+"\",\"endDate\":\""+data["endDate"]+"\",\"userid\":\""+data["userid"]+"\",\"name\":\""+data["name"]+"\",\"city\":\""+data["city"]+"\",\"province\":\""+data["province"]+"\",\"platenum\":\""+data["platenum"]+"\",\"vin\":\""+data["vin"]+"\",\"enginenum\":\""+data["enginenum"]+"\",\"managerid\":\""+data["managerid"]+"\",\"usertype\":\""+data["usertype"]+"\"}";
+                var url = '/car?domain=cusEdit&params='+encodeURIComponent(params);
                 $http.post(url).success(function (response) {
                     if(response.trim()=="true"){
                         deferred.resolve(response);
@@ -147,20 +162,16 @@ angular.module("indexApp.services", [])
                 return deferred.promise;
             },
             cusReg: function getList(data){
+
                 var deferred = $q.defer();
                 console.log(data);
                 var params="{\"startDate\":\""+data["startDate"]+"\",\"endDate\":\""+data["endDate"]+"\",\"openid\":\""+data["openid"]+"\",\"name\":\""+data["name"]+"\",\"city\":\""+data["city"]+"\",\"province\":\""+data["province"]+"\",\"platenum\":\""+data["platenum"]+"\",\"vin\":\""+data["vin"]+"\",\"enginenum\":\""+data["enginenum"]+"\"}";
                 var url = '/car?domain=cusReg&params='+encodeURIComponent(params);
                 $http.post(url).success(function (response) {
-                    if(response.trim()=="true"){
-                        deferred.resolve(response);
-                    } else{
-                        $ionicPopup.alert({
-                            title:'<b>错误!</b>',
-                            template:'网络联接失败!'
-                        })
-                        deferred.reject();
-                    }
+                    $ionicPopup.alert({
+                        title:'<b>修改成功!</b>',
+                        template:'修改客户信息成功！'
+                    })
                     deferred.resolve(response);
                 }).error(function (data) {
                         console.log("getList网络联接失败!");

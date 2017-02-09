@@ -15,7 +15,7 @@
                         </br>
                         联系方式： {{ item.D_MOBILE }}
                     </div>
-                    <div style="float: right" width="40%"><img ng-src="{{item.D_CODEPIC}}"></div>
+                    <div style="float: right"><img width="100px" ng-src="{{item.D_CODEPIC}}"></div>
                 </div>
             </ion-item>
         </ion-list>
@@ -28,14 +28,16 @@
                     <div style="float: left" width="45%">
                         用户姓名：{{ item.D_NAME }}
                         </br>
+                        所在城市：{{ item.D_CITY }}
+                        </br>
                         保险开始时间：{{ item.D_STARTDATE }}
+                        </br>
+                        保险到期时间：{{ item.D_ENDDATE }}
                         </br>
                         车牌号：{{ item.D_PLATENUM }}
                     </div>
                     <div style="float: right" width="45%">
-                        所在城市：{{ item.D_CITY }}
-                        </br>
-                        保险到期时间：{{ item.D_ENDDATE }}
+                        <img src="img/new.png">
                         </br>
                         提醒时间：{{ item.D_REMINDTIME }} 天
                 </div>
