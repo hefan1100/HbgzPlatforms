@@ -80,11 +80,13 @@ angular.module("indexApp.controllers",[])
                else {
                    IndexFactory.getChatsReply($scope.sendText).then(function (response) {
                        $scope.addHtml(response.reply);
+                       $scope.sendText="";
                    });
                }
            }
            else{
                $scope.addHtml(null);
+               $scope.sendText="";
            }
 
        };
@@ -212,7 +214,19 @@ angular.module("indexApp.controllers",[])
     })
 
     .controller('adviseCtrl', function ($timeout,$ionicHistory,$scope,$rootScope,$ionicHistory,$http, $ionicPopup, $state,$cacheFactory,$ionicSlideBoxDelegate,IndexFactory,$ionicScrollDelegate) {
-         $scope.submitInfo=function(){
+        $scope.availubleHeight=screen.availHeight;
+        $scope.availwidth=screen.availWidth;
+        $scope.width=window.screen.width;
+        $scope.modelstyle={
+            "width":$scope.width*0.8+"px",
+            "margin-left": $scope.width*0.1+"px",
+            "margin-right":$scope.width*0.1+"px"
+        };
+
+        var pageH = window.innerHeight;
+
+
+        $scope.submitInfo=function(){
              var phonereg =  /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,2,3,5-9]))\\d{8}$/;
              var isphone=testPhone();
              if(!isphone)
@@ -275,7 +289,19 @@ angular.module("indexApp.controllers",[])
             });
             return  confirmPopup;
         };
-
+        $scope.inputStyle={
+            "height": $scope.availubleHeight*0.1+'px',
+            "width":"100%"
+        };
+          $scope.itemContentStyle={
+            "height": $scope.availubleHeight*0.25+'px',
+            "width":"100%",
+            "vertical-align":"top"
+        };
+        $scope.itemtextareaStyle={
+            "height": '100%',
+            "vertical-align":"top"
+        };
         function testPhone() {
             var myreg=/^1[3|4|5|8][0-9]\d{4,8}$/;
             return myreg.test($scope.phonenumber);
@@ -290,6 +316,43 @@ angular.module("indexApp.controllers",[])
             });
             return alertPopup;
         };
+        $scope.allStyle={
+            "width":"100%",
+            "height":"100%",
+            "background-color":"#ffffff"
+        };
+
+        $scope.clickSex=function(){
+            $scope.openPopup();
+        };
+
+        $scope.openPopup=function() {
+
+            var myPopup = $ionicPopup.show({
+                title: '请选择您的性别',
+                scope: $scope,
+                buttons: [
+                    {text: '<b>女</b>',
+                        onTap: function (e) {
+                           $scope.sex="女";
+                        }},
+                    {
+                        text: '<b>男</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+                            $scope.sex="男";
+                        }
+                    },
+                ]
+            });
+            myPopup.then(function (res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); // 3秒后关闭弹窗
+            }, 3000);
+        }
+
     })
     .controller('phoneCtrl', function ($timeout,$ionicHistory,$scope,$rootScope,$ionicHistory,$http, $ionicPopup, $state,$cacheFactory,$ionicSlideBoxDelegate,IndexFactory,$ionicScrollDelegate) {
         $scope.availHeight=screen.availHeight;

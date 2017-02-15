@@ -1,29 +1,30 @@
 <ion-view>
 <ion-content>
+    <div ng-style="allStyle">
        <div class="list">
-           <label class="item item-input" ng-style="itemStyle">
+           <label class="item item-input" ng-style="inputStyle">
                <span class="input-label">姓名：</span>
                <input type="text" ng-model="form.name">
            </label>
 
-           <label class="item item-input" ng-style="itemStyle">
+           <label class="item  item-input" ng-style="inputStyle">
                <span class="input-label">性别：</span>
-               <input type="text" ng-model="form.sex">
+               <input type="text" placeholder="请点击此处选择性别" ng-model="form.sex" readonly="readonly" style="background-color:white" ng-click="clickSex()">
            </label>
 
-           <label class="item item-input" ng-style="itemStyle">
+           <label class="item item-input" ng-style="inputStyle">
                <span class="input-label">联系方式：</span>
                <input type="text" ng-model="form.phonenumber">
            </label>
 
-           <label class="item item-input" ng-style="itemStyle">
+           <label class="item item-input" ng-style="inputStyle">
                <span class="input-label">订单号：</span>
                <input type="text" ng-model="form.ordernumber">
            </label>
 
            <label class="item item-input" ng-style="itemContentStyle">
                <span class="input-label">投诉内容：</span>
-               <textarea placeholder="请输入您的投诉内容" ng-model="form.advisecontent"></textarea>
+               <textarea placeholder="请输入您的投诉内容" ng-model="form.advisecontent" ng-style="itemtextareaStyle"></textarea>
            </label>
 
 
@@ -34,6 +35,7 @@
             <button class="button button-balanced" ng-click="submitInfo()" style="width: 80%;height: 100%;display: inline;margin: 0 auto;">提交信息</button>
         </div>
     </div>
-
+  </div>
 </ion-content>
 </ion-view>
+

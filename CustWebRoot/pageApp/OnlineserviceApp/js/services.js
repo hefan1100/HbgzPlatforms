@@ -159,21 +159,8 @@ angular.module("indexApp.services", [])
 
             submitForAdvise: function submitForAdvise(adviseinfo) {
                 var deferred = $q.defer();
-                var url = 'http://120.27.221.0/chats?domain=submitForAdvise';
-                if(adviseinfo!=null)
-                {
-                    if(adviseinfo.name!=null)
-                        url+='&name='+adviseinfo.name;
-                    if(adviseinfo.sex!=null)
-                        url+='&sex='+adviseinfo.sex;
-                    if(adviseinfo.advisecontent!=null)
-                        url+='&advisecontent='+adviseinfo.advisecontent;
-                    if(adviseinfo.ordernumber!=null)
-                        url+='&ordernumber='+adviseinfo.ordernumber;
-                    if(adviseinfo.phonenumber!=null)
-                        url+='&phonenumber='+adviseinfo.phonenumber;
-                }
-
+                var params="{\"name\":\""+adviseinfo.name+"\",\"sex\":\""+adviseinfo.sex+"\",\"advisecontent\":\""+adviseinfo.advisecontent+"\",\"ordernumber\":\""+adviseinfo.ordernumber+"\",\"phonenumber\":\""+adviseinfo.phonenumber+"\"}";
+                var url = 'http://192.168.1.106:8080/chats?domain=submitForAdvise&params='+encodeURIComponent(params);
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
