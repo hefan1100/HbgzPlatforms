@@ -1,5 +1,5 @@
 angular.module("indexApp.controllers",[])
-    .controller('mainCtrl', function ($scope,$rootScope,$ionicHistory,$http, $ionicPopup, $state,$cacheFactory,$ionicSlideBoxDelegate,IndexFactory) {
+    .controller('mainCtrl', function ($scope,$rootScope,$ionicHistory,$http, $ionicPopup, $state,$cacheFactory,$ionicSlideBoxDelegate,$timeout,IndexFactory) {
         $scope.screenHeight=window.innerHeight;
         $scope.screenWidth=window.screen.availWidth;
         $scope.itemStyle={
@@ -10,11 +10,6 @@ angular.module("indexApp.controllers",[])
             "padding-left":"3%",
             "padding-right":"3%"
         };
-
-        $("#img").lazyload({
-            placeholder : "img/loading.gif",
-            effect: "fadeIn"
-        });
 
         $scope.rowStyle={
             "height":$scope.screenHeight*0.13+'px',
@@ -44,12 +39,34 @@ angular.module("indexApp.controllers",[])
             "width":$scope.screenWidth+'px'
         };
 
+        $scope.itemContainerimageStyle={
+            "height":$scope.screenHeight*0.3+'px',
+            "width":$scope.screenWidth+'px',
+            "position":"absolute"
+        };
+
         IndexFactory.getIndexList().then(function(response){
             $scope.articlelist=response.articlelist;
             $scope.imagelist=response.imagelist;
-            $ionicSlideBoxDelegate.update();
-            $ionicSlideBoxDelegate.$getByHandle("slideboximgs").loop(true);
+     //       $ionicSlideBoxDelegate.update();
+            $timeout(function(){
+                var handle= $ionicSlideBoxDelegate.$getByHandle("slideboximgs");
+                handle.update();
+                handle.loop(true);
+            },1000);
+
         });
+
+        //$scope.runModule=function(){
+        //    while(true)
+        //    {
+        //        $timeout(function() {
+        //
+        //            }
+        //            , 3000);
+        //    }
+        //};
+        //
 
 
         $scope.model = {

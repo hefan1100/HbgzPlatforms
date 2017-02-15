@@ -19,6 +19,11 @@ angular.module("indexApp.services", [])
                         articlearray.push(articleJson[i]);
                     }
                     for (var i = 0; i < imageJson.length; i++) {
+                        imageJson[i].LOGOPIC=imageJson[i].LOGOPIC+"?k="+Math.random();
+                        if(i==(imageJson.length-1))
+                            imageJson[i].last=1;
+                        else
+                            imageJson[i].last=0;
                         imagearray.push(imageJson[i]);
                     }
                     var rootobj={

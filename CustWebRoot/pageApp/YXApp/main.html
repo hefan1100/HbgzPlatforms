@@ -1,11 +1,12 @@
 <ion-view>
 
-    <ion-content style="background-color: #ffffff;">
-        <ion-slide-box on-slide-changed="slideHasChanged($index)" ng-style="itemtitleimageStyle" auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" pager-click="pageClick(index)"
-                       delegate-handle="slideboximgs">
-            <ion-slide style="width: 100%;height:100%;" ng-repeat="i in imagelist" ng-click="goDetail(i.ID)">
-                <img id="img" src="{{i.LOGOPIC}}" ng-style="itemtitleimageStyle">
-            </ion-slide>
+    <ion-content style="background-color: #ffffff;" >
+        <ion-slide-box  ng-style="itemtitleimageStyle" auto-play="true" does-continue="true" slide-interval=2000
+                       delegate-handle="slideboximgs" lazy-scroll>
+            <ion-slide class="image-loader-container"  style="width: 100%;height:100%;" ng-repeat="i in imagelist" ng-click="goDetail(i.ID)">
+                    <img image-lazy-src="{{i.LOGOPIC}}" image-lazy-loader="android" height="100%" width="100%" style="position: absolute;" ng-if="i.last==0">
+                    <img src="{{i.LOGOPIC}}" height="100%" width="100%" style="position: absolute;" ng-if="i.last==1">
+             </ion-slide>
         </ion-slide-box>
             <div class="row row-wrap row-no-padding" ng-style="itemSingleStyle">
                 <div class="col col-33 col-center" style="text-align: center;">
@@ -23,13 +24,16 @@
               <ion-item ng-style="itemStyle" ng-repeat="i in articlelist" ng-click="goDetail(i.ID)">
                   <div class="row row-wrap row-no-padding" ng-style="rowStyle">
 
-                      <div class="col col-80 col-center" style="text-align: center;height:100%;">
-                          <div style="white-space:normal;width: 100%;text-align: left;font-size: 1em;">{{i.CONTENT}}
+                      <div class="row row-wrap row-no-padding" ng-style="rowStyle">
+                          <div class="col col-20 col-center" style="height:100%;">
+                              <img src="{{i.LOGOPIC}}" style="display: inline;height: 80%;width:100%;float: left;">
                           </div>
-                      </div>
-
-                      <div class="col col-20 col-center" style="height:100%;">
-                          <img src="{{i.LOGOPIC}}" style="display: inline;height: 80%;float: right;">
+                          <div class="col col-50 col-center" style="text-align: center;height:100%;">
+                              <div style="white-space:normal;width: 100%;text-align: left;font-size: 1em;padding-left: 20px;">{{i.TITLE}}</div>
+                          </div>
+                          <div class="col col-30 col-center" style="text-align: center;height:100%;">
+                              <div style="white-space:normal;width: 100%;text-align: left;font-size: 1em;">{{i.CREATE_DATE}}</div>
+                          </div>
                       </div>
                   </div>
                   <div style="height: 1px;width:100%;background-color: #dcdcdc;">
@@ -39,7 +43,7 @@
           </ion-list>
 
         <div ng-style="itembottomimageStyle" ng-click="goListMain()">
-           <img src="img/yx_bottom.png" ng_style="itembottomimageStyle">
+           <img src="img/yx_yslm.jpg" ng_style="itembottomimageStyle">
         </div>
 
     </ion-content>
