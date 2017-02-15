@@ -2,7 +2,7 @@ angular.module("indexApp.controllers",[])
     .controller('mainCtrl', function ($scope,$rootScope,$ionicHistory,$http, $ionicPopup, $state,$cacheFactory,IndexFactory) {
         $scope.screenHeight=window.screen.height;
         $scope.screenWidth=window.screen.width;
-        $scope.allheight= $scope.screenHeight*0.35;
+        $scope.allheight= $scope.screenHeight*0.25;
         $scope.itemStyle={
              "height":$scope.allheight+'px',
              "border":"none",
@@ -19,18 +19,13 @@ angular.module("indexApp.controllers",[])
             "height":$scope.allheight*0.15*0.6+'px'
         };
 
-        $scope.itemavatarstyle={
-            "height":$scope.allheight*0.7+'px',
-            "width":$scope.screenWidth+'px'
-        }
-
         $scope.itemdescriptionstyle={
             "padding":"5px",
-            "height": $scope.allheight*0.25+'px',
+            "height": $scope.allheight*0.35+'px',
             "width":$scope.screenWidth+'px'
         }
         $scope.itemdivider={
-            "height": $scope.allheight*0.1+'px',
+            "height": $scope.allheight*0.12+'px',
             "width":$scope.screenWidth+'px',
             "background-color":"#dcdcdc"
         }
@@ -68,7 +63,7 @@ angular.module("indexApp.controllers",[])
 
     })
     .controller('listCtrl', function ($scope,$rootScope,$ionicHistory,$http, $ionicPopup, $state,$cacheFactory,$stateParams,IndexFactory) {
-        $scope.screenHeight=window.screen.availHeight;
+        $scope.screenHeight=window.innerHeight;
         $scope.screenWidth=window.screen.availWidth;
         $scope.citytitle=$stateParams.cityname;
         IndexFactory.getArticleDetails($stateParams.cid).then(function(response){
@@ -86,9 +81,23 @@ angular.module("indexApp.controllers",[])
             "width":$scope.screenWidth+'px'
         };
         $scope.itemStyle={
-            "height":$scope.screenHeight*0.25+'px',
+            "height":$scope.screenHeight*0.18+'px',
             'border':'none',
             "width":"100%"
+        };
+
+        $scope.topdivStyle={
+            "white-space":"normal",
+            "width": "100%",
+            "text-align": "left",
+            "font-size": "1em",
+            "height": $scope.screenHeight*0.2*0.3+'px'
+        };
+
+
+        $scope.pStyle={
+            "width": "100%",
+            "margin-top":$scope.screenHeight*0.2*0.3+'px'
         };
 
         $scope.goDetail=function(aid)
@@ -112,10 +121,15 @@ angular.module("indexApp.controllers",[])
             "width":"100%",
             "padding":"0px"
         };
-
+        function noEscapeHtml(html) {
+            return html.replace(/(\&|\&)gt;/g, ">")
+                .replace(/(\&|\&)lt;/g, "<")
+                .replace(/(\&|\&)quot;/g, "\"");
+        }
 
         IndexFactory.getArticleDetailsInfo($stateParams.aid).then(function(response){
             $scope.info=response;
+     //       $scope.info.CONTENT=noEscapeHtml($scope.info.CONTENT);
         });
     })
 ;

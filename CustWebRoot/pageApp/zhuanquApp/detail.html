@@ -5,8 +5,8 @@
             <img src="{{info.COVERPIC}}" ng-style="imgheaderStyle">
         </div>
 
-        <div style="white-space:normal;width: 100%;text-align: left;font-size: 1em;">
-            {{info.CONTENT}}
-       </div>
+        <div id="content" style="white-space:normal;width: 100%;text-align: left;font-size: 1em;">
+            <p ng-bind-html="info.CONTENT"></p>
+        </div>
     </ion-content>
 </ion-view>

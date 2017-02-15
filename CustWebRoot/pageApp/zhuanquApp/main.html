@@ -14,13 +14,13 @@
     </ion-header-bar>
     <ion-content style="background-color: #dcdcdc;">
       <ion-list>
-              <ion-item ng-style="itemStyle" ng-repeat="i in list" ng-click="goList(i.id)">
+              <ion-item  style="border:none;width:100%;background-color:#ffffff;padding:0px" ng-repeat="i in list" ng-click="goList(i.id)">
                   <!--<div class="row row-wrap row-no-padding" ng-style="itemtitleStyle">-->
                      <!--<div class="col col-center" style="padding: 0px;">-->
                         <!--<p style="color: #adff2f;font-size: 18px;">{{i.name}}邮政</p>-->
                      <!--</div>-->
                   <!--</div>-->
-                  <img src="{{i.statepic}}" ng-style="itemavatarstyle"/>
+                  <img src="{{i.statepic}}" ng-style="itemStyle"/>
                   <div ng-style="itemdescriptionstyle">
                       <p style="font-size: 16px;">更多精彩尽在{{i.name}}邮政微邮局</p>
                       <p style="font-size: 13px;margin-top:2%;color: #dcdcdc;">来源：{{i.name}}邮政微邮局</p>
