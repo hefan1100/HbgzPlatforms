@@ -1,21 +1,20 @@
-<ion-view  hide-nav-bar="true" style="z-index: 9999">
-
-
+<ion-view  >
+    <ion-nav-title><h1 class="title"><b>湖北邮政微商城</b></h1></ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-large icon ion-ios-arrow-back" ng-click="httpback()" style="border: none;background-color: transparent;color: white;font-size: 18px; ">返回</button>
+    </ion-nav-buttons>
     <ion-content ng-controller="scrollindex" style="background-color: #EEEEEE;">
-                <div class="bar bar-header" style="padding-top: 0px;padding-bottom: 0px;background-color: #000000;">
-                     <button class="button button-large icon ion-ios-arrow-back" ng-click="httpback()" style="border: none;background-color: transparent;color: white;font-size: 18px; ">返回</button>
-                     <h3 class="title" style="color: white;">湖北邮政微商城</h3>
-                </div>
 
-                 <div class="bar bar-subheader" style="padding-top: 0px;padding-bottom: 0px;background-color: #F0F0F0;">
-                    <div class="row row_wrap row-no-padding">
+
+                 <div  ng-style="barStyle">
+                    <div class="row row_wrap row-no-padding" style="height: 100%;">
                         <div class="col col-25 col-center" style="padding-top: 0px;padding-bottom: 0px;background-color: white;height: 38px;">
                            <img src="img/store/zhongguoyouzheng.png" width="100%" height="100%">
                         </div>
                         <div class="col col-50 col-center" style="padding-left: 10px;">
-                            <label class="item-input-wrapper" style="background-color: #E5E5E5;">
+                            <label class="item-input-wrapper" style="background-color: #E5E5E5;height: 100%;">
                                 <i class="icon ion-ios-search placeholder-icon"></i>
-                                <input type="search" placeholder="搜索京东商品/店铺" style="background-color:#E5E5E5;">
+                                <input type="search" placeholder="搜索京东商品/店铺" style="background-color:#E5E5E5;height: 100%;">
                             </label>
                         </div>
                         <div class="col col-center" style="text-align: center;">
@@ -26,29 +25,29 @@
                         </div>
                     </div>
                 </div>
-        <ion-slide-box on-slide-changed="slideHasChanged($index)" style="width:100%;height: 260px;"  auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" pager-click="pageClick(index)" active-slide="model.activeIndex"  delegate-handle="delegateHandler">
+        <ion-slide-box on-slide-changed="slideHasChanged($index)" ng-style="pagerStyle"  auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" pager-click="pageClick(index)" active-slide="model.activeIndex"  delegate-handle="delegateHandler">
             <ion-slide style="width: 100%;height:100%;">
-                <img src="img/store/title_image.png" width="100%;" height="100%;">
+                <img src="img/store/title_image.png" ng-style="pagerStyle">
             </ion-slide>
             <ion-slide style="width: 100%;height:100%;">
-                <img src="http://img.iyookee.cn/20150619/20150619_100607_883_670.png" width="100%;" height="100%;">
+                <img src="http://img.iyookee.cn/20150619/20150619_100607_883_670.png" ng-style="pagerStyle">
             </ion-slide>
             <ion-slide style="width: 100%;height:100%;">
-                <img src="http://img.iyookee.cn/20150714/20150714_172952_955_22.jpg" width="100%;" height="100%;">
+                <img src="http://img.iyookee.cn/20150714/20150714_172952_955_22.jpg" ng-style="pagerStyle">
             </ion-slide>
         </ion-slide-box>
 
-            <div class="row row-wrap row-no-padding" style="height:162px;width: 100%;background-color: #EEEEEE;padding: 0px;">
+            <div class="row row-wrap row-no-padding" ng-style="imageStyle">
                <div class="col col-33" style="padding: 0px;height:100%;">
-                   <img src="img/store/nongpin.png" height="162px" width="100%">
+                   <img src="img/store/nongpin.png" height="100%" width="100%">
                </div>
                <div class="col" style="padding-left: 10px;padding-top: 0px;padding-bottom: 0px;padding-right: 0px;height: 100%;">
-                   <img src="img/store/meishi.png" width="100%" height="69px">
-                   <div class="row row-wrap row-no-padding" style="margin-top: 5px;">
-                       <div class="col col-50" style="padding-right: 5px;padding-top:0px;padding-left: 0px;padding-bottom: 0px;">
+                   <img src="img/store/meishi.png" ng-style="meishiStyle">
+                   <div class="row row-wrap row-no-padding" ng-style="bottomStyle">
+                       <div class="col col-50" style="padding-right: 5px;padding-top:0px;padding-left: 0px;padding-bottom: 0px;height: 100%;">
                            <img src="img/store/baihuo.png" width="100%" height="100%">
                        </div>
-                       <div class="col col-50" style="padding-left: 5px;padding-top:0px;padding-right: 0px;padding-bottom: 0px;">
+                       <div class="col col-50" style="padding-left: 5px;padding-top:0px;padding-right: 0px;padding-bottom: 0px;height: 100%;">
                            <img src="img/store/caizhuang.png" width="100%" height="100%">
                        </div>
                    </div>
@@ -56,35 +55,24 @@
             </div>
 
 
-            <div class="row row-wrap row-no-padding" style="width: 100%;height: 50px;background-color: white;margin-top: 16px">
+            <div class="row row-wrap row-no-padding" ng-style="rexiaotuijianStyle">
                  <div class="col col-center" style="text-align: center">
 
                          <p style="width: 100px;display: inline;">
                            <img src="img/store/tuijain.png" width="16px" height="16px" >
                             <a style="color: green;text-decoration: none;margin-left: 10px;">热销推荐</a>
                          </p>
-
-                 </div>
+                </div>
             </div>
 
-             <div class="row row-wrap row-no-padding" style="width: 100%;height: 240px;background-color:#EEEEEE;margin-top: 10px;padding-left:0px;padding-right: 0px;padding-top: 0px;padding-bottom: 0px;">
-                   <div class="col col-33" style="padding-top: 0px;margin-bottom: 5px;margin-left: 3px;margin-right: 3px;background-color: white;" ng-click="entergoodsdetail(commendlist[0].G_ID)">
-                          <img src="{{commendlist[0].G_PIC}}" width="100%" height="150px">
-                          <a style="text-decoration: none;color: #000000;margin-top: 5px;">{{commendlist[0].G_NAME}}</a>
-                          <h3 style="color: red;font-weight: bold;">￥{{commendlist[0].G_PRICE}}</h3>
+             <div class="row row-wrap row-no-padding" ng-style="commendStyle">
+                   <div class="col" style="padding-top: 0px;margin-bottom: 5px;margin-left: 3px;margin-right: 3px;background-color: white;" ng-repeat="i in commendlist" ng-click="entergoodsdetail(i.G_ID)">
+                          <img src="{{i.G_PIC}}" width="100%" height="70%">
+                          <a style="text-decoration: none;color: #000000;margin-top: 5px;">{{i.G_NAME}}</a>
+                          <h3 style="color: red;font-weight: bold;margin-top: 5px;">￥{{i.G_PRICE}}</h3>
                    </div>
 
-                     <div class="col col-33" style="padding-top: 0px;margin-bottom: 5px;margin-left: 3px;margin-right: 3px;background-color: white;"  ng-click="entergoodsdetail(commendlist[1].G_ID)">
-                         <img src="{{commendlist[1].G_PIC}}" width="100%" height="150px">
-                         <a style="text-decoration: none;color: #000000;margin-top: 5px;">{{commendlist[1].G_NAME}}</a>
-                         <h3 style="color: red;font-weight: bold;">￥{{commendlist[1].G_PRICE}}</h3>
-                     </div>
-
-                  <div class="col" style="padding-top: 0px;margin-bottom: 5px;margin-right: 3px;background-color: white;" ng-click="entergoodsdetail(commendlist[2].G_ID)">
-                           <img src="{{commendlist[2].G_PIC}}" width="100%" height="150px">
-                           <a style="text-decoration: none;color: #000000;margin-top: 5px;">{{commendlist[2].G_NAME}}</a>
-                           <h3 style="color: red;font-weight: bold;">￥{{commendlist[2].G_PRICE}}</h3>
-                 </div>
+               <!--   innerHeight可能就是所管控的这个页面的高度，navbar是index.html的  -->
             </div>
    </ion-content>
 </ion-view>

@@ -10,6 +10,56 @@ angular.module("indexApp.controllers",[])
             $ionicHistory.goBack();
         };
 
+        $scope.height=window.innerHeight;
+        $scope.width=window.screen.width;
+
+        $scope.barStyle={
+            "height":$scope.height*0.1+"px",
+            "width":"100%",
+            "padding-top": "0px",
+            "padding-bottom": "0px",
+            "background-color": "#F0F0F0"
+        };
+
+        $scope.pagerStyle={
+            "height":$scope.height*0.25+"px",
+            "width":"100%"
+        };
+
+        $scope.imageStyle={
+            "height":$scope.height*0.25+"px",
+            "width": "100%",
+            "background-color": "#EEEEEE",
+            "padding": "0px"
+        };
+
+        $scope.meishiStyle={
+            "width":"100%",
+            "height":$scope.height*0.25*0.4+"px"
+        };
+        $scope.bottomStyle={
+            "width":"100%",
+            "height":($scope.height*0.25-$scope.height*0.25*0.4)+"px",
+            "padding":"0px"
+        };
+
+        $scope.rexiaotuijianStyle={
+            "width": "100%",
+            "height": $scope.height*0.1+"px",
+            "background-color": "white",
+            "padding":"0px"
+        };
+
+        $scope.commendStyle={
+            "width": "100%",
+            "height": ($scope.height-$scope.height*0.7-10)+"px",
+            "background-color":"#EEEEEE",
+            "margin-top": "10px",
+            "padding-left":"0px",
+            "padding-right": "0px",
+            "padding-top": "0px",
+            "padding-bottom": "0px"
+        }
 
         $scope.getCommendGoodsList=function(){
             commendlistFactory.getCommendlist().then(function(response){
@@ -34,16 +84,19 @@ angular.module("indexApp.controllers",[])
     .controller('clarifyCtrl', function ($scope, $http, $ionicPopup, $state,$ionicLoading,listFactory,categorylistFactory) {
         //     var url="http://192.168.15.52:7001/serv?domain=getClassifyTpye";
         var domain="getClassifyTpye";
-//        $ionicLoading.show({
-//            template: 'Loading...'
-//        });
+
+        $scope.height=window.innerHeight;
+        $scope.width=window.screen.width;
+
         var selectstyle_parent={
             "padding-right":"0px",
             "padding-left":"0px",
             "margin-top":"0px",
             "margin-bottom":"0px",
             "text-align":"center",
-            "background-color":"#dcdcdc"
+            "background-color":"#dcdcdc",
+            "width":"100%",
+            "height":$scope.height*0.05+'px'
         };
         var unselectstyle_parent={
             "padding-right":"0px",
@@ -51,17 +104,21 @@ angular.module("indexApp.controllers",[])
             "margin-top":"0px",
             "margin-bottom":"0px",
             "text-align":"center",
-            "background-color":"white"
+            "background-color":"white",
+            "width":"100%",
+            "height":$scope.height*0.05+'px'
         };
 
         var selectstyle_font={
             "font-size":"16px",
-            "color":"#87C644"
+            "color":"#87C644",
+            "display":"inline"
         };
 
         var unselectstyle_font={
             "font-size":"16px",
-            "color":"#000000"
+            "color":"#000000",
+            "display":"inline"
         };
 
         $scope.lastpfoffset=0;
@@ -102,6 +159,12 @@ angular.module("indexApp.controllers",[])
             $scope.items[offset].pfstyleobj.sparent=selectstyle_parent;
             $scope.items[offset].pfstyleobj.f=selectstyle_font;
             $scope.lastpfoffset=offset;
+        };
+
+        $scope.PICStyle={
+            "width": "100%",
+            "height":$scope.height*0.2+"px",
+            "display": "inline"
         };
 
         $scope.getCategorylistByPId=function(did,offset){
@@ -207,8 +270,8 @@ angular.module("indexApp.controllers",[])
         };
 
         /**
-         * 全选按钮
-         */
+         * 全选按钮
+        */
          $scope.selectAll=function(){
              if($scope.lastcheckall.checked)
              {
@@ -222,16 +285,20 @@ angular.module("indexApp.controllers",[])
                      scopeitems[i].check=false;
              }
           };
-        $scope.checkItem=function(index)      //由于已经绑定了每个item的check属性，每次点击的时候都要检查一遍
+        $scope.checkItem=function(index)      //由于已经绑定了每个item的check属性，每次点击的时候都要检查一遍
+
         {
             var itemarrays=$scope.items;
             if(itemarrays[index].check)
                 itemarrays[index].check=false;
             else
                 itemarrays[index].check=true;
-            var ischeckall=true; //初始化全选为真
-            var notcheckall=true;//初始化没有全选为真
-   //         var collection=$scope.items;   //获取所有数据
+            var ischeckall=true; //初始化全选为真
+
+            var notcheckall=true;//初始化没有全选为真
+
+   //         var collection=$scope.items;   //获取所有数据
+
             //检查有没有全部选中
              for(var i=0;i<itemarrays.length;i++)
              {
@@ -248,7 +315,8 @@ angular.module("indexApp.controllers",[])
 
 
         }
-        //点击结算再更改,点击结算之后再
+        //点击结算再更改,点击结算之后再
+
         $scope.delCart= function(gid){
 //            cartFactory.delCart(gid).then(function(response){
 //                $scope.doRefresh();
@@ -294,7 +362,8 @@ angular.module("indexApp.controllers",[])
 
         }
 
-        $scope.goConfirm=function(){         //看有那几个选中的
+        $scope.goConfirm=function(){         //看有那几个选中的
+
             var collection=$scope.items;
             var cartarray=[];
             var cartstr='';
@@ -309,7 +378,8 @@ angular.module("indexApp.controllers",[])
             cartstr=cartstr.substring(0,cartstr.length-1);
 
 
-            //确认订单controller里面需要
+            //确认订单controller里面需要
+
             cartFactory.setCartidlist(cartstr);
      //       $rootScope.cartidlist=cartstr;
             $state.go("confirmorder");
@@ -525,7 +595,8 @@ angular.module("indexApp.controllers",[])
         $scope.closeModal = function() {
             $scope.modal.hide();
         };
-        //当我们用完模型时，清除它！
+        //当我们用完模型时，清除它！
+
 
 
 
@@ -557,14 +628,16 @@ angular.module("indexApp.controllers",[])
             $scope.model.activeIndex = index;
         };
 
-//当图片切换后，触发此事件，注意参数
+//当图片切换后，触发此事件，注意参数
+
 
 
         $scope.slideHasChanged = function($index){
             //     alert($index);
 
         };
-        //这是属性delegate-handle的验证使用的，其实没必要重定义，直接使用$ionicSlideBoxDelegate就可以
+        //这是属性delegate-handle的验证使用的，其实没必要重定义，直接使用$ionicSlideBoxDelegate就可以
+
 
 
         $scope.delegateHandle = $ionicSlideBoxDelegate;
@@ -574,8 +647,10 @@ angular.module("indexApp.controllers",[])
         var param={
             curPage:5,
             loadPage:0,   //加载了多少条记录
-            hasMore:true,  //有没有更多数据
-            orderparam:null     //按照什么排序
+            hasMore:true,  //有没有更多数据
+
+            orderparam:null     //按照什么排序
+
         };
         $scope.parameter=param;
         $scope.alertLoadMore = function(){
@@ -720,13 +795,17 @@ angular.module("indexApp.controllers",[])
             var status=null;
             //全部略去
             if(index==1)
-                status='0';       //待付款
+                status='0';       //待付款
+
             else if(index==2)
-                status='1';       //已付款
+                status='1';       //已付款
+
             else if(index==3)
-                status='2';       //已发货
+                status='2';       //已发货
+
             else if(index==4)
-                status='8';       //已完成
+                status='8';       //已完成
+
             OrderFactory.getPayOrderByStatus(status).then(function(response){
                 $scope.orderlist=response;
             });
@@ -774,9 +853,11 @@ angular.module("indexApp.controllers",[])
         };
         $scope.laststyle=$scope.allstyle;
         /**
-         * 换标题样式
+         * 换标题样式
+
          * @param obj   选中的那个状态对象，全部对应allstyle,待付款对应Fkstyle.......
-         * @param i     tab选中的索引，选中第几页
+         * @param i     tab选中的索引，选中第几页
+
          */
          $scope.changestyle=function(obj,i)
         {
@@ -791,7 +872,8 @@ angular.module("indexApp.controllers",[])
         $scope.lastindex=0;
 
         /**
-         * 滑屏切换，调整标题
+         * 滑屏切换，调整标题
+
          * @param index
          */
         $scope.slideHasChanged=function(index)
@@ -990,7 +1072,8 @@ angular.module("indexApp.controllers",[])
     .controller('orderconfirmCtrl', function ($scope,$rootScope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,ConfirmOrderFactory,DiscountFactory,cartFactory,OrderFactory) {
         $scope.showPopup = function(text) {
 
-            // 自定义弹窗
+            // 自定义弹窗
+
             var myPopup = $ionicPopup.show({
                 title: '您还没有收货地址,请立即到个人中心那儿设置',
                 scope: $scope,
@@ -1011,7 +1094,8 @@ angular.module("indexApp.controllers",[])
         };
         $scope.acquirePersonalInfo=function(){
             var cartidlist=cartFactory.getCartidlist();
-            OrderFactory.setOrderId(null);//每次进来之前都清一下缓存
+            OrderFactory.setOrderId(null);//每次进来之前都清一下缓存
+
             OrderFactory.setOrderprice(null);  //清空订单总价缓存
             ConfirmOrderFactory.acquirePersonalInfo(cartidlist).then(function(response){
                   if(response.code=='NoAddress')
@@ -1155,17 +1239,20 @@ angular.module("indexApp.controllers",[])
         var unselectPStyle = {
             "color" : "#000000"
         };
-        //未使用
+        //未使用
+
         $scope.WSYstyle= {
             colstyle:selectColstyle,
             pstyle:selectPStyle
         };
-        //已使用
+        //已使用
+
         $scope.YSYstyle={
             colstyle:unselectColstyle,
             pstyle:unselectPStyle
         };
-        //已过期
+        //已过期
+
         $scope.YGQstyle={
             colstyle:unselectColstyle,
             pstyle:unselectPStyle
@@ -1227,7 +1314,8 @@ angular.module("indexApp.controllers",[])
         };
         $scope.selectedTab(0);
 
-        //获取优惠券列表，status：三种状态的标识码
+        //获取优惠券列表，status：三种状态的标识码
+
         $scope.getCouponlist=function(status){
             DiscountFactory.getCouponlist(status).then(function(response){
                $scope.discountlist=response;
@@ -1236,7 +1324,8 @@ angular.module("indexApp.controllers",[])
         $scope.getCouponlist();
 
 
-        //三个tab点击时候相互切换
+        //三个tab点击时候相互切换
+
         $scope.doselectCondition=function(status){
             $scope.getCouponlist(status);
         };
@@ -1271,7 +1360,8 @@ angular.module("indexApp.controllers",[])
        //点击一个，如果他没被选中，那就到他这为止都选中
         $scope.chooseDescription=function(index)
         {
-            if(index==4)//选中最后一个
+            if(index==4)//选中最后一个
+
             {
                if($scope.description[index])
                {
@@ -1309,7 +1399,8 @@ angular.module("indexApp.controllers",[])
 
         $scope.chooseWuliu=function(index)
         {
-            if(index==4)//选中最后一个
+            if(index==4)//选中最后一个
+
             {
                 if($scope.wuliu[index])
                 {
@@ -1347,7 +1438,8 @@ angular.module("indexApp.controllers",[])
 
         $scope.chooseFuwu=function(index)
         {
-            if(index==4)//选中最后一个
+            if(index==4)//选中最后一个
+
             {
                 if($scope.fuwu[index])
                 {

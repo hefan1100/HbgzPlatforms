@@ -4,41 +4,8 @@
     <ion-nav-buttons side="left">
         <button class="button button-large button-clear icon ion-ios-arrow-back" ng-click="httpback()">返回</button>
     </ion-nav-buttons>
-    <ion-content style="background-color: #dcdcdc;padding: 0px;">
-   <!--
-        <div class="bar bar-header item-input-inset">
-            <label class="item-input-wrapper">
-                <i class="icon ion-ios-search placeholder-icon"></i>
-                <input type="search" placeholder="手机数码电脑">
-            </label>
-            <a href="javascript:void(0);" class="button button-icon icon ion-ios-chatbubble-outline"></a>
-        </div>
+    <ion-content style="background-color: #f5f5f5;padding: 0px;">
 
-        <div class="row row-wrap">
-            <div class="col col-25" style="padding-left: 0px;padding-right: 0px;">
-                <ul class="list" style="padding-left: 0px;padding-right: 0px;" ng-repeat="i in items">
-                     <li class="item" style="padding-right: 0px;padding-left: 0px;text-align: center;" ng-click="getCategorylistByDicId(i.DIC_ID)">
-                        <b>{{i.DIC_NAME}}</b>
-                    </li>
-                </ul>
-            </div>
-            <div class="col col-75" >
-                <img src="img/store/title-image.png">
-                <b style="margin-top: 60px;">推荐品牌</b>
-
-                <div class="row row-wrap" style="padding: 0px;" ng-repeat="x in categorylist">
-                    <div class="col" style="padding: 0px;" ng-click="goDetail(x.once.CATEG_ID)">
-                        <img src="{{x.once.CATEG_PIC}}">
-                    </div>
-
-                    <div class="col" style="padding: 0px;" >
-                        <img src="{{x.twice.CATEG_PIC}}" ng-if="x.size>1" ng-click="goDetail(x.twice.CATEG_ID)">
-                    </div>
-                </div>
-
-            </div>
-
-        </div>   -->
         <div class="row row-wrap row-no-padding" style="background-color: #87C644;padding-left:24px;padding-right: 24px;padding-top: 6px;padding-bottom: 6px;">
              <div class="col col-10 col-center">
                   <i class="icon ion-ios-arrow-back" style="color: white;font-weight: bold;float:left;"></i>
@@ -69,7 +36,7 @@
 
                         <div class="list" style="padding: 0px;height: 100%;width: 100%" ng-if="x.size>0">
                             <div class="item" style="padding: 0px;height: 90%;width:100%;text-align: center;">
-                                <img src="{{x.once.DIC_PIC}}" width="81px" height="86px" style="display: inline;">
+                                <img src="{{x.once.DIC_PIC}}" ng-style="PICStyle">
                             </div>
                             <div class="item" style="padding: 0px;height: 10%;text-align: center;">
                                 <b style="font-size: 15px;">{{x.once.DIC_NAME}}</b>
@@ -80,7 +47,7 @@
                     <div class="col col-center" style="padding: 0px;" >
                         <div class="list" style="padding: 0px;height: 100%;width: 100%;" ng-if="x.size>1" ng-click="goDetail(x.twice.DIC_ID)">
                             <div class="item" style="padding: 0px;height: 90%;width:100%;text-align: center;">
-                                <img src="{{x.twice.DIC_PIC}}" width="81px" height="86px" style="display: inline;">
+                                <img src="{{x.twice.DIC_PIC}}" ng-style="PICStyle">
                             </div>
                             <div class="item" style="padding: 0px;height: 10%;text-align: center;">
                                 <b style="font-size: 15px;">{{x.twice.DIC_NAME}}</b>
@@ -91,7 +58,7 @@
                      <div class="col col-center" style="padding: 0px;" >
                          <div class="list" style="padding: 0px;height: 100%;width: 100%;" ng-if="x.size>2" ng-click="goDetail(x.third.DIC_ID)">
                              <div class="item" style="padding: 0px;height: 90%;width:100%;text-align: center;">
-                                 <img src="{{x.third.DIC_PIC}}" width="81px" height="86px" style="display: inline;">
+                                 <img src="{{x.third.DIC_PIC}}" ng-style="PICStyle">
                              </div>
                              <div class="item" style="padding: 0px;height: 10%;text-align: center;">
                                  <b style="font-size: 15px;">{{x.third.DIC_NAME}}</b>

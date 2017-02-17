@@ -46,7 +46,7 @@ angular.module("indexApp.services", [])
             },
             getListByDomain: function getListByDomain(domain,uid){
                 var deferred = $q.defer();
-                var url = 'http://192.168.15.20:8080/store?domain='+domain;
+                var url = 'http://192.168.1.100:8080/store?domain='+domain;
                 if(uid!=null)
                      url=url+"&uid="+uid;
                 $ionicLoading.show({
@@ -82,7 +82,7 @@ angular.module("indexApp.services", [])
             },
             getcartList: function getcartList(domain){
                 var deferred = $q.defer();
-                var url = 'http://192.168.15.20:8080/store?domain='+domain;
+                var url = 'http://192.168.1.100:8080/store?domain='+domain;
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
@@ -257,7 +257,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=doLogin&username='+username+'&password='+password;
+                var url = 'http://192.168.1.100:8080/store?domain=doLogin&username='+username+'&password='+password;
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
 
@@ -278,7 +278,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=getCategorylist&dicid='+dicid;
+                var url = 'http://192.168.1.100:8080/store?domain=getCategorylist&dicid='+dicid;
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
                     var resultJson = response;
@@ -303,7 +303,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=getMain';
+                var url = 'http://192.168.1.100:8080/store?domain=getMain';
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
 
@@ -336,7 +336,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=getGoodslist&clarifyId='+clarifyId+'&startpage='+startpage+'&endpage='+curpage;
+                var url = 'http://192.168.1.100:8080/store?domain=getGoodslist&clarifyId='+clarifyId+'&startpage='+startpage+'&endpage='+curpage;
                 if(param!=null)
                     url=url+"&orderparam="+param;
                 $http.post(url).success(function (response) {
@@ -375,7 +375,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=addCart&gid='+gid;
+                var url = 'http://192.168.1.100:8080/store?domain=addCart&gid='+gid;
 
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
@@ -408,7 +408,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=addCartNumber&gid='+gid;
+                var url = 'http://192.168.1.100:8080/store?domain=addCartNumber&gid='+gid;
 
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
@@ -442,7 +442,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=minusCartNumber&gid='+gid;
+                var url = 'http://192.168.1.100:8080/store?domain=minusCartNumber&gid='+gid;
 
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
@@ -476,7 +476,7 @@ angular.module("indexApp.services", [])
               $ionicLoading.show({
                   template: 'Loading...'
               });
-              var url = 'http://192.168.15.20:8080/store?domain=delCart&gid='+gid;
+              var url = 'http://192.168.1.100:8080/store?domain=delCart&gid='+gid;
 
               $http.post(url).success(function (response) {
                   $ionicLoading.hide();
@@ -513,7 +513,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=getGoodsdetail&gid='+gid;
+                var url = 'http://192.168.1.100:8080/store?domain=getGoodsdetail&gid='+gid;
 //                if(param!=null)
 //                    url=url+"&orderparam="+param;
                 $http.post(url).success(function (response) {
@@ -542,7 +542,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=acquireConfirmOrderInfo&idlist='+cartidlist;
+                var url = 'http://192.168.1.100:8080/store?domain=acquireConfirmOrderInfo&idlist='+cartidlist;
 //                if(param!=null)
 //                    url=url+"&orderparam="+param;
                 $http.post(url).success(function (response) {
@@ -589,12 +589,14 @@ angular.module("indexApp.services", [])
             }
         };
     })
-    //优惠券
+    //优惠券
+
 
     .factory('DiscountFactory', function($http, $q,$ionicPopup,$ionicLoading){
 
         return {
-            //之间的传值，优惠券，优惠券列表和确认订单列表之间的传值
+            //之间的传值，优惠券，优惠券列表和确认订单列表之间的传值
+
 
             discount:null,
             //把所有购物车的id用''括起来拼接成字符串传到后台去
@@ -612,7 +614,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=getDiscountByUser';
+                var url = 'http://192.168.1.100:8080/store?domain=getDiscountByUser';
                 if(status!=null)
                      status=status+'&status='+status;
 //                if(param!=null)
@@ -702,7 +704,8 @@ angular.module("indexApp.services", [])
     .factory('OrderFactory', function($http, $q,$ionicPopup,$ionicLoading){
 
         return {
-            //生成为支付订单
+            //生成为支付订单
+
 
             orderprice:null,//实际付的金额
             orderid:null,   //orderid ID        正在支付的订单id,金额
@@ -731,7 +734,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=produceNotPayOrder';
+                var url = 'http://192.168.1.100:8080/store?domain=produceNotPayOrder';
                 if(cartidlist!=null)
                     url=url+"&cartidlist="+cartidlist;
                 if(cartallprice!=null)
@@ -781,14 +784,15 @@ angular.module("indexApp.services", [])
                 return deferred.promise;
 
             },
-            //改变订单状态
+            //改变订单状态
+
 
             getPayOrderByStatus:function getPayOrderByStatus(orderstatus){
                 var deferred = $q.defer();
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=getPayOrderByStatus';
+                var url = 'http://192.168.1.100:8080/store?domain=getPayOrderByStatus';
                 if(orderstatus!=null)
                      url=url+"&orderstatus="+orderstatus;
                     $http.post(url).success(function (response) {
@@ -826,12 +830,14 @@ angular.module("indexApp.services", [])
 
 
             },
-           //改变订单状态
+           //改变订单状态
+
 
             /**
              *
              * @param O_ORDERID             订单ID
-             * @param orderstatus           新的状态
+             * @param orderstatus           新的状态
+
 
              * @param allprice              需要付款总价参数
              * @return {*}
@@ -841,7 +847,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=modifyPayOrder';
+                var url = 'http://192.168.1.100:8080/store?domain=modifyPayOrder';
                 if(O_ORDERID==null||orderstatus==null)
                 {
                     alert("系统错误");
@@ -887,7 +893,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.15.20:8080/store?domain=getOrderDetailById';
+                var url = 'http://192.168.1.100:8080/store?domain=getOrderDetailById';
                 if(O_ORDERID==null)
                 {
                     alert("系统错误");
