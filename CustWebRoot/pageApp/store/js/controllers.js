@@ -89,36 +89,36 @@ angular.module("indexApp.controllers",[])
         $scope.width=window.screen.width;
 
         var selectstyle_parent={
-            "padding-right":"0px",
-            "padding-left":"0px",
+            "padding":"0px",
             "margin-top":"0px",
             "margin-bottom":"0px",
             "text-align":"center",
-            "background-color":"#dcdcdc",
+            "background-color":"#f5f5f5",
             "width":"100%",
-            "height":$scope.height*0.05+'px'
+            "height":$scope.height*0.07+'px'
         };
         var unselectstyle_parent={
-            "padding-right":"0px",
-            "padding-left":"0px",
+            "padding":"0px",
             "margin-top":"0px",
             "margin-bottom":"0px",
             "text-align":"center",
             "background-color":"white",
             "width":"100%",
-            "height":$scope.height*0.05+'px'
+            "height":$scope.height*0.07+'px'
         };
 
         var selectstyle_font={
             "font-size":"16px",
             "color":"#87C644",
-            "display":"inline"
+            "display":"inline",
+            "vertical-align":"middle"
         };
 
         var unselectstyle_font={
             "font-size":"16px",
-            "color":"#000000",
-            "display":"inline"
+            "color":"#666666",
+            "display":"inline",
+            "vertical-align":"middle"
         };
 
         $scope.lastpfoffset=0;
@@ -674,7 +674,7 @@ angular.module("indexApp.controllers",[])
 
         $scope.getGoodslistBySort=function(orderparam)
         {
-            $scope.parameter.loadPage=0;
+            $scope.parameter.loadPage=0;//加载的条数
             $scope.parameter.hasMore=true;
             $scope.parameter.curPage=5;
             $scope.parameter.orderparam=orderparam;
@@ -682,11 +682,12 @@ angular.module("indexApp.controllers",[])
 
             goodslistFactory.getGoodslist($stateParams.clarifyId,$scope.parameter.loadPage,$scope.parameter.curPage,$scope.parameter.orderparam).then(function(response){
                 $scope.parameter.loadPage += response.length;
-                $scope.parameter.hasMore = $scope.parameter.loadPage>= $scope.parameter.curPage;
+                $scope.parameter.hasMore = $scope.parameter.loadPage>= $scope.parameter.curPage;     //curpage是本来应该加载多少个
                 $scope.goodsitems = $scope.goodsitems.concat(response);
                 $scope.parameter.curPage += 5;     //原本这样的方法肯定是不对的，通过curPage往上加
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });
+//            $scope.loadMore();
         }
 
         var titlearray=["默认","销量","价格","筛选"];
@@ -769,6 +770,7 @@ angular.module("indexApp.controllers",[])
             }
             else
             {
+                console.log("loadPage:",$scope.parameter.loadPage);
                 $timeout(function() {
                     goodslistFactory.getGoodslist($stateParams.clarifyId,$scope.parameter.loadPage,$scope.parameter.curPage,$scope.parameter.orderparam).then(function(response){
                         $scope.parameter.loadPage += response.length;
@@ -788,6 +790,9 @@ angular.module("indexApp.controllers",[])
      //       $state.go("goodsdetail");
             $state.go('goodsdetail', {gid: goodsid});
         }
+
+        $scope.formobj=$scope;
+    //    $scope.loadMore();
     })
     .controller('orderslistCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,OrderFactory) {
         //数量弹窗没做

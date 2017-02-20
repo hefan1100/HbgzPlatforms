@@ -24,7 +24,11 @@
             <div class="col col-25" style="padding:0px;margin-top: 2px;">
                 <div class="list" style="padding-left: 0px;padding-right: 0px;" >
                    <div class="item" ng-style="i.pfstyleobj.sparent"   ng-repeat="i in items" ng-click="getCategorylistByPId(i.DIC_ID,i.pfstyleobj.offset)">
-                        <p ng-style="i.pfstyleobj.f">{{i.DIC_NAME}}</p>
+                       <div class="row row-wrap row-no-padding" style="height: 100%;">
+                           <div class="col col-center" style="text-align: center;">
+                              <a ng-style="i.pfstyleobj.f">{{i.DIC_NAME}}</a>
+                           </div>
+                       </div>
                     </div>
 
                 </div>
@@ -39,7 +43,7 @@
                                 <img src="{{x.once.DIC_PIC}}" ng-style="PICStyle">
                             </div>
                             <div class="item" style="padding: 0px;height: 10%;text-align: center;">
-                                <b style="font-size: 15px;">{{x.once.DIC_NAME}}</b>
+                                <b style="font-size: 15px;color: #333333;">{{x.once.DIC_NAME}}</b>
                             </div>
                         </div>
                     </div>
@@ -50,7 +54,7 @@
                                 <img src="{{x.twice.DIC_PIC}}" ng-style="PICStyle">
                             </div>
                             <div class="item" style="padding: 0px;height: 10%;text-align: center;">
-                                <b style="font-size: 15px;">{{x.twice.DIC_NAME}}</b>
+                                <b style="font-size: 15px;color: #333333;">{{x.twice.DIC_NAME}}</b>
                             </div>
                         </div>
                      </div>
@@ -61,7 +65,7 @@
                                  <img src="{{x.third.DIC_PIC}}" ng-style="PICStyle">
                              </div>
                              <div class="item" style="padding: 0px;height: 10%;text-align: center;">
-                                 <b style="font-size: 15px;">{{x.third.DIC_NAME}}</b>
+                                 <b style="font-size: 15px;color: #333333;">{{x.third.DIC_NAME}}</b>
                              </div>
                          </div>
                     </div>

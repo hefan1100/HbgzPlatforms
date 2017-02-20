@@ -146,13 +146,13 @@ angular.module("indexApp.controllers",[])
             var html="<ion-item style='border: none;min-height:100px;max-height:360px;padding: 0px;background-color: #EEEEEE;'>";
             html+="<div class='list' style='background-color: #EEEEEE;'>";
             html+="<div class='item' style='width: 100%; border: none;background-color: #EEEEEE;'>";
-            html+="<div style='min-height: 50px;padding: 2%;max-height:160px;max-width:33%;min-width:5%;float: right;background-image: url(img/dialog_box@2x.png);background-size: 100% 100%;background-repeat: no-repeat;white-space: normal;'>";
+            html+="<div style='min-height: 50px;padding: 2%;line-height:50%;max-width:33%;min-width:5%;float: right;background-image: url(img/dialog_box@2x.png);background-size: 100% 100%;background-repeat: no-repeat;white-space: normal;font-size:1.2em;'>";
             html+=send;
             html+="</div>";
             html+="</div>";
             if(reply!=null) {
                 html += "<div class='item' style='width: 100%;border: none;background-color: #EEEEEE;'>";
-                html += "<div style='min-height: 50px;max-height:200px;min-width: 5%;max-width:50%;float: left;background-image: url(img/dialog_kf@2x.png);background-size: 100% 100%;background-repeat: no-repeat;white-space: normal;padding: 2%;'>";
+                html += "<div style='min-height: 50px;min-width: 5%;line-height:50%;max-width:50%;float: left;background-image: url(img/dialog_kf@2x.png);background-size: 100% 100%;background-repeat: no-repeat;white-space: normal;padding: 2%;font-size:1.2em;'>";
                 html += reply;
                 html += "</div>";
                 html += "</div>";
