@@ -145,7 +145,7 @@ angular.module("indexApp.controllers",[])
         {
             var html="<ion-item style='border: none;padding: 0px;background-color: #EEEEEE;'>";
             html+="<div class='list' style='background-color: #EEEEEE;'>";
-            html+="<div class='item' style='width: 100%; border: none;padding:0px;background-color: #EEEEEE;'>";
+            html+="<div class='item' style='width: 100%; border: none;background-color: #EEEEEE;'>";
             html+="<div style='min-height: 50px;padding: 15px;line-height:150%;max-width:33%;min-width:5%;float: right;background-image: url(img/dialog_box@2x.png);background-size: 100% 100%;background-repeat: no-repeat;white-space: normal;font-size:1em;'>";
             html+=send;
             html+="</div>";
