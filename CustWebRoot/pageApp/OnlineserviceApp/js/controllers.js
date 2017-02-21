@@ -146,14 +146,28 @@ angular.module("indexApp.controllers",[])
             var html="<ion-item style='border: none;padding: 0px;background-color: #EEEEEE;'>";
             html+="<div class='list' style='background-color: #EEEEEE;'>";
             html+="<div class='item' style='width: 100%; border: none;background-color: #EEEEEE;'>";
-            html+="<div class='rightchats'>";
-            html+=send;
+            html+="<div class='row row-wrap row-no-padding' style='min-height: 50px;width:33%;float: right;white-space: normal;'>";
+            html+="<div class='col col-80' >";
+            html+="<div style='white-space:normal;min-width:20%;max-width:100%;line-height:150%;padding: 10px;background-image: url(img/youfangkuai.png);background-size: 100% 100%;background-repeat: no-repeat;float: right; '>";
+            html+=send.trim();
+            html+="</div>";
+            html+="</div>";
+            html+="<div class='col col-20' style='height: 100%;padding-top: 10px;'>";
+            html+="<img src='img/youjiantou.png' style='height: 15px'>";
+            html+="</div>";
             html+="</div>";
             html+="</div>";
             if(reply!=null) {
                 html += "<div class='item' style='width: 100%;border: none;background-color: #EEEEEE;'>";
-                html += "<div class='leftchats'>";
+                html += "<div class='row row-wrap row-no-padding' style='width: 50%;line-height:150%;float: left;white-space: normal;font-size:1em;'>";
+                html += "<div class='col col-10' style='height: 100%;width: 100%;padding-top: 20px;'>";
+                html += "<img src='img/zuojiantou.png' style='height: 15px;float: right;'>";
+                html += "</div>";
+                html += "<div class='col col-90 col-center'>";
+                html+="<div style='white-space:normal;min-width:20%;padding: 15px;max-width:100%;line-height:150%;padding: 10px;background-image: url(img/zuofangkuai.png);background-size: 100% 100%;background-repeat: no-repeat;float: right; '>";
                 html += reply;
+                html += "</div>";
+                html += "</div>";
                 html += "</div>";
                 html += "</div>";
             }
