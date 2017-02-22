@@ -7,48 +7,48 @@
         <div style="width: 95%;padding-top:8px;margin:0 auto;" class="list radius">
             <div class="item item-input item-select radius-top">
                 <div class="input-label">* 省:</div>
-                <select id="province" ng-model="items.D_PROVINCE" ng-options="province.name as province.name for province in provinces"  ng-init="item.D_PROVINCE = province.name">
+                <select id="province" ng-model="items.D_PROVINCE" ng-options="province.name as province.name for province in provinces"  ng-init="item.D_PROVINCE = province.name" required >
                 </select>
             </div>
             <div class="item item-input item-select">
                 <div class="input-label">* 市:</div>
                     <!--<option value="{{$index}}" ng-repeat="t in city" ng-selected="number==$index">{{t}}</option>-->
-                <select id="city" ng-model="items.D_CITY" ng-options="city.name as city.name for city in citys"  ng-init="item.D_CITY = city.name">
+                <select id="city" ng-model="items.D_CITY" ng-options="city.name as city.name for city in citys"  ng-init="item.D_CITY = city.name" required >
                 </select>
             </div>
             <div class="item item-input item-select">
-                <div class="input-label">* 用户标识:</div>
-                <select id="usertype" ng-model="items.D_USERTYPE" ng-options="usertype.name as usertype.name for usertype in usertypes"  ng-init="item.D_USERTYPE = usertype.name">
+                <div class="input-label" >* 用户标识:</div>
+                <select id="usertype" ng-model="items.D_USERTYPE" ng-options="usertype.name as usertype.name for usertype in usertypes"  ng-init="item.D_USERTYPE = usertype.name" required >
                 </select>
             </div>
             <div class="item item-input">
-                <div class="input-label">* 车牌号码:</div>
-                鄂<input id="platenum" type="text"  ng-model="items.D_PLATENUM" />
+                <div class="input-label" for="platenum">* 车牌号码:</div>
+                鄂<input id="platenum" type="text" ng-minlength="6" ng-maxlength="6"  ng-model="items.D_PLATENUM" required />
             </div>
             <div class="item item-input">
-                <div class="input-label">* 车主姓名:</div>
-                <input id="name" type="text"  ng-model="items.D_NAME" />
+                <div class="input-label" for="name">* 车主姓名:</div>
+                <input id="name" type="text"  ng-model="items.D_NAME" required />
                 <input id="userid" type="hidden" ng-model="items.D_DETAILID" />
             </div>
             <div class="item item-input">
                 <span class="input-label">* 起保日期:</span>
-                <ionic-datepicker idate="startDate" >
+                <ionic-datepicker idate="startDate" required >
                     <button id="startDate" class="button button-clear" style="width: 100%;"> {{startDate | date:'yyyy/MM/dd'}} </button>
                 </ionic-datepicker>
             </div>
             <div class="item item-input">
                 <span class="input-label">* 终保日期:</span>
-                <ionic-datepicker idate="endDate" >
+                <ionic-datepicker idate="endDate" required >
                     <button id="endDate" class="button button-clear" style="width: 100%;"> {{endDate | date:'yyyy/MM/dd'}} </button>
                 </ionic-datepicker>
             </div>
-            <div class="item item-input">
+            <div class="item item-input" for="vin">
                 <div class="input-label">* 车架号:</div>
-                <input id="vin" type="text"  ng-model="items.D_VIN"/>
+                <input id="vin" type="text"  ng-minlength="17" ng-maxlength="17"  ng-model="items.D_VIN" required />
             </div>
             <div class="item item-input radius-button">
-                <div class="input-label">* 发动机号:</div>
-                <input id="enginenum" type="text"  ng-model="items.D_ENGINENUM"/>
+                <div class="input-label" for="enginenum">* 发动机号:</div>
+                <input id="enginenum" type="text"  ng-minlength="7" ng-maxlength="8"  ng-model="items.D_ENGINENUM" required />
             </div>
             <div class="item item-input radius-button">
                 <div class="input-label">* 提醒时间:</div>
