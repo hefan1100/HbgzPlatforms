@@ -3,8 +3,9 @@
     <ion-nav-buttons side="left">
         <button class="button button-large button-clear icon ion-ios-arrow-back" ng-click="httpback()">返回</button>
     </ion-nav-buttons>
-    <ion-side-menus>
-        <ion-side-menu-content>
+ <!--   <ion-side-menus>
+        <ion-side-menu-content  >       -->
+    <ion-content>
                     <div class="row row-wrap row-no-padding" style="margin-top:0px;background-color: #87C644;padding-left:24px;padding-right: 24px;padding-top: 6px;padding-bottom: 6px;">
                         <div class="col col-10 col-center">
                             <i class="icon ion-ios-arrow-back" style="color: white;font-weight: bold;float:left;"></i>
@@ -51,13 +52,13 @@
 
                        <ion-infinite-scroll ng-if="parameter.hasMore" on-infinite="loadMore()" immediate-check="false">
                         </ion-infinite-scroll>
-
-        </ion-side-menu-content>
+         </ion-content>
+<!--        </ion-side-menu-content>
 
 
 
         <ion-side-menu side="right" >
-            <ion-content style="background-color: white;padding-top: 20px;padding-bottom: 20px;">
+            <ion-content style="background-color: white;padding-top: 20px;padding-bottom: 20px;" overflow-scroll='false'>
                 <p style="margin-left: 10px;">价格区间</p>
                 <p style="margin-top: 20px;padding-left: 10px;padding-right: 10px;width: 100%;">
                     <a class="button button-clear" style="background-color: #E6E6E6;height: 40px;width:40%;color:#959595;">最低价</a>
@@ -68,5 +69,5 @@
                  <p style="padding-left: 10px;padding-right: 10px;width: 100%;margin-top: 20px;">发货地</p>
             </ion-content>
         </ion-side-menu>
-    </ion-side-menus>
+    </ion-side-menus>      -->
 </ion-view>

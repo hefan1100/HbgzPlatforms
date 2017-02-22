@@ -13,8 +13,8 @@ angular.module("indexApp", ["ionic","ui.router","indexApp.controllers","indexApp
 
         $ionicConfigProvider.platform.ios.views.transition('ios');
         $ionicConfigProvider.platform.android.views.transition('android');
-
-
+        //允许开启滑动，ion下拉加载更多时
+        $ionicConfigProvider.scrolling.jsScrolling(true);
 
         $stateProvider
             .state('tabs', {

@@ -790,8 +790,8 @@ angular.module("indexApp.controllers",[])
      //       $state.go("goodsdetail");
             $state.go('goodsdetail', {gid: goodsid});
         }
-
-        $scope.formobj=$scope;
+        alert(1);
+     //   $scope.formobj=$scope;
     //    $scope.loadMore();
     })
     .controller('orderslistCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,OrderFactory) {

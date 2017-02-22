@@ -19,7 +19,8 @@ import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
- * User: 王文海        app的后台
+ * User: 王文海        app的后台
+
 
 
  * Date: 16-11-22
@@ -155,20 +156,24 @@ public class StoreService extends HttpServlet {
             System.out.println("startpage:" + startpage);
             System.out.println("curpage:"+curpage);
             System.out.println("orderparam:"+orderparam);
-            //还需判断库存，有的库存为零的要消失在列表上
+            //还需判断库存，有的库存为零的要消失在列表上
 
-          //根据销量排序
+
+          //根据销量排序
+
 
 //            select s.g_id,s.g_name,s.g_price,s.g_amount,s.dicid,sup.sup_name,SUM(d.info_amount) as dsum from store_goods_info s
 //            inner join store_sup_supply sup on s.sup_id=sup.sup_id inner join store_order_details d on s.g_id=d.g_id group by s.g_id,s.g_name,
 //            s.g_price,s.g_amount,s.dicid,sup.sup_name having s.dicid='qwedsfsdssddsfdfd' order by SUM(d.info_amount)
-            if(orderparam.equals("salesamount"))  //销售,求和订单详情列表中的销售数量来排销量
+            if(orderparam.equals("salesamount"))  //销售,求和订单详情列表中的销售数量来排销量
+
 
            {
                sql.append("SELECT S.G_ID,S.G_PIC,S.G_NAME,S.G_PRICE,S.G_AMOUNT,S.DICID,SUP.SUP_NAME,SUM(D.INFO_AMOUNT) AS DSUM FROM STORE_GOODS_INFO S LEFT JOIN STORE_SUP_SUPPLY SUP ON S.SUP_ID=SUP.SUP_ID LEFT JOIN STORE_ORDER_DETAILS D ON S.G_ID=D.G_ID " +
-                       "GROUP BY S.G_ID,S.G_NAME,S.G_PRICE,S.G_PIC,S.G_AMOUNT,S.DICID,SUP.SUP_NAME HAVING s.dicid='"+clarifyId+"' and s.g_amount>0 order by dsum limit "+(startpage+1)+","+(startpage+curpage));
+                       "GROUP BY S.G_ID,S.G_NAME,S.G_PRICE,S.G_PIC,S.G_AMOUNT,S.DICID,SUP.SUP_NAME HAVING s.dicid='"+clarifyId+"' and s.g_amount>0 order by dsum limit "+(startpage)+","+curpage);
                System.out.println("销售排列:"+sql.toString());
-           }else if(orderparam.equals("default")) //默认  ,去重复的项
+           }else if(orderparam.equals("default")) //默认  ,去重复的项
+
 
            {
 //               sql.append("select * from (SELECT A.*, ROWNUM RN FROM (select s.g_id,s.g_pic,s.g_name,to_number(s.g_price) as G_PRICE,s.g_amount,s.dicid," +
@@ -179,7 +184,7 @@ public class StoreService extends HttpServlet {
 
                sql.append("SELECT S.G_ID,S.G_PIC,S.G_NAME,S.G_PRICE,S.G_AMOUNT,S.DICID,SUP.SUP_NAME,SUM(D.INFO_AMOUNT) " +
                        "AS DSUM FROM STORE_GOODS_INFO S LEFT JOIN STORE_SUP_SUPPLY SUP ON S.SUP_ID=SUP.SUP_ID LEFT JOIN STORE_ORDER_DETAILS D ON S.G_ID=D.G_ID " +
-                       "GROUP BY S.G_ID,S.G_NAME,S.G_PRICE,S.G_PIC,S.G_AMOUNT,S.DICID,SUP.SUP_NAME HAVING s.dicid='"+clarifyId+"' and s.g_amount>0 limit "+(startpage+1)+","+(startpage+curpage));
+                       "GROUP BY S.G_ID,S.G_NAME,S.G_PRICE,S.G_PIC,S.G_AMOUNT,S.DICID,SUP.SUP_NAME HAVING s.dicid='"+clarifyId+"' and s.g_amount>0 limit "+(startpage)+","+(curpage));
                //select s.g_id,s.g_pic,s.g_name,s.g_price as G_PRICE,s.g_amount,s.dicid,sup.sup_name from store_goods_info s left join store_sup_supply sup on s.sup_id=sup.sup_id left join store_order_details d on s.g_id=d.g_id group by s.g_id,s.g_name,s.g_price,s.g_pic,s.g_amount,s.dicid,sup.sup_name having s.dicid='' and s.g_amount>0
 //               sql.append("select * from (SELECT A.*, ROWNUM RN FROM (select s.g_id,s.g_pic,s.g_name,to_number(s.g_price) as G_PRICE,s.g_amount,s.dicid," +
 //                       "sup.sup_name from store_goods_info s left join store_sup_supply sup " +
@@ -245,7 +250,8 @@ public class StoreService extends HttpServlet {
                     System.out.println("addCart:"+jsonStr);
 
                 }
-                else      //又符合条件的就执行更新语句
+                else      //又符合条件的就执行更新语句
+
 
                 {
                     sql = new StringBuffer();
@@ -399,7 +405,8 @@ public class StoreService extends HttpServlet {
                     {      //获取收货地址
                         rootjson.put("code","success");
                         rootjson.put("addresslist",json);
-                           //获取购物车商品
+                           //获取购物车商品
+
 
                         JSONObject obj=json.getJSONObject(0);
                         String userid=obj.getString("A_USERID");
@@ -424,7 +431,8 @@ public class StoreService extends HttpServlet {
             ui=new UserHttpImpl();
             StringBuffer sql = new StringBuffer();
             String oid=(String)session.getAttribute("openid");
-            String status=request.getParameter("status");    //0  未使用     1  已使用       2  已过期
+            String status=request.getParameter("status");    //0  未使用     1  已使用       2  已过期
+
 
             int discountstatus=0;
             if(status!=null&&(!status.equals("")))
@@ -457,20 +465,25 @@ public class StoreService extends HttpServlet {
             ui=new UserHttpImpl();
             StringBuffer sql = new StringBuffer();
             String oid=(String)session.getAttribute("openid");
-            String cartidlist=request.getParameter("cartidlist");//购物车字段
+            String cartidlist=request.getParameter("cartidlist");//购物车字段
+
 
             System.out.println("cartidlist:"+cartidlist);
-            String couponid=request.getParameter("couponid");//优惠券id,discount优惠券id值
+            String couponid=request.getParameter("couponid");//优惠券id,discount优惠券id值
+
 
             System.out.println("couponid:"+couponid);
- //           String couponprice=request.getParameter("couponprice");//优惠券价格
+ //           String couponprice=request.getParameter("couponprice");//优惠券价格
+
 
 //            String conditiontype=request.getParameter("conditiontype");//优惠券条件，C_GOODTYPE  1  满减
-//            String C_MONEY=request.getParameter("C_MONEY");//满减的话就代表减去多少价格，打折的话这个就是百分比
+//            String C_MONEY=request.getParameter("C_MONEY");//满减的话就代表减去多少价格，打折的话这个就是百分比
+
 
             String cartallprice=request.getParameter("cartallprice");//购物车总价
             System.out.println("cartallprice:"+cartallprice);
-            String UC_ID=request.getParameter("UC_ID");      //user的打折ID值，用户使用的优惠券id值
+            String UC_ID=request.getParameter("UC_ID");      //user的打折ID值，用户使用的优惠券id值
+
 
             System.out.println("UC_ID:"+UC_ID);
             String paramlist=request.getParameter("paramlist");       //参数集合提交上来      格式是    //gid商品id-优惠券id-单个商品总价-数量,gid商品id-优惠券id-单个商品总价-数量...
@@ -488,14 +501,16 @@ public class StoreService extends HttpServlet {
             {
             //满减 1   折扣  2
             //已付款   1    待付款   0     已发货    2    已签收    3     已评论     4      已退款     7      已完成     8
-                    //生成总的STORE_ORDER_INFO表
+                    //生成总的STORE_ORDER_INFO表
+
 
 //                    String O_ORDERID=UUID.randomUUID().toString();
 //
 //                    java.util.Date date=new java.util.Date();
 //                    java.sql.Date sqlDate=new java.sql.Date(date.getTime());
 //                    SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//                    //删除购物车中的商品
+//                    //删除购物车中的商品
+
 
 //                    sql=new StringBuffer();
 //
@@ -517,7 +532,8 @@ public class StoreService extends HttpServlet {
 //                    System.out.println("添加order_info表:"+addStr);
 //
 //
-//                    //生成所有明细STORE_ORDER_DETAIL表
+//                    //生成所有明细STORE_ORDER_DETAIL表
+
 
 //                    //INFO_ID详情id   O_ORDERID订单id    G_ID商品id   C_ID优惠券   INFO_TOTALPRICE总价   INFO_AMOUNT数量   INFO_STATUS状态,判断收获否   COM_CODE,COM _STATUS
 //                    sql=new StringBuffer();
@@ -539,11 +555,14 @@ public class StoreService extends HttpServlet {
 //                    String resultStr=ui.addAny(getJsonSql("addAnySQL", sql.toString()));
 //                    Boolean isSuccess=Boolean.parseBoolean(resultStr);
 //                    System.out.println("添加order_details表:"+resultStr);
-//                   //将STORE_USER_DISCOUNT表中的优惠券UC_STATUS改变其状态，改未使用状态为已使用
+//                   //将STORE_USER_DISCOUNT表中的优惠券UC_STATUS改变其状态，改未使用状态为已使用
 
-//                   //将STORE_USER_DISCOUNT表中的优惠券O_ORDERID绑定新增的orderid值
 
-//                   //0  未使用     1   已使用       2   已过期
+//                   //将STORE_USER_DISCOUNT表中的优惠券O_ORDERID绑定新增的orderid值
+
+
+//                   //0  未使用     1   已使用       2   已过期
+
 
 //
                    //查库存   比较所有提交的购物车商品的库存，如果有就把他存起来
@@ -578,14 +597,16 @@ public class StoreService extends HttpServlet {
                     }
                     else        //如果库存都够，则让他生成订单
                     {
-                           //删除购物车信息
+                           //删除购物车信息
+
 
                             String O_ORDERID=UUID.randomUUID().toString().substring(0,10);
                             O_ORDERID=O_ORDERID.replaceAll("-","");
                             java.util.Date date=new java.util.Date();
                             java.sql.Date sqlDate=new java.sql.Date(date.getTime());
                             SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            //删除购物车中的商品
+                            //删除购物车中的商品
+
 
                             sql=new StringBuffer();
                        //     sql.append("DELIMITER ");
@@ -600,7 +621,8 @@ public class StoreService extends HttpServlet {
                                     "STORE_USER_ADDRESS U WHERE U.A_USERID=(SELECT SU.U_USERID FROM STORE_USER_INFO SU WHERE su.openid='"+oid+"')  and u.a_default=1),null); ");
 
                             System.out.println("insertsql:"+sql.toString());
-                            //生成所有明细STORE_ORDER_DETAIL表
+                            //生成所有明细STORE_ORDER_DETAIL表
+
 
                             //INFO_ID详情id   O_ORDERID订单id    G_ID商品id   C_ID优惠券   INFO_TOTALPRICE总价   INFO_AMOUNT数量   INFO_STATUS状态,判断收获否   COM_CODE,COM _STATUS
 
@@ -620,11 +642,14 @@ public class StoreService extends HttpServlet {
                                 sql.append("UPDATE STORE_GOODS_INFO INFO SET info.g_amount=info.g_amount-"+param[2]+" where info.g_id="+param[0]+"; ");
                             }
 
-                            //将STORE_USER_DISCOUNT表中的优惠券UC_STATUS改变其状态，改未使用状态为已使用
+                            //将STORE_USER_DISCOUNT表中的优惠券UC_STATUS改变其状态，改未使用状态为已使用
 
-                            //将STORE_USER_DISCOUNT表中的优惠券O_ORDERID绑定新增的orderid值
 
-                            //0  未使用     1   已使用       2   已过期
+                            //将STORE_USER_DISCOUNT表中的优惠券O_ORDERID绑定新增的orderid值
+
+
+                            //0  未使用     1   已使用       2   已过期
+
 
                             //update store_user_discount dis set dis.uc_status=1,dis.o_orderid='sdfsfdsfsfdssdfdsf' where dis.uc_id='sdfsfsfss'
 
@@ -700,7 +725,8 @@ public class StoreService extends HttpServlet {
                     System.out.println("jsonstr:"+jsonStr);
                 }
             }
-            else if(orderstatus.equals("5")||orderstatus.equals("11"))        //已取消
+            else if(orderstatus.equals("5")||orderstatus.equals("11"))        //已取消
+
 
             {
                 if(O_ORDERID==null||O_ORDERID.equals(""))//没有订单
@@ -730,7 +756,8 @@ public class StoreService extends HttpServlet {
                     System.out.println("jsonstr:"+jsonStr);
                 }
             }
-            else if(orderstatus.equals("10")||orderstatus.equals("12")||orderstatus.equals("8"))        //把订单调成已删除状态  或者加急发货状态   或者已完成状态
+            else if(orderstatus.equals("10")||orderstatus.equals("12")||orderstatus.equals("8"))        //把订单调成已删除状态  或者加急发货状态   或者已完成状态
+
 
             {
                 if(O_ORDERID==null||O_ORDERID.equals(""))//没有订单
@@ -903,7 +930,8 @@ public class StoreService extends HttpServlet {
         out.println(jsonStr);
     }
     //减去所有购物车的id
-    //生成未支付订单
+    //生成未支付订单
+
 
 
 
