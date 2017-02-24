@@ -2,6 +2,7 @@ package com.webservice;
 
 import com.alibaba.fastjson.JSON;
 import com.app.web.user.UserHttpImpl;
+import com.commons.util.ExpandHanlerUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -232,7 +233,7 @@ public class StoreService extends HttpServlet {
                 String json = ui.queryAny(getJsonSql("queryAnySQL",sql.toString()));
                 JSONObject result= JSONObject.fromObject(json);
 
-                int digital=Integer.parseInt(result.getString("amount"));
+                int digital=Integer.parseInt(result.getString("AMOUNT"));
                 Boolean addstate=false;
                 String jsonresult="";
                 if(digital==0)  //没有符合条件的就插入
@@ -565,7 +566,7 @@ public class StoreService extends HttpServlet {
 
 
 //
-                   //查库存   比较所有提交的购物车商品的库存，如果有就把他存起来
+                   //查库存   比较所有提交的购物车商品的库存，如果有库存不够的就把他存起来
                     String[] gparams=paramlist.split(",");
                     JSONArray jarray=new JSONArray();
                     for(int i=0;i<gparams.length;i++)
@@ -599,6 +600,8 @@ public class StoreService extends HttpServlet {
                     {
                            //删除购物车信息
 
+                            ArrayList<String> sqllist=new ArrayList<String>();     //操作数据的集合
+
 
                             String O_ORDERID=UUID.randomUUID().toString().substring(0,10);
                             O_ORDERID=O_ORDERID.replaceAll("-","");
@@ -609,16 +612,22 @@ public class StoreService extends HttpServlet {
 
 
                             sql=new StringBuffer();
-                       //     sql.append("DELIMITER ");
-                       //     sql.append("begin ");
-                            sql.append("DELETE FROM STORE_USER_CAR WHERE S_ID IN ("+cartidlist+"); ");
+
+                            sql.append("DELETE FROM STORE_USER_CAR WHERE S_ID IN ("+cartidlist+");  ");
+                            String sqljson=getJsonSql("delAnySQL",sql.toString());
+                            sqllist.add(sqljson);
                             //然后所有商品减库存
                             //total_price     使用优惠券   插入一条记录到STORE_ORDER_INFO
+
+                            sql=new StringBuffer();
+
                             sql.append("INSERT INTO STORE_ORDER_INFO VALUES ('"+O_ORDERID+"'," +
-                                    "(SELECT UI.U_USERID FROM STORE_USER_INFO UI WHERE ui.openid='"+oid+"'),'','"+cartallprice+"'" +
+                                    "(SELECT ui.U_USERID FROM STORE_USER_INFO ui WHERE ui.openid='"+oid+"'),'','"+cartallprice+"'" +
                                     ",'"+dateFormat.format(sqlDate)+"'," +
                                     "'"+dateFormat.format(sqlDate)+"','1','0',(SELECT U.A_ADDRESSID FROM " +
-                                    "STORE_USER_ADDRESS U WHERE U.A_USERID=(SELECT SU.U_USERID FROM STORE_USER_INFO SU WHERE su.openid='"+oid+"')  and u.a_default=1),null); ");
+                                    "STORE_USER_ADDRESS U WHERE U.A_USERID=(SELECT SU.U_USERID FROM STORE_USER_INFO SU WHERE SU.OPENID='"+oid+"')  and U.A_DEFAULT=1),null); ");
+                            sqljson=getJsonSql("addAnySQL",sql.toString());
+                            sqllist.add(sqljson);
 
                             System.out.println("insertsql:"+sql.toString());
                             //生成所有明细STORE_ORDER_DETAIL表
@@ -637,9 +646,19 @@ public class StoreService extends HttpServlet {
                                 String[] param=params[i].split("-");
                                 //gid商品id-总价-数量
                                 String couponparam=couponid!=null?"'"+couponid+"'":null;
+
+
+                                sql=new StringBuffer();
                                 sql.append("INSERT INTO STORE_ORDER_DETAILS VALUES ('"+orderdetailid+"','"+O_ORDERID+"',"+param[0]+","+couponparam+","+param[1]+","+param[2]+",'0','',''); ");
+                                sqljson=getJsonSql("addAnySQL",sql.toString());
+                                sqllist.add(sqljson);
+
+
                                 //更新库存
-                                sql.append("UPDATE STORE_GOODS_INFO INFO SET info.g_amount=info.g_amount-"+param[2]+" where info.g_id="+param[0]+"; ");
+                                sql=new StringBuffer();
+                                sql.append("UPDATE STORE_GOODS_INFO INFO SET INFO.G_AMOUNT=INFO.G_AMOUNT-"+param[2]+" where INFO.G_ID="+param[0]+"; ");
+                                sqljson=getJsonSql("updateAnySQL",sql.toString());
+                                sqllist.add(sqljson);
                             }
 
                             //将STORE_USER_DISCOUNT表中的优惠券UC_STATUS改变其状态，改未使用状态为已使用
@@ -655,7 +674,10 @@ public class StoreService extends HttpServlet {
 
                             if(UC_ID!=null)
                             {
+                                sql=new StringBuffer();
                                 sql.append("UPDATE STORE_USER_DISCOUNT DIS SET dis.uc_status=1,dis.o_orderid='"+O_ORDERID+"' where dis.uc_id='"+UC_ID+"'; ");
+                                sqljson=getJsonSql("updateAnySQL",sql.toString());
+                                sqllist.add(sqljson);
                                 System.out.println("updateCart:"+jsonStr);
                             }
                         //     sql.append(" commit;");
@@ -663,9 +685,20 @@ public class StoreService extends HttpServlet {
                         //     sql.append(" DELIMITER;");
 
                         //     sString resultStr=ui.addAny(getJsonSql("addAnySQL", sql.toString()));
-                             String resultStr=ui.updateAny(getJsonSql("updateAnySQL", sql.toString()));
-                             Boolean isSuccess=Boolean.parseBoolean(resultStr);
-                             System.out.println("总的操作:"+resultStr);
+                      //       sql.append("  END");
+                   //          String resultStr=ui.updateAny(getJsonSql("updateAnySQL", sql.toString()));
+                             Boolean isSuccess=false;
+                            try
+                            {
+                                ExpandHanlerUtil.ExpandUtilTransaction(sqllist);
+                                isSuccess=true;
+                            }catch(Exception e)
+                            {
+                                e.printStackTrace();
+                                isSuccess=false;
+                            }
+
+                             System.out.println("总的操作:"+isSuccess);
 
 
                             JSONObject rootobj=new JSONObject();

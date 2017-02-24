@@ -46,7 +46,7 @@ angular.module("indexApp.services", [])
             },
             getListByDomain: function getListByDomain(domain,uid){
                 var deferred = $q.defer();
-                var url = 'http://192.168.1.100:8080/store?domain='+domain;
+                var url = 'http://192.168.1.105:8080/store?domain='+domain;
                 if(uid!=null)
                      url=url+"&uid="+uid;
                 $ionicLoading.show({
@@ -82,7 +82,7 @@ angular.module("indexApp.services", [])
             },
             getcartList: function getcartList(domain){
                 var deferred = $q.defer();
-                var url = 'http://192.168.1.100:8080/store?domain='+domain;
+                var url = 'http://192.168.1.105:8080/store?domain='+domain;
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
@@ -257,7 +257,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=doLogin&username='+username+'&password='+password;
+                var url = 'http://192.168.1.105:8080/store?domain=doLogin&username='+username+'&password='+password;
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
 
@@ -278,7 +278,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=getCategorylist&dicid='+dicid;
+                var url = 'http://192.168.1.105:8080/store?domain=getCategorylist&dicid='+dicid;
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
                     var resultJson = response;
@@ -303,7 +303,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=getMain';
+                var url = 'http://192.168.1.105:8080/store?domain=getMain';
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
 
@@ -336,7 +336,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=getGoodslist&clarifyId='+clarifyId+'&startpage='+startpage+'&endpage='+curpage;
+                var url = 'http://192.168.1.105:8080/store?domain=getGoodslist&clarifyId='+clarifyId+'&startpage='+startpage+'&endpage='+curpage;
                 if(param!=null)
                     url=url+"&orderparam="+param;
                 $http.post(url).success(function (response) {
@@ -375,7 +375,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=addCart&gid='+gid;
+                var url = 'http://192.168.1.105:8080/store?domain=addCart&gid='+gid;
 
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
@@ -408,7 +408,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=addCartNumber&gid='+gid;
+                var url = 'http://192.168.1.105:8080/store?domain=addCartNumber&gid='+gid;
 
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
@@ -442,7 +442,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=minusCartNumber&gid='+gid;
+                var url = 'http://192.168.1.105:8080/store?domain=minusCartNumber&gid='+gid;
 
                 $http.post(url).success(function (response) {
                     $ionicLoading.hide();
@@ -476,7 +476,7 @@ angular.module("indexApp.services", [])
               $ionicLoading.show({
                   template: 'Loading...'
               });
-              var url = 'http://192.168.1.100:8080/store?domain=delCart&gid='+gid;
+              var url = 'http://192.168.1.105:8080/store?domain=delCart&gid='+gid;
 
               $http.post(url).success(function (response) {
                   $ionicLoading.hide();
@@ -513,7 +513,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=getGoodsdetail&gid='+gid;
+                var url = 'http://192.168.1.105:8080/store?domain=getGoodsdetail&gid='+gid;
 //                if(param!=null)
 //                    url=url+"&orderparam="+param;
                 $http.post(url).success(function (response) {
@@ -542,7 +542,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=acquireConfirmOrderInfo&idlist='+cartidlist;
+                var url = 'http://192.168.1.105:8080/store?domain=acquireConfirmOrderInfo&idlist='+cartidlist;
 //                if(param!=null)
 //                    url=url+"&orderparam="+param;
                 $http.post(url).success(function (response) {
@@ -614,7 +614,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=getDiscountByUser';
+                var url = 'http://192.168.1.105:8080/store?domain=getDiscountByUser';
                 if(status!=null)
                      status=status+'&status='+status;
 //                if(param!=null)
@@ -734,7 +734,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=produceNotPayOrder';
+                var url = 'http://192.168.1.105:8080/store?domain=produceNotPayOrder';
                 if(cartidlist!=null)
                     url=url+"&cartidlist="+cartidlist;
                 if(cartallprice!=null)
@@ -792,7 +792,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=getPayOrderByStatus';
+                var url = 'http://192.168.1.105:8080/store?domain=getPayOrderByStatus';
                 if(orderstatus!=null)
                      url=url+"&orderstatus="+orderstatus;
                     $http.post(url).success(function (response) {
@@ -847,7 +847,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=modifyPayOrder';
+                var url = 'http://192.168.1.105:8080/store?domain=modifyPayOrder';
                 if(O_ORDERID==null||orderstatus==null)
                 {
                     alert("系统错误");
@@ -893,7 +893,7 @@ angular.module("indexApp.services", [])
                 $ionicLoading.show({
                     template: 'Loading...'
                 });
-                var url = 'http://192.168.1.100:8080/store?domain=getOrderDetailById';
+                var url = 'http://192.168.1.105:8080/store?domain=getOrderDetailById';
                 if(O_ORDERID==null)
                 {
                     alert("系统错误");
