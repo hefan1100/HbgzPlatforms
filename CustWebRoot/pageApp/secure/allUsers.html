@@ -1,27 +1,33 @@
 <ion-pane>
-    <ion-content style="background-color:#f3f3f3;">
-        <ion-list ng-controller="AllUserCtrl">
-            <ion-item ng-repeat="item in items"
-                      item="item"
-                      href="#/item/{{item.id}}" class="item-remove-animate">
-                <div style="width:100%;height: 100%;float: right;font-size: 12px"  class="warp">
-                    <div style="float: left" width="40%">
-                        用户姓名：{{ item.D_NAME }}
-                        </br>
-                        所在城市：{{ item.D_CITY }}
-                        </br>
-                        保险开始时间：{{ item.D_STARTDATE }}
-                        </br>
-                        保险到期时间：{{ item.D_ENDDATE }}
-                        </br>
-                        车牌号：{{ item.D_PLATENUM }}
-                    </div>
-                    <div style="float: right" >
-                        <img ng-src="{{ item.D_CODEPIC }}" width="100px" />
-                    </div>
-                </div>
-            </ion-item>
 
-        </ion-list>
-    </ion-content>
+    <table class="table table-border" ng-controller="AllUserCtrl" width="100%">
+        <thead>
+        <tr>
+            <div style="float: left;width:20%;padding-top: 5px;">
+                客户查询 :
+            </div>
+            <div style="float: left;width:20%;">
+                <input type="text" id="uname"  ng-model="search" />
+            </div>
+        </tr>
+        <tr>
+            <th align="left" ng-click="col='D_NAME';desc=!desc">用户名字</th>
+            <!-- 当点击列标题时，执行click事件，将排序条件反转，即，如果原来是升序则将按降序，降序亦如此 -->
+            <th align="left" ng-click="col='D_CITY';desc=!desc">所在城市</th>
+            <th align="left" ng-click="col='D_PLATENUM';desc=!desc">车牌号</th>
+            <th align="left" ng-click="col='D_STARTDATE';desc=!desc">保险开始日期</th>
+            <th align="left" ng-click="">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in items| orderBy:col:desc | filter:search">
+            <td>{{item.D_NAME}}</td>
+            <td>{{item.D_CITY}}</td>
+            <td>{{item.D_PLATENUM}}</td>
+            <td>{{item.D_STARTDATE}}</td>
+            <td><button ng-click="bind(item.D_DETAILID)">绑定</button></td>
+        </tr>
+        </tbody>
+    </table>
 </ion-pane>
+

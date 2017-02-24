@@ -115,11 +115,11 @@ public class CarSecureService extends HttpServlet {
             //再给用户填充信息
             UUID did=UUID.randomUUID();
             String d_id=did.toString().replaceAll("-","");
-            String insertcus="insert INTO store_user_details values('"+d_id+"','"+u_id+"','"+name+"','','','"+province+"','"+city+"','','','"+platenum+"','"+vin+"','','"+enginenum+"','"+startdate+"','"+enddate+"',sysdate(),'','2','')";
+            String insertcus="insert INTO store_user_details values('"+d_id+"','"+u_id+"','"+name+"','','','"+province+"','"+city+"','','','"+platenum+"','"+vin+"','','"+enginenum+"','"+startdate+"','"+enddate+"',sysdate(),'','','2','','','')";
             ui = new UserHttpImpl();
             jsonStr = ui.addAny(getJsonSql("addAnySQL",sql));
             if(jsonStr.equals("true")){
-                ui.addAny(getJsonSql("addAnySQL",insertcus));
+                jsonStr=ui.addAny(getJsonSql("addAnySQL",insertcus));
             }
             System.out.println(jsonStr);
         }
@@ -180,11 +180,29 @@ public class CarSecureService extends HttpServlet {
             sb.append(")");
             jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sb.toString()));
         }
+        if(domain.equals("queryUserByName")){
+            JSONObject obj = JSONObject.fromObject(params);
+            String name=obj.get("name").toString();
+            ui = new UserHttpImpl();
+            StringBuffer sql=new StringBuffer();
+            sql.append("SELECT D_DETAILID,U_USERID,D_NAME,D_GENDER,D_BIRTHDAY,D_PROVINCE,D_CITY,D_BRANCH,D_ADDRESS,D_PLATENUM,D_VIN,D_DRIVERLICENCE,D_ENGINENUM,D_CITY,D_ENDDATE,D_STARTDATE,D_USERTYPE,MANAGER_ID,D_TYPE,D_CODEPIC,D_MOBILE,D_REMINDTIME FROM STORE_USER_DETAILS WHERE D_TYPE=2 ");
+            if(!StringUtil.isBlank(name)){
+                sql.append(" AND D_NAME like '%"+name+"%'");
+            }
+            jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
+        }
+        if(domain.equals("bindUser")){
+            ui = new UserHttpImpl();
+            JSONObject obj = JSONObject.fromObject(params);
+            String userid =obj.get("userid").toString();
+            String managerid =obj.get("managerid").toString();
+            String sql="UPDATE STORE_USER_DETAILS SET MANAGER_ID='"+managerid+"' WHERE D_DETAILID='"+userid+"'";
+            jsonStr=ui.updateAny(getJsonSql("updateAnySQL",sql));
+        }
         if(domain.equals("branchPosition")){
             ui = new UserHttpImpl();
             String sql = "SELECT * FROM BRANCH_POSITION";
             jsonStr = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql));
-
         }
         if(domain.equals("getUser")){
             JSONObject obj = JSONObject.fromObject(params);

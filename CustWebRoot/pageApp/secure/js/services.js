@@ -162,16 +162,24 @@ angular.module("indexApp.services", [])
                 return deferred.promise;
             },
             cusReg: function getList(data){
-
                 var deferred = $q.defer();
                 console.log(data);
+
                 var params="{\"startDate\":\""+data["startDate"]+"\",\"endDate\":\""+data["endDate"]+"\",\"openid\":\""+data["openid"]+"\",\"name\":\""+data["name"]+"\",\"city\":\""+data["city"]+"\",\"province\":\""+data["province"]+"\",\"platenum\":\""+data["platenum"]+"\",\"vin\":\""+data["vin"]+"\",\"enginenum\":\""+data["enginenum"]+"\"}";
                 var url = '/car?domain=cusReg&params='+encodeURIComponent(params);
                 $http.post(url).success(function (response) {
-                    $ionicPopup.alert({
-                        title:'<b>修改成功!</b>',
-                        template:'修改客户信息成功！'
-                    })
+                    if(response=='true'){
+                        $ionicPopup.alert({
+                            title:'<b>注册成功!</b>',
+                            template:'注册客户信息成功！'
+                        })
+                    }else{
+                        $ionicPopup.alert({
+                            title:'<b>错误!</b>',
+                            template:'网络联接失败!'
+                        })
+                    }
+
                     deferred.resolve(response);
                 }).error(function (data) {
                         console.log("getList网络联接失败!");
@@ -216,6 +224,49 @@ angular.module("indexApp.services", [])
                 var url = '/car?domain=getMangerList&params='+encodeURIComponent(params);
                 $http.post(url).success(function (response) {
                     deferred.resolve(response);
+                }).error(function (data) {
+                        console.log("getList网络联接失败!");
+                        $ionicPopup.alert({
+                            title:'<b>错误!</b>',
+                            template:'网络联接失败!'
+                        })
+                        deferred.reject();
+                    });
+                return deferred.promise;
+            },
+            queryUserByName:function getList(name){
+                var deferred = $q.defer();
+                var params="{\"name\":\""+name+"\"}";
+                var url = '/car?domain=queryUserByName&params='+encodeURIComponent(params);
+                $http.post(url).success(function (response) {
+                    deferred.resolve(response);
+                }).error(function (data) {
+                        console.log("getList网络联接失败!");
+                        $ionicPopup.alert({
+                            title:'<b>错误!</b>',
+                            template:'网络联接失败!'
+                        })
+                        deferred.reject();
+                    });
+                return deferred.promise;
+            },
+            binduser:function getList(managerid,userid){
+                var deferred = $q.defer();
+                var params="{\"userid\":\""+userid+"\",\"managerid\":\""+managerid+"\"}";
+                var url = '/car?domain=bindUser&params='+encodeURIComponent(params);
+                $http.post(url).success(function (response) {
+                    if(response.trim()=="true"){
+                        deferred.resolve(response);
+                        $ionicPopup.alert({
+                            title:'<b>绑定成功!</b>',
+                            template:'绑定成功!'
+                        })
+                    }else{
+                        $ionicPopup.alert({
+                            title:'<b>错误!</b>',
+                            template:'网络联接失败!'
+                        })
+                    }
                 }).error(function (data) {
                         console.log("getList网络联接失败!");
                         $ionicPopup.alert({

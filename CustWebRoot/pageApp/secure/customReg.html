@@ -4,7 +4,7 @@
         $("#openid").append(QueryString());
     });
 </script>
-<ion-view ng-controller="RegCtrl">
+<ion-view ng-controller="RegCtrl" name="regForm" novalidate >
     <ion-content style="background-color:#f3f3f3;">
         <div style="width: 95%;padding-top:8px;margin:0 auto;" class="list radius">
             <div class="item item-input item-select radius-top">
@@ -24,36 +24,36 @@
                 </select>
             </div>
             <div class="item item-input">
-                <div class="input-label">车牌号码:</div>
-                鄂<input id="platenum" type="text"  ng-model="data.platenum"/>
+                <div class="input-label" for="platenum">车牌号码:</div>
+                鄂<input id="platenum" name="platenum" type="text" ng-model="data.platenum" required />
             </div>
             <div class="item item-input">
-                <div class="input-label">车主姓名:</div>
-                <input id="name" type="text"  ng-model="data.name"/>
+                <div class="input-label" for="name">车主姓名:</div>
+                <input id="name" name="name" type="text" ng-model="data.name" required />
                 <input id="openid" type="hidden" ng-model="data.openid" />
             </div>
             <div class="item item-input">
                 <span class="input-label">起保日期:</span>
-                <ionic-datepicker idate="startDate" >
+                <ionic-datepicker idate="startDate" name="startDate">
                     <button id="startDate" class="button button-clear" style="width: 100%;"> {{startDate | date:'yyyy/MM/dd'}} </button>
                 </ionic-datepicker>
             </div>
             <div class="item item-input">
                 <span class="input-label">终保日期:</span>
-                <ionic-datepicker idate="endDate" >
+                <ionic-datepicker idate="endDate" name="endDate" >
                     <button id="endDate" class="button button-clear" style="width: 100%;"> {{endDate | date:'yyyy/MM/dd'}} </button>
                 </ionic-datepicker>
             </div>
             <div class="item item-input">
-                <div class="input-label">车架号:</div>
-                <input id="vin" type="text"  ng-model="data.vin"/>
+                <div class="input-label" for="vin">车架号:</div>
+                <input id="vin" type="text"  name="vin" ng-model="data.vin" required />
             </div>
             <div class="item item-input radius-button">
-                <div class="input-label">发动机号:</div>
-                <input id="enginenum" type="text"  ng-model="data.enginenum"/>
+                <div class="input-label" for="enginenum">发动机号:</div>
+                <input id="enginenum" type="text"  name="enginenum" ng-model="data.enginenum" required />
             </div>
             <div >
-                <button class="button button-block radius" style="color:white;font-weight:bold;background-image: url('img/btn.png');background-repeat: no-repeat;background-size:100% 100%; " ng-click="doReg(data)">注册</button>
+                <button type="submit" g-disabled="regForm.$invalid" class="button button-block radius" style="color:white;font-weight:bold;background-image: url('img/btn.png');background-repeat: no-repeat;background-size:100% 100%; " ng-click="doReg(data)">注册</button>
             </div>
         </div>
     </ion-content>

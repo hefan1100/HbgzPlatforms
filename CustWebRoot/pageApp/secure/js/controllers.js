@@ -68,7 +68,6 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
             $state.go("allManager");
         };
         $scope.goAllUsers=function(){
-            console.log("asdasd")
             $state.go("allUsers");
         };
         $scope.goSalesReg=function(){
@@ -156,11 +155,58 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
             $scope.data.openid=$("#openid").val();
             $scope.data.startDate=startDate.innerText;
             $scope.data.endDate=endDate.innerText;
-            listFactory.cusReg(data).then(function(response){
-                    console.log(response);
-                    $scope.showPopup();
-                }
-            );
+            if(data["name"]==""){
+                $ionicPopup.alert({
+                    title:'<b>错误</b>',
+                    template:'请填写用户姓名！'
+                })
+            }else if(data["city"]==""){
+                $ionicPopup.alert({
+                    title:'<b>错误</b>',
+                    template:'请填写城市！'
+                })
+            }else if(data["province"]==""){
+                $ionicPopup.alert({
+                    title:'<b>错误</b>',
+                    template:'请填写省份！'
+                })
+            }else if(data["platenum"]==""){
+                $ionicPopup.alert({
+                    title:'<b>错误</b>',
+                    template:'请填写车牌号码！'
+                })
+            }else if(data["platenum"].length!=6){
+                $ionicPopup.alert({
+                    title:'<b>错误</b>',
+                    template:'请正确填写车牌号码！'
+                })
+            }else if(data["vin"]==""){
+                $ionicPopup.alert({
+                    title:'<b>错误</b>',
+                    template:'请填写车架号！'
+                })
+            }else if( data["vin"].length!=17){
+                $ionicPopup.alert({
+                    title:'<b>错误</b>',
+                    template:'请正确填写车架号！'
+                })
+            }else if(data["enginenum"]==""){
+                $ionicPopup.alert({
+                    title:'<b>错误</b>',
+                    template:'请填写发动机号！'
+                })
+            }else if( data["enginenum"].length!=7){
+                $ionicPopup.alert({
+                    title:'<b>错误</b>',
+                    template:'请正确填写发动机号！'
+                })
+            }else {
+                listFactory.cusReg(data).then(function(response){
+                        console.log(response);
+                    }
+                );
+            }
+
 //            $scope.showPopup();
         };
         $scope.doSalesReg=function(data){
@@ -418,7 +464,6 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
             $scope.items.splice($scope.items.indexOf(item), 1);
         };
         $scope.goAllUsers=function(){
-            console.log("asdasd")
             $state.go("allUsers");
         };
         var openid=QueryString();
@@ -467,7 +512,9 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
         $scope.data = {
             showDelete: false
         };
-
+        $scope.items=[];
+        $scope.col = 'D_NAME';//默认按name列排序
+        $scope.desc = 0;//默认排序条件升序
         $scope.edit = function(item) {
             alert('Edit Item: ' + item.id);
         };
@@ -483,10 +530,21 @@ angular.module("indexApp.controllers",['ionic', 'ionic-datepicker'])
         $scope.onItemDelete = function(item) {
             $scope.items.splice($scope.items.indexOf(item), 1);
         };
-        listFactory.getUserList("").then(function(response){
+
+        listFactory.queryUserByName("").then(function(response){
                 console.log(response);
                 $scope.items =response;
+
             }
         );
+
+        $scope.bind=function(userid){
+            var managerid= QueryString();
+            listFactory.binduser(managerid,userid).then(function(response){
+                    console.log(response);
+                }
+            );
+        }
+        console.log($scope.items);
     })
 ;
