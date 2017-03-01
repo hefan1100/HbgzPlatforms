@@ -41,6 +41,7 @@ public class FileUploader extends HttpServlet {
                     //获取路径
                     String rootpath = request.getRealPath(request.getRequestURI());
                     rootpath = rootpath.substring(0, rootpath.lastIndexOf("file"));
+                    System.out.println("rootpath:"+rootpath);
                     String serverpath = rootpath + "upload/"+filename+"."+tt;
                     ajaxUpdateResult=filename+"."+tt;
                     System.out.println(serverpath);

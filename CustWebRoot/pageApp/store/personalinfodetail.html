@@ -1,0 +1,89 @@
+ <ion-view >
+     <ion-nav-title><h1 class="title"><b>个人信息</b></h1></ion-nav-title>
+     <ion-nav-buttons side="left">
+         <button class="button button-clear icon ion-ios-arrow-back" ng-click="httpback()"> 返回</button>
+     </ion-nav-buttons>
+ <ion-content>
+        <div class="mui-content" style="background-color: gainsboro;">
+
+              <div ng-style="contentStyle">
+                            <div class="row row-wrap row-no-padding " ng-style="avatarheight" ng-click="openModal()">
+                                <div class="col col-50 col-center" style="padding: 0px;">
+                                    <a style="font-size: 18px;margin-left: 30px;">头像</a>
+                                </div>
+                                <div class="col col-33 col-center" style="padding: 0px;">
+                                    <img id="headImage" src="img/store/vicky.png" height="60px" style="float: right;" ng-if="uinfo.D_CODEPIC==null||uinfo.D_CODEPIC==''">
+                                    <img id="headImage" src="{{uinfo.D_CODEPIC}}" height="60px" style="float: right;" ng-if="uinfo.D_CODEPIC!=null&&uinfo.D_CODEPIC!=''">
+                                </div>
+                                <div class="col col-center" style="padding: 0px;text-align: center;">
+                                    <i class="icon ion-chevron-right" style="display: inline;"></i>
+                                </div>
+
+                            </div>
+                            <div style="height: 1px;background-color: gainsboro;">
+                            </div>
+
+                            <div class="row row-wrap row-no-padding" ng-style="nichengheight">
+                                <div class="col col-50 col-center" style="padding: 0px;">
+                                    <a style="font-size: 18px;margin-left: 30px;">昵称</a>
+                                </div>
+                                <div class="col col-33 col-center" style="padding: 0px;">
+                                    <a style="text-decoration: none;color: gainsboro;float:right;">{{uinfo.D_NAME}}</a>
+                                </div>
+                                <div class="col col-center" style="padding: 0px;text-align: center;">
+                                    <i class="icon ion-chevron-right" style="display: inline;"></i>
+                                </div>
+                          </div>
+                           <div style="height: 1px;background-color: gainsboro;">
+                           </div>
+
+                          <div class="row row-wrap row-no-padding" ng-style="sexheight">
+                            <div class="col col-50 col-center" style="padding: 0px;">
+                                <a style="font-size: 18px;margin-left: 30px;">性别</a>
+                            </div>
+                            <div class="col col-33 col-center" style="padding: 0px;">
+                                <a style="text-decoration: none;color: gainsboro;float:right;">{{uinfo.D_GENDER}}</a>
+                            </div>
+                            <div class="col col-center" style="padding: 0px;text-align: center;">
+                                <i class="icon ion-chevron-right" style="display: inline;"></i>
+                            </div>
+                         </div>
+                          <div style="height: 1px;background-color: gainsboro;">
+                          </div>
+
+
+                        <div class="row row-wrap row-no-padding" ng-style="birthheight">
+                            <div class="col col-50 col-center" style="padding: 0px;">
+                                <a style="font-size: 18px;margin-left: 30px;">出生日期</a>
+                            </div>
+                            <div class="col col-33 col-center" style="padding: 0px;">
+                                <a style="text-decoration: none;color: gainsboro;float:right;">{{uinfo.D_BIRTHDATE}}</a>
+                            </div>
+                            <div class="col col-center" style="padding: 0px;text-align: center;">
+                                <i class="icon ion-chevron-right" style="display: inline;"></i>
+                            </div>
+                        </div>
+
+                  <div style="height: 1px;background-color: gainsboro;">
+                  </div>
+                         <div class="row row-wrap row-no-padding" ng-style="mobileheight">
+                              <div class="col col-50 col-center" style="padding: 0px;">
+                               <a style="font-size: 18px;margin-left: 30px;">手机号码</a>
+                          </div>
+                          <div class="col col-33 col-center" style="padding: 0px;">
+                              <a style="text-decoration: none;color: gainsboro;float:right;">{{uinfo.D_MOBILE}}</a>
+                          </div>
+                          <div class="col col-center" style="padding: 0px;text-align: center;">
+                              <i class="icon ion-chevron-right" style="display: inline;"></i>
+                          </div>
+                      </div>
+                 </div>
+
+           </div>
+     <input type="file" id="file" style="display:none;"  accept="image/*"><!--
+         <input type="file" id="file" style="display:none;"  accept="image/*" multiple>
+         <input type="file" id="file2" accept="image/*" capture="camera" >
+         <canvas style="display: none;"></canvas>  -->
+     </div>
+  </ion-content>
+</ion-view>

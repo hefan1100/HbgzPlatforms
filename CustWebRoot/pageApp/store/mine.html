@@ -15,16 +15,16 @@
                     <a style="display: inline;color: white;">Vicky</a>
                 </div>
 
-                <div style="width:100%;height:25%;padding-left: 10%;padding-right:10%;">
-                    <button class="button icon-left ion-ios-cart-outline" style="border:1px solid white;color: white;font-size: 16px;height: 80%;width:40%;background-color: transparent;" ng-click="entermyorder()">我的订单</button>
-                    <button class="button icon-left ion-android-person" style="border:1px solid white;color: white;font-size: 16px;height: 80%;float:right;width:40%;background-color: transparent;" ng-click="enterpersonalinfo()">账号管理</button>
+                <div style="width:100%;height:25%;padding-left: 5%;padding-right:5%;">
+                    <button class="button icon-left ion-ios-cart-outline" style="border:1px solid white;color: white;font-size: 1em;height: 80%;width:45%;background-color: transparent;" ng-click="entermyorder()">我的订单</button>
+                    <button class="button icon-left ion-android-person" style="border:1px solid white;color: white;font-size: 1em;height: 80%;float:right;width:45%;background-color: transparent;" ng-click="enterpersonalinfo()">账号管理</button>
                 </div>
            </div>
         </div>
 
         <div ng-style="gain">
-            <div class="row row-wrap row-no-padding" style="height: 45%;padding-left:10%;padding-right:10%;">
-                <div class="col" style="height: 100%;padding-bottom: 5%;border-right: 1px solid #dcdcdc;border-bottom: 1px solid #dcdcdc;">
+            <div class="row row-wrap row-no-padding" ng-style="themeStyle">
+                <div class="col" style="height: 100%;border-right: 1px solid #dcdcdc;border-bottom: 1px solid #dcdcdc;">
                     <div style="height: 50%;width: 100%;text-align: center;">
                          <img src="img/store/icon_mine_coupon.png"  height="30px" style="display: inline;">
                     </div>
@@ -32,7 +32,7 @@
                         <a style="display: inline;font-size: 16px;margin-top: 20px;">我的优惠券</a>
                     </div>
                 </div>
-                <div class="col" style="height: 100%;padding-bottom: 5%;border-bottom: 1px solid #dcdcdc;">
+                <div class="col" style="height: 100%;border-bottom: 1px solid #dcdcdc;">
                     <div style="height: 50%;width: 100%;text-align: center;">
                         <img src="img/store/icon_mine_history.png"  height="30px" style="display: inline;">
                     </div>
@@ -42,26 +42,26 @@
                 </div>
             </div>
 
-
-            <div class="row row-wrap row-no-padding" style="height: 45%;width: 100%;padding-left:10%;padding-right:10%;">
-
-                <div class="col" style="height: 100%;padding-top: 10%;border-right: 1px solid #dcdcdc;">
-                         <div style="height: 50%;width: 100%;text-align: center;">
-                            <img src="img/store/icon_mine_favorite.png" height="30px" width="30px" style="display: inline;">
-                        </div>
-                        <div style="height: 38%;width: 100%;text-align: center;">
-                            <a style="display: inline;font-size: 16px;margin-top: 20px;">收藏夹</a>
-                        </div>
-                 </div>
-                <div class="col" style="height: 100%;padding-top: 10%;" ng-click="goAddress()">
-                        <div style="height: 50%;width: 100%;text-align: center;">
-                            <img src="img/store/icon_mine_address.png" height="30px" width="30px" style="display: inline;">
-                        </div>
-                        <div style="height: 38%;width: 100%;text-align: center;" >
-                            <a style="display: inline;font-size: 16px;margin-top: 20px;">地址管理</a>
-                        </div>
+            <div class="row row-wrap row-no-padding" ng-style="themeStyle">
+                <div class="col" style="height: 100%;border-right: 1px solid #dcdcdc;border-bottom: 1px solid #dcdcdc;padding-top: 5%;">
+                    <div style="height: 50%;width: 100%;text-align: center;">
+                        <img src="img/store/icon_mine_favorite.png"  height="30px" style="display: inline;">
+                    </div>
+                    <div style="height: 42%;width: 100%;text-align: center;">
+                        <a style="display: inline;font-size: 16px;margin-top: 20px;">收藏夹</a>
+                    </div>
+                </div>
+                <div class="col" style="height: 100%;border-bottom: 1px solid #dcdcdc;padding-top: 5%;">
+                    <div style="height: 50%;width: 100%;text-align: center;">
+                        <img src="img/store/icon_mine_address.png"  height="30px" style="display: inline;">
+                    </div>
+                    <div style="height: 42%;width: 100%;text-align: center;">
+                        <a style="display: inline;font-size: 16px;margin-top: 20px;">地址管理</a>
+                    </div>
                 </div>
             </div>
+
+
         </div>
 
     </ion-content>

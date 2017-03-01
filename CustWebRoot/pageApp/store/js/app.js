@@ -94,7 +94,7 @@ angular.module("indexApp", ["ionic","ui.router","indexApp.controllers","indexApp
             .state('personalinfo', {
                 url:"/personalinfo",
                 cache:false,
-                templateUrl:"personalinfo.html",
+                templateUrl:"personalinfodetail.html",
                 controller: 'personalinfoCtrl'
             })
 

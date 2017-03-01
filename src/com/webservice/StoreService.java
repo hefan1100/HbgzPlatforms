@@ -460,6 +460,34 @@ public class StoreService extends HttpServlet {
             }
 
         }
+
+        //个人中心模块
+        else if(domain.equals("getUserDetailinfo"))
+        {
+            ui=new UserHttpImpl();
+            StringBuffer sql = new StringBuffer();
+            String uid=(String)session.getAttribute("uid");//从session里面获得uid
+        //    String status=request.getParameter("status");    //0  未使用     1  已使用       2  已过期
+            sql.append("select * from store_user_details d where d.U_USERID='"+uid+"'");
+            jsonStr= ui.queryAny(getJsonSql("queryAnySQL",sql.toString()));
+         }
+        //修改用户个人详细信息
+        else if(domain.equals("modifyUserDetailinfo"))
+        {
+            ui=new UserHttpImpl();
+            StringBuffer sql = new StringBuffer();
+            String param=(String)request.getAttribute("param");
+            String imgurl=(String)request.getAttribute("imgurl");
+            String uid=(String)session.getAttribute("uid");//从session里面获得uid
+            //    String status=request.getParameter("status");    //0  未使用     1  已使用       2  已过期
+            if(param.equals("avatar"))//修改头像
+              sql.append("update store_user_details t set t.D_CODEPIC='"+imgurl+"'");
+            String jsonresult=ui.updateAny(getJsonSql("updateAnySQL", sql.toString()));
+            Boolean isDel=Boolean.parseBoolean(jsonresult);
+            JSONObject rootobj=new JSONObject();
+            rootobj.put("code","success");
+            jsonStr=rootobj.toString();
+        }
         //生成未支付订单，优惠券没有的情况还没有做
         else if(domain.equals("produceNotPayOrder"))
         {
@@ -502,47 +530,7 @@ public class StoreService extends HttpServlet {
             {
             //满减 1   折扣  2
             //已付款   1    待付款   0     已发货    2    已签收    3     已评论     4      已退款     7      已完成     8
-                    //生成总的STORE_ORDER_INFO表
 
-
-//                    String O_ORDERID=UUID.randomUUID().toString();
-//
-//                    java.util.Date date=new java.util.Date();
-//                    java.sql.Date sqlDate=new java.sql.Date(date.getTime());
-//                    SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//                    //删除购物车中的商品
-
-
-//                    sql=new StringBuffer();
-//
-//                    sql.append("delete from store_user_car c where c.s_id in ("+cartidlist+")");
-//                    String delStr=ui.delAny(getJsonSql("delAnySQL", sql.toString()));
-//                    System.out.println("删除购物车:"+delStr);
-//
-//
-//
-//                    //total_price     使用优惠券   插入一条记录到STORE_ORDER_INFO
-//                    sql=new StringBuffer();
-//                    sql.append("insert into store_order_info values ('"+O_ORDERID+"'," +
-//                            "(select ui.u_userid from store_user_info ui where ui.openid='"+oid+"'),'','"+cartallprice+"'" +
-//                            ",to_date('"+dateFormat.format(sqlDate)+"','YYYY-MM-DD HH24:MI:SS')," +
-//                            "to_date('"+dateFormat.format(sqlDate)+"','YYYY-MM-DD HH24:MI:SS'),'1','0')");
-//                    System.out.println("insertsql:"+sql.toString());
-//                    String addStr=ui.addAny(getJsonSql("addAnySQL", sql.toString()));
-//                    Boolean isInsertSuccess=Boolean.parseBoolean(addStr);
-//                    System.out.println("添加order_info表:"+addStr);
-//
-//
-//                    //生成所有明细STORE_ORDER_DETAIL表
-
-
-//                    //INFO_ID详情id   O_ORDERID订单id    G_ID商品id   C_ID优惠券   INFO_TOTALPRICE总价   INFO_AMOUNT数量   INFO_STATUS状态,判断收获否   COM_CODE,COM _STATUS
-//                    sql=new StringBuffer();
-//                    System.out.println("商品paramlist:"+paramlist);
-//
-//                    String[] params=paramlist.split(",");
-//
-//                    sql.append("begin ");
 //                    for(int i=0;i<params.length;i++)
 //                    {
 //                          String orderdetailid=UUID.randomUUID().toString();
@@ -724,6 +712,8 @@ public class StoreService extends HttpServlet {
             String allprice=request.getParameter("allprice");
             //info_status     待付款   0     作废    5     已评论    4     已退款     7      已完成      8
             //已发货      2       已付款      1     已签收      3
+
+            String sqljson="";
             if(oid==null||oid.equals(""))
             {
                 JSONObject message=new JSONObject();
@@ -743,13 +733,42 @@ public class StoreService extends HttpServlet {
                 {
                     Date date=new Date();
                     SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    ArrayList<String> sqllist=new ArrayList<String>();
+                    sql=new StringBuffer();
                     sql.append(" UPDATE STORE_ORDER_INFO I SET i.o_realprice='"+allprice+"' where i.o_orderid='"+O_ORDERID+"';");
+                     sqljson=getJsonSql("updateAnySQL",sql.toString());
+                    sqllist.add(sqljson);
+
+
+                    sql=new StringBuffer();
                     sql.append(" UPDATE STORE_ORDER_INFO I SET i.o_rderstate='"+orderstatus+"' where i.o_orderid='"+O_ORDERID+"';");
+                    sqljson=getJsonSql("updateAnySQL",sql.toString());
+                    sqllist.add(sqljson);
+
+                    sql=new StringBuffer();
                     sql.append(" UPDATE STORE_ORDER_DETAILS D SET d.info_status='"+orderstatus+"' where d.o_orderid='"+O_ORDERID+"';");
+                    sqljson=getJsonSql("updateAnySQL",sql.toString());
+                    sqllist.add(sqljson);
+
+
+                    sql=new StringBuffer();
                     sql.append(" UPDATE STORE_ORDER_INFO I SET i.LASTMODIFY='"+format.format(date)+"',i.O_PAYDATE='"+format.format(date)+"' where i.O_ORDERID='"+O_ORDERID+"'");
+                    sqljson=getJsonSql("updateAnySQL",sql.toString());
+                    sqllist.add(sqljson);
+
                     //             sql.append(" end;");
-                    String resultStr=ui.updateAny(getJsonSql("updateAnySQL", sql.toString()));
-                    Boolean isSuccess=Boolean.parseBoolean(resultStr);
+                 //   String resultStr=ui.updateAny(getJsonSql("updateAnySQL", sql.toString()));
+                    Boolean isSuccess=false;
+                    try
+                    {
+                        ExpandHanlerUtil.ExpandUtilTransaction(sqllist);   //批处理，一次性执行多条语句
+                        isSuccess=true;
+                    }
+                    catch(Exception e)
+                    {
+                        e.printStackTrace();
+                        isSuccess=false;
+                    }
 
                     JSONObject rootobj=new JSONObject();
                     rootobj.put("code","success");
@@ -774,13 +793,36 @@ public class StoreService extends HttpServlet {
                     sql=new StringBuffer();
                     Date date=new Date();
                     SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    ArrayList<String> sqllist=new ArrayList<String>();
                     //商家同意以后才能加库存 sql.append("update store_goods_info info set info.g_amount=info.g_amount+"+info_amount+" where info.g_id='"+gid+"'; ");
+                    sql=new StringBuffer();
                     sql.append("UPDATE STORE_ORDER_DETAILS D SET d.info_status='"+orderstatus+"' where d.o_orderid='"+O_ORDERID+"'; ");
-                    sql.append("UPDATE STORE_ORDER_INFO INFO SET info.O_RDERSTATE='"+orderstatus+"' where info.O_ORDERID='"+O_ORDERID+"'; ");
-                    sql.append(" UPDATE STORE_ORDER_INFO I SET i.LASTMODIFY='"+format.format(date)+"' where i.O_ORDERID='"+O_ORDERID+"'");
+                    sqljson=getJsonSql("updateAnySQL",sql.toString());
+                    sqllist.add(sqljson);
 
-                    String resultStr=ui.updateAny(getJsonSql("updateAnySQL", sql.toString()));
-                    Boolean isSuccess=Boolean.parseBoolean(resultStr);
+                    sql=new StringBuffer();
+                    sql.append("UPDATE STORE_ORDER_INFO INFO SET info.O_RDERSTATE='"+orderstatus+"' where info.O_ORDERID='"+O_ORDERID+"'; ");
+                    sqljson=getJsonSql("updateAnySQL",sql.toString());
+                    sqllist.add(sqljson);
+
+
+                    sql=new StringBuffer();
+                    sql.append(" UPDATE STORE_ORDER_INFO I SET i.LASTMODIFY='"+format.format(date)+"' where i.O_ORDERID='"+O_ORDERID+"'");
+                    sqljson=getJsonSql("updateAnySQL",sql.toString());
+                    sqllist.add(sqljson);
+
+               //     String resultStr=ui.updateAny(getJsonSql("updateAnySQL", sql.toString()));
+                    Boolean isSuccess=false;
+                    try
+                    {
+                        ExpandHanlerUtil.ExpandUtilTransaction(sqllist);
+                        isSuccess=true;
+                    }
+                    catch(Exception e)
+                    {
+                         e.printStackTrace();
+                        isSuccess=false;
+                    }
 
                     JSONObject rootobj=new JSONObject();
                     rootobj.put("code","success");
@@ -805,11 +847,37 @@ public class StoreService extends HttpServlet {
                     sql=new StringBuffer();
                     Date date=new Date();
                     SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    ArrayList<String> sqllist=new ArrayList<String>();
+
+                    sql=new StringBuffer();
                     sql.append("UPDATE STORE_ORDER_DETAILS D SET d.info_status='"+orderstatus+"' where d.o_orderid='"+O_ORDERID+"'; ");
+                    sqljson=getJsonSql("updateAnySQL",sql.toString());
+                    sqllist.add(sqljson);
+
+                    sql=new StringBuffer();
                     sql.append("UPDATE STORE_ORDER_INFO INFO SET info.O_RDERSTATE='"+orderstatus+"' where info.O_ORDERID='"+O_ORDERID+"'; ");
-                    sql.append(" UPDATE STORE_ORDER_INFO I SET i.LASTMODIFY='"+format.format(date)+"' where i.O_ORDERID='"+O_ORDERID+"'");        //更新修改日期
-                    String resultStr=ui.updateAny(getJsonSql("updateAnySQL", sql.toString()));
-                    Boolean isSuccess=Boolean.parseBoolean(resultStr);
+                    sqljson=getJsonSql("updateAnySQL",sql.toString());
+                    sqllist.add(sqljson);
+
+                    sql=new StringBuffer();
+                    sql.append(" UPDATE STORE_ORDER_INFO I SET i.LASTMODIFY='"+format.format(date)+"' where i.O_ORDERID='"+O_ORDERID+"'");
+                           //更新修改日期
+                    sqljson=getJsonSql("updateAnySQL",sql.toString());
+                    sqllist.add(sqljson);
+
+
+
+           //         String resultStr=ui.updateAny(getJsonSql("updateAnySQL", sql.toString()));
+                    Boolean isSuccess=false;
+                    try{
+                         ExpandHanlerUtil.ExpandUtilTransaction(sqllist);
+                         isSuccess=true;
+                    }
+                    catch(Exception e)
+                    {
+                         e.printStackTrace();
+                        isSuccess=false;
+                    }
 
                     JSONObject rootobj=new JSONObject();
                     rootobj.put("code","success");
@@ -910,6 +978,9 @@ public class StoreService extends HttpServlet {
                 System.out.println("jsonstr:"+jsonStr);
             }
         }
+
+
+
         else if(domain.equals("getOrderDetailById"))//获取订单详情
         {
             ui=new UserHttpImpl();
@@ -992,16 +1063,34 @@ public class StoreService extends HttpServlet {
         JSONObject result= JSONObject.fromObject(jsonStr);
         if(result==null||(result.getString("U_USERID")==null))
         {
+           ArrayList<String> sqllist=new ArrayList<String>();
            //addAnySQL
             sql=new StringBuffer();
             String userid=UUID.randomUUID().toString();
             userid=userid.replaceAll("-","");
             sql.append("INSERT INTO STORE_USER_INFO(U_USERID,OPENID) VALUES ('"+userid+"','"+openid+"')");
             System.out.println("insertsql:"+sql.toString());
-            String info=ui.addAny(getJsonSql("addAnySQL", sql.toString()));
+            String sqlinfo=getJsonSql("addAnySQL", sql.toString());
+            sqllist.add(sqlinfo);
+
+      //      String info=ui.addAny(getJsonSql("addAnySQL", sql.toString()));
+
+            String detailid=UUID.randomUUID().toString();
+            sql=new StringBuffer();
+            sql.append("insert into STORE_USER_DETAILS(D_DETAILID,U_USERID) values('"+detailid+"','"+userid+"')");
+            sqlinfo=getJsonSql("addAnySQL", sql.toString());
+            sqllist.add(sqlinfo);
+
             session.setAttribute("uid",userid);
-            boolean isInsert=Boolean.parseBoolean(info);
-            System.out.println("insert:"+isInsert);
+      //      boolean isInsert=Boolean.parseBoolean(info);
+      //      System.out.println("insert:"+isInsert);
+            try
+            {
+               ExpandHanlerUtil.ExpandUtilTransaction(sqllist);
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
         else
         {

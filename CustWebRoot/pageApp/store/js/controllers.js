@@ -1023,25 +1023,30 @@ angular.module("indexApp.controllers",[])
         $scope.enterdiscount=function () {
             $state.go('discount');
         }
-        $scope.init=function(){
-            var screenHeight= window.screen.height;
-            $scope.gainheight={
-                'height':screenHeight*0.4+'px'
-            };
-            $scope.gain={
-                "height": screenHeight*0.6-50,//-document.getElementById("nav").offsetHeight,
-                "background-color":"white",
-                "padding-top":"5%",
-                "padding-bottom":"5%",
-                "width":"100%"
-            };
+
+        var screenHeight= window.innerHeight;
+        $scope.gainheight={
+            'height':screenHeight*0.4+'px'
+         };
+        $scope.gain={
+            "height": screenHeight-screenHeight*0.4+'px',//-document.getElementById("nav").offsetHeight,
+            "background-color":"white",
+            "padding-top":screenHeight*0.02+'px',
+            "width":"100%"
+        };
+
+        $scope.themeStyle={
+            "height": (screenHeight-screenHeight*0.4)*0.36+'px',
+            "padding-left":"10%",
+            "padding-right":"10%",
+            "padding-top":screenHeight*0.02+'px'
         }
 
         $scope.goAddress=function(){
             $state.go("addresslist");
         };
 
-        $scope.init();
+ //       $scope.init();
 
     })
     .controller('settingCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory) {
@@ -1052,7 +1057,7 @@ angular.module("indexApp.controllers",[])
         //数量弹窗没做
 
     })
-    .controller('personalinfoCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicPopover) {
+    .controller('personalinfoCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicPopover,$ionicModal,$timeout,UserCenterFactory) {
         $scope.screenHeight=window.screen.height;
         $scope.avatarheight={
           "background-color":"white",
@@ -1070,9 +1075,131 @@ angular.module("indexApp.controllers",[])
             "background-color":"white",
             "height": $scope.screenHeight*0.1+"px"
         };
+        $scope.mobileheight={
+            "background-color":"white",
+            "height": $scope.screenHeight*0.1+"px"
+        };
+
+        $scope.contentStyle={
+            "height": $scope.screenHeight+"px"
+        };
+
+        $scope.popover = $ionicPopover.fromTemplateUrl('my-popover.html', {
+            scope: $scope
+        });
+
+
+       $('#file').change(function(event)
+       {
+          filechange(event);
+       });
+//       document.getElementById("file2").addEventListener('change',function(){
+//            console.log(this.files[0]);
+//
+//           if(file.size > 1024 * 1024 * 2) {
+//               alert('图片大小不能超过 2MB!');
+//               return false;
+//           }
+//           // 获取 window 的 URL 工具
+//           var URL = window.URL || window.webkitURL;
+//           // 通过 file 生成目标 url
+//     //      var imgURL = URL.createObjectURL(file);
+//           //       var sampleFile = document.getElementById("file").files[0];
+//           var formdata = new FormData();
+//           formdata.append("sampleFile", file);
+//           var xhr = new XMLHttpRequest();
+//           xhr.open("POST","/file", true);
+//           xhr.send(formdata);
+//           xhr.onload = function(e) {
+//               if (this.status == 200) {
+//                   $scope.picurl=this.responseText;
+//
+//
+//               }
+//           };
+//
+//       });
+//        $scope.selectAvatar=function(){
+//             $scope.popup.close();
+//             $('#file').click();
+//        };
+
+//        $scope.createAvatar=function(){
+//            $scope.popup.close();
+//            $('#file2').click();
+//        };
+        $scope.openModal=function(){
+            $('#file').click();
+        };
+        var filechange=function(event){
+            var files = event.target.files;
+            var file=null;
+            if (files && files.length > 0) {
+                // 获取目前上传的文件
+                file = files[0];// 文件大小校验的动作
+                if(file.size > 1024 * 1024 * 2) {
+                    alert('图片大小不能超过 2MB!');
+                    return false;
+                }
+                // 获取 window 的 URL 工具
+                var URL = window.URL || window.webkitURL;
+                // 通过 file 生成目标 url
+                var imgURL = URL.createObjectURL(file);
+         //       var sampleFile = document.getElementById("file").files[0];
+                var formdata = new FormData();
+                formdata.append("sampleFile", file);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST","/file", true);
+                xhr.send(formdata);
+                xhr.onload = function(e) {
+                    if (this.status == 200) {
+                        $scope.picurl=this.responseText;
+                        $("#headImage").attr("src",imgURL);
+                        UserCenterFactory.modifyAvatar('/upload/'+$scope.picurl).then(function(response){
+                            if(response.code!="success")
+                            {
+
+                            }
+                       });
+                    }
+                };
+                //用attr将img的src属性改成获得的url
+
+                // 使用下面这句可以在内存中释放对此 url 的伺服，跑了之后那个 URL 就无效了
+                // URL.revokeObjectURL(imgURL);
+            }
+        };
+
+        $scope.getUserInfo=function(){
+            UserCenterFactory.getUserInfo().then(function(response){
+               $scope.uinfo=response;
+
+            });
+        };
+
+        $scope.modifyAvatar=function(){
+            UserCenterFactory.getUserInfo().then(function(response){
+                $scope.uinfo=response;
+
+            });
+        };
 
 
 
+
+        function displayAsImage(file) {
+            var imgURL = URL.createObjectURL(file);
+            $("#headImage").attr("src",imgURL);
+
+//            var img.onload = function() {
+//                URL.revokeObjectURL(imgURL);
+//            };
+
+//            img.src = imgURL;
+
+        }
+
+        $scope.getUserInfo();
     }) //一旦退回到购物车页面的时候，购物车id列表清空
     .controller('orderconfirmCtrl', function ($scope,$rootScope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,ConfirmOrderFactory,DiscountFactory,cartFactory,OrderFactory) {
         $scope.showPopup = function(text) {
