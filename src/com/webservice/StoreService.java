@@ -476,12 +476,27 @@ public class StoreService extends HttpServlet {
         {
             ui=new UserHttpImpl();
             StringBuffer sql = new StringBuffer();
-            String param=(String)request.getAttribute("param");
-            String imgurl=(String)request.getAttribute("imgurl");
+
+            String param=(String)request.getParameter("param");
+            String imgurl=(String)request.getParameter("imgurl");
+            String gendor=request.getParameter("sex")==null?"":new String(request.getParameter("sex").getBytes("ISO-8859-1"), "utf-8");
+            String name=request.getParameter("name")==null?"":new String(request.getParameter("name").getBytes("ISO-8859-1"), "utf-8");
+            String birthdate=request.getParameter("birthdate");
+            String mobile=request.getParameter("mobile");
+
             String uid=(String)session.getAttribute("uid");//从session里面获得uid
             //    String status=request.getParameter("status");    //0  未使用     1  已使用       2  已过期
             if(param.equals("avatar"))//修改头像
-              sql.append("update store_user_details t set t.D_CODEPIC='"+imgurl+"'");
+              sql.append("update store_user_details t set t.D_CODEPIC='"+imgurl+"' where t.U_USERID='"+uid+"'");
+            else if(param.equals("gendor"))//修改性别
+              sql.append("update store_user_details t set t.D_GENDER='"+gendor+"' where t.U_USERID='"+uid+"'");
+            else if(param.equals("name"))
+              sql.append("update store_user_details t set t.D_NAME='"+name+"' where t.U_USERID='"+uid+"'");
+            else if(param.equals("birthdate"))
+                sql.append("update store_user_details t set t.D_BIRTHDATE='"+birthdate+"' where t.U_USERID='"+uid+"'");
+            else if(param.equals("mobile"))
+                sql.append("update store_user_details t set t.D_MOBILE='"+mobile+"' where t.U_USERID='"+uid+"'");
+
             String jsonresult=ui.updateAny(getJsonSql("updateAnySQL", sql.toString()));
             Boolean isDel=Boolean.parseBoolean(jsonresult);
             JSONObject rootobj=new JSONObject();

@@ -160,6 +160,20 @@ angular.module("indexApp", ["ionic","ui.router","indexApp.controllers","indexApp
                 templateUrl:"addressadminister.html",
                 controller: 'addressadministerCtrl'
             })
+
+            .state('modifyname', {
+                url:"/modifyname",
+                cache:false,
+                templateUrl:"modifyUserName.html",
+                controller: 'modifyusernameCtrl'
+            })
+
+            .state('modifymobilephone', {
+                url:"/modifymobilephone",
+                cache:false,
+                templateUrl:"modifyMobilePhone.html",
+                controller: 'modifymobilephoneCtrl'
+            })
         ;
         //两个模块控制器不能一样，或者控制器有问题
 

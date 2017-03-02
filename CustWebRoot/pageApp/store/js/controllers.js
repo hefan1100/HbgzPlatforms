@@ -1024,6 +1024,11 @@ angular.module("indexApp.controllers",[])
             $state.go('discount');
         }
 
+        $scope.enterAddress=function () {
+            $state.go('addresslist');
+        }
+
+
         var screenHeight= window.innerHeight;
         $scope.gainheight={
             'height':screenHeight*0.4+'px'
@@ -1056,6 +1061,24 @@ angular.module("indexApp.controllers",[])
     .controller('accountadministerCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory) {
         //数量弹窗没做
 
+    })
+    .controller('modifyusernameCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,UserCenterFactory) {
+        //数量弹窗没做
+        $scope.formdata=$scope;
+        $scope.modifyname=function(){
+            UserCenterFactory.modifyName($scope.username).then(function(response){
+                $ionicHistory.goBack();
+            });
+        }
+    })
+    .controller('modifymobilephoneCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,UserCenterFactory) {
+        //数量弹窗没做
+        $scope.formdata=$scope;
+        $scope.modifymobilephone=function(){
+            UserCenterFactory.modifyMobilephone($scope.mobilephone).then(function(response){
+                $ionicHistory.goBack();
+            });
+        }
     })
     .controller('personalinfoCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicPopover,$ionicModal,$timeout,UserCenterFactory) {
         $scope.screenHeight=window.screen.height;
@@ -1131,6 +1154,15 @@ angular.module("indexApp.controllers",[])
         $scope.openModal=function(){
             $('#file').click();
         };
+
+        $scope.gotousername=function(){
+            $state.go("modifyname");
+        };
+
+        $scope.gotomobilephone=function(){
+            $state.go("modifymobilephone");
+        };
+
         var filechange=function(event){
             var files = event.target.files;
             var file=null;
@@ -1187,17 +1219,40 @@ angular.module("indexApp.controllers",[])
 
 
 
-        function displayAsImage(file) {
-            var imgURL = URL.createObjectURL(file);
-            $("#headImage").attr("src",imgURL);
 
-//            var img.onload = function() {
-//                URL.revokeObjectURL(imgURL);
-//            };
 
-//            img.src = imgURL;
+        $scope.showSexPopup = function() {
+            $scope.data = {}
 
-        }
+            // 自定义弹窗
+            var myPopup = $ionicPopup.show({
+                title: '请选择您的性别',
+                scope: $scope,
+                buttons: [
+                    { text: '<b>女</b>',
+                        onTap: function(e) {
+                          UserCenterFactory.modifySex('女').then(function(response){
+                     //s         $ionicHistory.goBack();
+                          });
+                        }},
+                    {
+                        text: '<b>男</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                          UserCenterFactory.modifySex('男').then(function(response){
+                     //         $ionicHistory.goBack();
+                          });
+                        }
+                    },
+                ]
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); // 3秒后关闭弹窗
+            }, 3000);
+        };
 
         $scope.getUserInfo();
     }) //一旦退回到购物车页面的时候，购物车id列表清空
