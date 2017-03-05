@@ -790,7 +790,6 @@ angular.module("indexApp.controllers",[])
      //       $state.go("goodsdetail");
             $state.go('goodsdetail', {gid: goodsid});
         }
-        alert(1);
      //   $scope.formobj=$scope;
     //    $scope.loadMore();
     })
@@ -1407,7 +1406,9 @@ angular.module("indexApp.controllers",[])
 
         });
 
-
+        $scope.goDianpu=function(){
+            $state.go('storedianpu');
+        };
     })
     .controller('discountCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,DiscountFactory) {
 
@@ -1768,7 +1769,7 @@ angular.module("indexApp.controllers",[])
 
         $scope.init();
     })
-    .controller('addressadministerCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,DiscountFactory,OrderFactory) {
+    .controller('addressadministerCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,AddressFactory) {
        $scope.screenHeight=window.screen.height;
        $scope.liststyle={
           "height":$scope.screenHeight*0.2+'px',
@@ -1776,7 +1777,198 @@ angular.module("indexApp.controllers",[])
           'padding':'5px',
           'background-color':'white'
        };
+       $scope.acquireAllAddress=function(){
+           AddressFactory.getAllAddress().then(function(response){
+             $scope.addresslist=response;
+             for(var i=0;i<$scope.addresslist.length;i++)
+             {
+                 var data=$scope.addresslist[i];
+                 if(data.A_DEFAULT==1)
+                    $scope.lastdefault=data.A_ADDRESSID;
+             }
+           });
+       };
+
+        $scope.updateDefault=function(aid){
+            if($scope.lastdefault==aid)
+                return;
+            else
+            {
+                AddressFactory.updateDefaultAddress($scope.lastdefault,aid).then(function(response){
+                    $scope.acquireAllAddress();
+                });
+            }
+        };
+
+        $scope.delAddress=function(aid)
+        {
+            var myPopup = $ionicPopup.show({
+                title: '您确定要删除地址了吗',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>取消</b>'
+
+                    },
+                    {
+                        text: '<b>确定</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            AddressFactory.delAddress(aid).then(function(response){
+                                $scope.acquireAllAddress();
+                            });
+                        }
+                    }
+                ]
+            });
+        }
+
+        $scope.goaddAddress=function(){
+            $state.go("addaddress");
+        };
+        $scope.goeditAddress=function(aid){
+            $state.go("editaddress",{aid: aid});
+        };
+        $scope.acquireAllAddress();
+    })
+
+    .controller('addaddressCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,AddressFactory) {
+        $scope.formdata=$scope;
+
+        $scope.addAddress=function(){
+            AddressFactory.addAddress($scope.mobilephone,$scope.receivename,$scope.province,'',$scope.detailaddress).then(function(response){
+                if(response.code=='success')
+                    $ionicHistory.goBack();
+            });
+        };
+
+    })
+
+    .controller('dianpuCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,AddressFactory) {
+        $scope.screenHeight=window.innerHeight;
+        $scope.screenWidth=window.innerWidth;
+        $scope.barStyle={
+          "height":$scope.screenHeight*0.1+'px',
+          "width":"100%",
+          "background-color": "#87C644"
+        };
+        $scope.titleStyle={
+            "height":$scope.screenHeight*0.1+'px',
+            "width":"100%"
+        };
+        $scope.searchStyle={
+            "height":$scope.screenHeight*0.1*0.6+'px',
+            "width":$scope.screenWidth*0.5+'px',
+            "background-color":"#FFFFFF",
+            "border-radius":$scope.screenHeight*0.1*0.6*0.5+'px'
+        };
+
+        $scope.searchtextStyle={
+            "height":$scope.screenHeight*0.1*0.6+'px',
+            "width":($scope.screenWidth*0.5-$scope.screenHeight*0.1*0.6)+'px',
+            "background-color":"#FFFFFF"
+        };
 
 
+        $scope.dianpuPicStyle={
+            "height":$scope.screenHeight*0.1*0.7+'px',
+            "margin-top":$scope.screenHeight*0.1*0.2+'px'
+        };
+        $scope.diannamePicStyle={
+            "margin-top":$scope.screenHeight*0.1*0.2+'px'
+        };
+        $scope.titleselectStyle={
+            "height":$scope.screenHeight*0.1+'px',
+            "background-color":"white"
+        };
+
+        $scope.titleAselectStyle={
+            "color": "#adff2f"
+        };
+
+        $scope.titleAunselectStyle={
+        };
+
+        $scope.initAstyle=function(){
+          $scope.shouyeStyle=$scope.titleAselectStyle;
+          $scope.shangpinStyle=$scope.titleAunselectStyle;
+          $scope.rexiaoStyle=$scope.titleAunselectStyle;
+          $scope.shangxinStyle=$scope.titleAunselectStyle;
+
+          $scope.stylearray=[];
+          $scope.stylearray.push($scope.shouyeStyle);
+          $scope.stylearray.push($scope.shangpinStyle);
+          $scope.stylearray.push($scope.rexiaoStyle);
+          $scope.stylearray.push($scope.shangxinStyle);
+
+          $scope.lastindex=0;
+        };
+
+        $scope.changeAstyle=function(index)
+        {
+          $scope.stylearray[$scope.lastindex]=$scope.titleAunselectStyle;
+          $scope.stylearray[index]=$scope.titleAselectStyle;
+        }
+        $scope.commendtopStyle={
+            "margin-top": "10px",
+            "padding-top":"2%",
+            "padding-bottom": "2%",
+            "padding-left": "5%",
+            "padding-right": "5%",
+            "height":$scope.screenHeight*0.2+'px',
+            "background-color":"white"
+        };
+        $scope.commendcouponStyle={
+            "margin-top":"10px",
+            "padding-left": "5%",
+            "padding-right": "5%",
+            "height":$scope.screenHeight*0.1+'px',
+            "background-color":"white"
+        };
+
+        $scope.commendcouponimageStyle={
+            "width":"100%",
+            "height":$scope.screenHeight*0.1+'px'
+        };
+
+        $scope.commendGoodsllistStyle={
+            "width":"100%",
+            "padding-left":"5px",
+            "padding-right":"5px",
+            "height":$scope.screenHeight-$scope.screenHeight*0.65+'px',
+            "background-color":"white"
+        };
+
+        $scope.tuijiantitleStyle={
+            "width":"100%",
+            "height":$scope.screenHeight*0.05+'px',
+            "padding-left": "5%",
+            "padding-right": "5%",
+            "margin-top":"10px",
+            "background-color":"white"
+        };
+        $scope.initAstyle();
+    })
+
+    .controller('editaddressCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,AddressFactory) {
+        $scope.formdata=$scope;
+
+        $scope.aquireAddress=function(){
+            AddressFactory.aquireAddressByAid($stateParams.aid).then(function(response){
+                $scope.receivename=response.A_RECEIVENAME;
+                $scope.mobilephone=response.A_MOBILEPHONE;
+                $scope.province=response.A_PROVINCE;
+                $scope.detailaddress=response.A_ADDRESS;
+                $scope.aid=response.A_ADDRESSID;
+            });
+        };
+
+        $scope.editAddress=function(){
+            AddressFactory.editAddress($scope.aid,$scope.mobilephone,$scope.receivename,$scope.province,'',$scope.detailaddress).then(function(response){
+                if(response.code=='success')
+                    $ionicHistory.goBack();
+            });
+        };
+        $scope.aquireAddress();
     })
 ;

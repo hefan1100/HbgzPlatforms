@@ -71,7 +71,7 @@ public class StoreService extends HttpServlet {
             String password=request.getParameter("password");
             String uuid= UUID.randomUUID().toString();
             uuid=uuid.replaceAll("-","");
-            sql.append("INSERT INTO STORE_USER_INFO(U_USERID,U_PWD,U_USERNAME) VALUES ('"+uuid+"','"+password+"','"+username+"')");
+            sql.append("INSERT INTO STORE_USER_INFO(U_USERID,U_PWD,U_USERNAME) VALUES ('" + uuid + "','" + password + "','" + username + "')");
             boolean isSuccess = Boolean.parseBoolean(ui.addAny(getJsonSql("addAnySQL", sql.toString())));
             System.out.println("doregister:"+isSuccess);
             JSONObject obj=new JSONObject();
@@ -501,6 +501,120 @@ public class StoreService extends HttpServlet {
             Boolean isDel=Boolean.parseBoolean(jsonresult);
             JSONObject rootobj=new JSONObject();
             rootobj.put("code","success");
+            jsonStr=rootobj.toString();
+        }
+
+        //新增地址
+        else if(domain.equals("addAddress"))
+        {
+            ui=new UserHttpImpl();
+            StringBuffer sql = new StringBuffer();
+
+            String contactmobile=(String)request.getParameter("contactmobile");   //联系人
+            String receivename=request.getParameter("receivename")==null?"":new String(request.getParameter("receivename").getBytes("ISO-8859-1"), "utf-8");     //收货人
+            String province=request.getParameter("province")==null?"":new String(request.getParameter("province").getBytes("ISO-8859-1"), "utf-8");    //省分
+            String city=request.getParameter("city")==null?"":new String(request.getParameter("city").getBytes("ISO-8859-1"), "utf-8");    //省分
+            String detailaddress=request.getParameter("detailaddress")==null?"":new String(request.getParameter("detailaddress").getBytes("ISO-8859-1"), "utf-8");//详细地址
+            String uid=(String)session.getAttribute("uid");//从session里面获得uid
+
+            sql.append("select * from store_user_address t where t.A_DEFAULT=1 and t.A_USERID='"+uid+"' and t.A_STATUS=1");   //查找有没有设置为默认的地址
+            String defaultinfo= ui.queryAny(getJsonSql("queryAnySQL",sql.toString()));
+            sql=new StringBuffer();
+            String addressid=UUID.randomUUID().toString();
+            if(defaultinfo!=null&&(!defaultinfo.equals(""))&&(!defaultinfo.equals("{}")))    //已经有设置默认的地址
+                sql.append("insert into store_user_address values('"+addressid+"','"+uid+"','"+province+"','"+city+"','"+detailaddress+"','"+contactmobile+"',0,'"+receivename+"',1)");
+            else
+                sql.append("insert into store_user_address values('"+addressid+"','"+uid+"','"+province+"','"+city+"','"+detailaddress+"','"+contactmobile+"',1,'"+receivename+"',1)");
+            boolean isSuccess = Boolean.parseBoolean(ui.addAny(getJsonSql("addAnySQL", sql.toString())));
+            JSONObject rootobj=new JSONObject();
+            rootobj.put("code", "success");
+            jsonStr=rootobj.toString();
+        }
+        //编辑地址
+        else if(domain.equals("editAddress"))
+        {
+            ui=new UserHttpImpl();
+            StringBuffer sql = new StringBuffer();
+
+            String aid=(String)request.getParameter("aid");
+
+            String contactmobile=(String)request.getParameter("contactmobile");   //联系人
+            String receivename=request.getParameter("receivename")==null?"":new String(request.getParameter("receivename").getBytes("ISO-8859-1"), "utf-8");     //收货人
+            String province=request.getParameter("province")==null?"":new String(request.getParameter("province").getBytes("ISO-8859-1"), "utf-8");    //省分
+            String city=request.getParameter("city")==null?"":new String(request.getParameter("city").getBytes("ISO-8859-1"), "utf-8");    //省分
+            String detailaddress=request.getParameter("detailaddress")==null?"":new String(request.getParameter("detailaddress").getBytes("ISO-8859-1"), "utf-8");//详细地址
+            String uid=(String)session.getAttribute("uid");//从session里面获得uid
+
+            sql.append("update store_user_address t set t.A_ADDRESS='"+detailaddress+"',t.A_CITY='"+city+"',t.A_MOBILEPHONE='"+contactmobile+"',t.A_PROVINCE='"+province+"',t.A_RECEIVENAME='"+receivename+"' where t.A_ADDRESSID='"+aid+"'");
+
+            boolean isSuccess = Boolean.parseBoolean(ui.updateAny(getJsonSql("updateAnySQL", sql.toString())));
+            JSONObject rootobj=new JSONObject();
+            rootobj.put("code", "success");
+            jsonStr=rootobj.toString();
+        }
+        //更改默认设置
+        else if(domain.equals("updateDefaultAddress"))
+        {
+            ui=new UserHttpImpl();
+            StringBuffer sql = new StringBuffer();
+
+            String aid=(String)request.getParameter("aid");
+            String uid=(String)session.getAttribute("uid");
+            String lid=(String)request.getParameter("lid");
+
+            ArrayList<String> sqllist=new ArrayList<String>();
+            sql.append("update store_user_address t set t.A_DEFAULT=0 where t.A_ADDRESSID='"+lid+"'");
+            String addsql=getJsonSql("addAnySQL",sql.toString());
+            sqllist.add(addsql);
+            sql=new StringBuffer();
+            sql.append("update store_user_address t set t.A_DEFAULT=1 where t.A_ADDRESSID='"+aid+"' and t.A_USERID='"+uid+"'");
+            String updatesql=getJsonSql("updateAnySQL", sql.toString());
+            sqllist.add(updatesql);
+            try
+            {
+                ExpandHanlerUtil.ExpandUtilTransaction(sqllist);
+            }catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            JSONObject rootobj=new JSONObject();
+            rootobj.put("code", "success");
+            jsonStr=rootobj.toString();
+        }
+        //管理地址
+        else if(domain.equals("getAllAddress"))
+        {
+            ui=new UserHttpImpl();
+            StringBuffer sql = new StringBuffer();
+            String uid=(String)session.getAttribute("uid");//从session里面获得uid
+
+            sql.append("select * from store_user_address t where t.A_USERID='"+uid+"' and t.A_STATUS=1");   //查找有没有设置为默认的地址
+            jsonStr= ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
+        }
+        //获得aid的地址
+        else if(domain.equals("aquireAddressByAid"))
+        {
+            ui=new UserHttpImpl();
+            StringBuffer sql = new StringBuffer();
+            String aid=(String)request.getParameter("aid");//地址id
+            //A_STATUS=1表示正在使用中
+            sql.append("select * from store_user_address t where t.A_ADDRESSID='"+aid+"'");   //查找有没有设置为默认的地址
+            jsonStr= ui.queryAny(getJsonSql("queryAnySQL",sql.toString()));
+        }
+        //删除地址
+        else if(domain.equals("delAddress"))
+        {
+            ui=new UserHttpImpl();
+            StringBuffer sql = new StringBuffer();
+            String aid=(String)request.getParameter("aid");//地址id
+
+
+            sql.append("update store_user_address t set t.A_STATUS=0 where t.A_ADDRESSID='"+aid+"'");   //查找有没有设置为默认的地址
+     //       jsonStr= ui.queryAny(getJsonSql("queryAnySQL",sql.toString()));
+            boolean isSuccess = Boolean.parseBoolean(ui.updateAny(getJsonSql("updateAnySQL", sql.toString())));
+            JSONObject rootobj=new JSONObject();
+            rootobj.put("code", "success");
             jsonStr=rootobj.toString();
         }
         //生成未支付订单，优惠券没有的情况还没有做

@@ -1,0 +1,31 @@
+<ion-view>
+    <ion-nav-title><h1 class="title"><b>地址管理</b></h1></ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon ion-ios-arrow-back" ng-click="httpback()"> 返回</button>
+    </ion-nav-buttons>
+    <ion-content style="background-color: #F5F5F5;">
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">收货人：</span>
+                <input type="text" ng-model="formdata.receivename">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">联系电话：</span>
+                <input type="text" ng-model="formdata.mobilephone">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">所在地区：</span>
+                <input type="text" ng-model="formdata.province">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">详细地址：</span>
+                <input type="text" ng-model="formdata.detailaddress">
+            </label>
+        </div>
+
+
+         <button class="button button-balanced" style="margin-top: 15%;margin-left: 10%;margin-right: 10%;width: 80%;" ng-click="addAddress()">
+             保存
+         </button>
+    </ion-content>
+</ion-view>

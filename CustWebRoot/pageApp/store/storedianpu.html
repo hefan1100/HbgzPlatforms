@@ -1,0 +1,120 @@
+<ion-view>
+    <ion-nav-title><h1 class="title"><b>店铺</b></h1></ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon ion-ios-arrow-back" ng-click="httpback()"> 返回</button>
+    </ion-nav-buttons>
+    <ion-content style="background-color: #F5F5F5;">
+        <div ng-style="barStyle">
+            <div class="row row_wrap row-no-padding" style="height: 100%;">
+                <div class="col col-25 col-center" style="padding-top: 0px;padding-bottom: 0px;padding-left: 20px;padding-right: 20px;">
+                    <i class="icon ion-ios-arrow-back" style="float: left;font-size: 4em;color: #ffffff;"></i>
+                </div>
+                <div class="col col-50 col-center" >
+                    <label class="item-input-wrapper" >
+                        <i class="icon ion-ios-search placeholder-icon" style="font-size: 1.2em;"></i>
+                        <input type="search" placeholder="潘婷">
+                    </label>
+                </div>
+                <div class="col col-center" style="text-align: center;">
+
+                </div>
+            </div>
+        </div>
+
+        <div  ng-style="titleStyle">
+           <div class="row row-wrap row-no-padding" style="height: 100%;position: relative;">
+               <div class="col col-25 col-center" style="text-align:center;height: 100%;">
+                     <img src="img/store/icon_dianpu.jpg" ng-style="dianpuPicStyle">
+                </div>
+               <div class="col col-34 col-center" style="text-align:center;">
+                    <div ng-style="diannameStyle">
+                         <a style="float: left;font-size: 1.1em;">宝洁官方旗舰店</a>
+                    </div>
+                   <div style="position: absolute;bottom: 0px;float:left;">
+                    <a style="font-size: 1.1em;">4.9分</a>
+                   </div>
+               </div>
+               <div class="col col-25 col-center" >
+                   <a style="float: right;font-size: 1.1em;">收藏店铺</a>
+                </div>
+               <div class="col col-center" style="text-align: center;">
+                    <i class="icon ion-ios-star assertive" style="font-size: 1.2em;"></i>
+                </div>
+           </div>
+        </div>
+
+        <div ng-style="titleselectStyle">
+                <div class="row row-wrap row-no-padding" style="height: 100%;">
+                      <div class="col col-center" style="text-align: center;" ng-click="changeAstyle(0)">
+                           <a style="color: #adff2f;">店铺首页</a>
+                      </div>
+                        <div class="col col-center" style="text-align: center;" ng-click="changeAstyle(1)">
+                            <a>全部商品</a>
+                        </div>
+                        <div class="col col-center" style="text-align: center;" ng-click="changeAstyle(2)">
+                            <a>热销</a>
+                        </div>
+                        <div class="col col-center" style="text-align: center;" ng-click="changeAstyle(3)">
+                            <a>上新</a>
+                        </div>
+                </div>
+        </div>
+
+        <div ng-style="commendtopStyle">
+             <img src="img/store/icon-jiajieshi.png" style="width: 100%;height: 100%;">
+             </img>
+        </div>
+
+        <div ng-style="commendcouponStyle">
+            <div class="row row-wrap row-no-padding" style="height: 100%;">
+                <div class="col col-33 col-center" style="padding-right: 5px;">
+                    <img src="img/store/icon-5-coupon.png" ng-style="commendcouponimageStyle">
+                    </img>
+                </div>
+                <div class="col col-33 col-center" style="padding-left: 2.5px;padding-right: 2.5px;">
+                    <img src="img/store/icon-10-coupon.png" ng-style="commendcouponimageStyle">
+                    </img>
+                </div>
+                <div class="col col-center" style="padding-left: 5px;">
+                    <img src="img/store/icon-20-coupon.png" ng-style="commendcouponimageStyle">
+                    </img>
+                </div>
+            </div>
+        </div>
+
+        <div ng-style="tuijiantitleStyle">
+            <div class="row row-wrap row-no-padding" style="height: 100%;">
+                <div class="col col-33 col-center">
+                    <img src="img/store/icon-hengleft.png" width="100%">
+                    </img>
+                </div>
+                <div class="col col-33 col-center" style="text-align: center;">
+                     <h5 style="display: inline;font-weight: bold;">超值推荐</h5>
+                </div>
+                <div class="col col-center">
+                    <img src="img/store/icon-hengright.png" width="100%">
+                    </img>
+                </div>
+            </div>
+        </div>
+
+        <div ng-style="commendGoodsllistStyle">
+           <div class="row row-wrap row-no-padding" style="height: 100%;">
+               <div class="col col-50">
+                  <div style="height: 80%">
+                      <img src="img/store/icon-jiajieshileft.png" />
+                   </div>
+                   <div style="height: 20%;">
+                    </div>
+               </div>
+               <div class="col col-50">
+                   <div style="height: 80%">
+                       <img src="img/store/icon-jiajieshileft.png" />
+                   </div>
+                   <div style="height: 20%;">
+                   </div>
+               </div>
+           </div>
+        </div>
+    </ion-content>
+</ion-view>

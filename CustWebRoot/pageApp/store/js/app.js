@@ -174,6 +174,26 @@ angular.module("indexApp", ["ionic","ui.router","indexApp.controllers","indexApp
                 templateUrl:"modifyMobilePhone.html",
                 controller: 'modifymobilephoneCtrl'
             })
+
+            .state('addaddress', {
+                url:"/addaddress",
+                cache:false,
+                templateUrl:"addaddress.html",
+                controller: 'addaddressCtrl'
+            })
+
+            .state('editaddress', {
+                url:"/editaddress/:aid",
+                cache:false,
+                templateUrl:"editaddress.html",
+                controller: 'editaddressCtrl'
+            })
+            .state('storedianpu', {
+                url:"/storedianpu",
+                cache:false,
+                templateUrl:"storedianpu.html",
+                controller: 'dianpuCtrl'
+            })
         ;
         //两个模块控制器不能一样，或者控制器有问题
 
