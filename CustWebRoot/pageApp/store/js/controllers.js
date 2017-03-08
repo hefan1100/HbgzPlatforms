@@ -1280,36 +1280,40 @@ angular.module("indexApp.controllers",[])
         };
         $scope.acquirePersonalInfo=function(){
             var cartidlist=cartFactory.getCartidlist();
-            OrderFactory.setOrderId(null);//每次进来之前都清一下缓存
+            if(cartidlist!=null)
+            {
+                OrderFactory.setOrderId(null);//每次进来之前都清一下缓存
 
-            OrderFactory.setOrderprice(null);  //清空订单总价缓存
-            ConfirmOrderFactory.acquirePersonalInfo(cartidlist).then(function(response){
-                  if(response.code=='NoAddress')
-                  {
-                      $scope.showPopup('去设置收货地址');
-                  }
-                  else if(response.code=="success")
-                  {
-                      var allprice=0;
-                      var cartalllist=response.cartlist;
-                      var paramlist="";
-                      for(var i=0;i<cartalllist.length;i++)
-                      {
-                         var price=parseFloat(cartalllist[i].G_PRICE);
-                         var singleallprice=price*(cartalllist[i].COUNT);
-                         allprice+=cartalllist[i].COUNT*price;
-                          //gid商品id-单个商品总价-数量
-                          paramlist+="'"+cartalllist[i].G_ID+"'-'"+singleallprice+"'-'"+cartalllist[i].COUNT+"',";
-                      }
-                      $scope.detaillist=paramlist.substring(0,paramlist.length-1);
-                      allprice=allprice.toFixed(2);
-                      $scope.allprice=allprice;
-                      OrderFactory.setOrderprice($scope.allprice);
-                      $scope.cartlistresult=response.cartlist;
-                      $scope.addressresult=response.addresslist;
-                  }
-            });
-        };
+                OrderFactory.setOrderprice(null);  //清空订单总价缓存
+                ConfirmOrderFactory.acquirePersonalInfo(cartidlist).then(function(response){
+                    if(response.code=='NoAddress')
+                    {
+                        $scope.showPopup('去设置收货地址');
+                    }
+                    else if(response.code=="success")
+                    {
+                        var allprice=0;
+                        var cartalllist=response.cartlist;
+                        var paramlist="";
+                        for(var i=0;i<cartalllist.length;i++)
+                        {
+                            var price=parseFloat(cartalllist[i].G_PRICE);
+                            var singleallprice=price*(cartalllist[i].COUNT);
+                            allprice+=cartalllist[i].COUNT*price;
+                            //gid商品id-单个商品总价-数量
+                            paramlist+="'"+cartalllist[i].G_ID+"'-'"+singleallprice+"'-'"+cartalllist[i].COUNT+"'-'"+cartalllist[i].SUP_ID+"',";
+                        }
+                        $scope.detaillist=paramlist.substring(0,paramlist.length-1);
+                        allprice=allprice.toFixed(2);
+                        $scope.allprice=allprice;
+                        OrderFactory.setOrderprice($scope.allprice);
+                        $scope.cartlistresult=response.cartlist;
+                        $scope.addressresult=response.addresslist;
+                    }
+                });
+            }   //立即购买
+
+       };
 
         $scope.enterPay=function(){
     //        $state.go("pay");
@@ -1320,7 +1324,17 @@ angular.module("indexApp.controllers",[])
                OrderFactory.produceNotPayOrder(cartFactory.getCartidlist(),$scope.allprice,discount.UC_ID,$scope.detaillist,discount.C_ID).then(function(response){
                      $state.go("pay");
                      cartFactory.setCartidlist(null);   //清除缓存
+                    var nums=parseInt(response.data.ordernums);
+                   if(nums>1)
+                   {
+                     OrderFactory.setOrderIds(response.data.O_ORDERID);
+                     OrderFactory.setOrderId(null);
+                   }
+                   else
+                   {
                      OrderFactory.setOrderId(response.data.O_ORDERID);
+                     OrderFactory.setOrderIds(null);
+                   }
                //      OrderFactory.setOrderprice(null);  //清空订单总价缓存
                });
             }
@@ -1329,12 +1343,61 @@ angular.module("indexApp.controllers",[])
                 OrderFactory.produceNotPayOrder(cartFactory.getCartidlist(),$scope.allprice,null,$scope.detaillist,null).then(function(response){
                     $state.go("pay");
                     cartFactory.setCartidlist(null);   //清除缓存          //需要解决回退问题
-                    OrderFactory.setOrderId(response.data.O_ORDERID);
+                    var nums=parseInt(response.data.ordernums);
+                    if(nums>1)
+                    {
+                        OrderFactory.setOrderIds(response.data.O_ORDERID);
+                        OrderFactory.setOrderId(null);
+                    }
+                    else
+                    {
+                        OrderFactory.setOrderId(response.data.O_ORDERID);
+                        OrderFactory.setOrderIds(null);
+                    }
                 });
             }
         };
 
         $scope.acquirePersonalInfo();
+    })
+    .controller('buyinstanceCtrl', function ($scope,$rootScope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,ConfirmOrderFactory,DiscountFactory,cartFactory,OrderFactory) {
+
+        $scope.acquireGoodsInfo=function(){
+            ConfirmOrderFactory.acquireGoodsInfo($stateParams.gid).then(function(response){
+                if(response.code=='NoAddress')
+                {
+                    $scope.showPopup('去设置收货地址');
+                }
+                else if(response.code=="success")
+                {
+                    var allprice=0;
+                    var cartalllist=response.cartlist;
+                    for(var i=0;i<cartalllist.length;i++)
+                    {
+                        var price=parseFloat(cartalllist[i].G_PRICE);
+                        allprice+=price;
+                    }
+                    $scope.allprice=allprice;
+                    $scope.cartlistresult=response.cartlist;
+                    $scope.addressresult=response.addresslist;
+                }
+
+            });
+        };
+
+        $scope.enterPay=function(){
+            //        $state.go("pay");
+
+                OrderFactory.produceNotPayOrderInstance($stateParams.gid).then(function(response){
+                    $state.go("pay");
+                    OrderFactory.setOrderId(response.orderid);
+                    OrderFactory.setOrderprice($scope.allprice);
+                    OrderFactory.setOrderIds(null);
+
+                });
+        };
+
+        $scope.acquireGoodsInfo();
     })
     .controller('goodsdetailCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,goodsDetailFactory,cartFactory) {
         $scope.myActiveSlide = 0;
@@ -1389,7 +1452,7 @@ angular.module("indexApp.controllers",[])
         $scope.selectedTab(0);
 
         $scope.goOrder=function(){
-             $state.go("confirmorder");
+             $state.go("buyinstance",{gid:$scope.goodsdetail.G_ID});
         };
         $scope.goCart=function(){
             $state.go("cart");
@@ -1407,7 +1470,7 @@ angular.module("indexApp.controllers",[])
         });
 
         $scope.goDianpu=function(){
-            $state.go('storedianpu');
+            $state.go('storedianpu',{supid:$scope.goodsdetail.SUP_ID});
         };
     })
     .controller('discountCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,DiscountFactory) {
@@ -1520,12 +1583,24 @@ angular.module("indexApp.controllers",[])
     })
     .controller('payCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,DiscountFactory,OrderFactory) {
          $scope.allorderprice=  OrderFactory.getOrderprice();
-         var O_ORDERID=OrderFactory.getOrderId();
+        var desc;
+         var O_ORDERID;
+        if(OrderFactory.getOrderId()==null)
+        {
+            O_ORDERID=OrderFactory.getOrderIds();
+            desc='multiple';
+        }
+        else
+        {
+            O_ORDERID=OrderFactory.getOrderId();
+            desc="single";
+        }
          $scope.payOrder=function(){
-             OrderFactory.modifyPayOrder(O_ORDERID,1,$scope.allorderprice).then(function(response){
+             OrderFactory.modifyPayOrder(O_ORDERID,1,$scope.allorderprice,desc).then(function(response){
                  //已付款   1    待付款   0     已发货    2    已签收    3     已评论     4      已退款     7      已完成     8
                  OrderFactory.setOrderprice(null);  //清空订单总价缓存
                  OrderFactory.setOrderId(null);     //清空订单ID缓存
+                 OrderFactory.setOrderIds(null);
                  $state.go("paysuccess");
              });
          };
@@ -1844,7 +1919,7 @@ angular.module("indexApp.controllers",[])
 
     })
 
-    .controller('dianpuCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,AddressFactory) {
+    .controller('dianpuCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,AddressFactory,SupFactory) {
         $scope.screenHeight=window.innerHeight;
         $scope.screenWidth=window.innerWidth;
         $scope.barStyle={
@@ -1868,7 +1943,9 @@ angular.module("indexApp.controllers",[])
             "width":($scope.screenWidth*0.5-$scope.screenHeight*0.1*0.6)+'px',
             "background-color":"#FFFFFF"
         };
-
+        $scope.selectedTab = function (index) {
+            $ionicSlideBoxDelegate.slide(index);
+        };
 
         $scope.dianpuPicStyle={
             "height":$scope.screenHeight*0.1*0.7+'px',
@@ -1890,16 +1967,13 @@ angular.module("indexApp.controllers",[])
         };
 
         $scope.initAstyle=function(){
-          $scope.shouyeStyle=$scope.titleAselectStyle;
-          $scope.shangpinStyle=$scope.titleAunselectStyle;
-          $scope.rexiaoStyle=$scope.titleAunselectStyle;
-          $scope.shangxinStyle=$scope.titleAunselectStyle;
+
 
           $scope.stylearray=[];
-          $scope.stylearray.push($scope.shouyeStyle);
-          $scope.stylearray.push($scope.shangpinStyle);
-          $scope.stylearray.push($scope.rexiaoStyle);
-          $scope.stylearray.push($scope.shangxinStyle);
+          $scope.stylearray.push($scope.titleAselectStyle);
+          $scope.stylearray.push($scope.titleAunselectStyle);
+          $scope.stylearray.push($scope.titleAunselectStyle);
+          $scope.stylearray.push($scope.titleAunselectStyle);
 
           $scope.lastindex=0;
         };
@@ -1908,6 +1982,8 @@ angular.module("indexApp.controllers",[])
         {
           $scope.stylearray[$scope.lastindex]=$scope.titleAunselectStyle;
           $scope.stylearray[index]=$scope.titleAselectStyle;
+          $scope.lastindex=index;
+          $scope.selectedTab(index);
         }
         $scope.commendtopStyle={
             "margin-top": "10px",
@@ -1930,12 +2006,21 @@ angular.module("indexApp.controllers",[])
             "width":"100%",
             "height":$scope.screenHeight*0.1+'px'
         };
-
         $scope.commendGoodsllistStyle={
-            "width":"100%",
-            "padding-left":"5px",
-            "padding-right":"5px",
-            "height":$scope.screenHeight-$scope.screenHeight*0.65+'px',
+            "width":$scope.screenWidth-10+'px',
+            "margin-left":"5px",
+            "margin-right":"5px",
+            "margin-top":"5px",
+            "height":$scope.screenHeight-$scope.screenHeight*0.6+'px',
+            "background-color":"white"
+        };
+
+        $scope.alllistStyle={
+            "width":$scope.screenWidth-10+'px',
+            "margin-left":"5px",
+            "margin-right":"5px",
+            "margin-top":"10px",
+            "height":$scope.screenHeight-$scope.screenHeight*0.6+'px',
             "background-color":"white"
         };
 
@@ -1947,7 +2032,30 @@ angular.module("indexApp.controllers",[])
             "margin-top":"10px",
             "background-color":"white"
         };
+
+        $scope.slideHasChanged=function(index)
+        {
+            if($scope.lastindex!=index) {
+                $scope.myActiveSlide = index;
+                $scope.changeAstyle(index);
+            }
+            if(index==0)
+            {
+                $scope.initInfo();
+            }
+
+        };
+        $scope.initInfo=function(){
+            alert("stateparam:supid:"+$stateParams.supid);
+            SupFactory.getSupInfo($stateParams.supid).then(function(response){
+                $scope.supinfo=response.supdata;
+                $scope.discountlist=response.discountlist;
+                $scope.commendlist=response.commendlist;
+            });
+        };
+
         $scope.initAstyle();
+        $scope.initInfo();
     })
 
     .controller('editaddressCtrl', function ($scope,$http, $ionicPopup,$stateParams, $state,$ionicLoading,$ionicHistory,$cacheFactory,$ionicSlideBoxDelegate,AddressFactory) {

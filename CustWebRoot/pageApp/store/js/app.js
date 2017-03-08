@@ -111,6 +111,13 @@ angular.module("indexApp", ["ionic","ui.router","indexApp.controllers","indexApp
                 templateUrl:"confirmorder.html",
                 controller: 'orderconfirmCtrl'
             })
+            //立即购买
+            .state('buyinstance', {
+                url:"/buyinstance/:gid",
+                cache:false,
+                templateUrl:"confirmorder.html",
+                controller: 'buyinstanceCtrl'
+            })
 
             .state('cart', {
                 url:"/cart",
@@ -189,7 +196,7 @@ angular.module("indexApp", ["ionic","ui.router","indexApp.controllers","indexApp
                 controller: 'editaddressCtrl'
             })
             .state('storedianpu', {
-                url:"/storedianpu",
+                url:"/storedianpu/:supid",
                 cache:false,
                 templateUrl:"storedianpu.html",
                 controller: 'dianpuCtrl'

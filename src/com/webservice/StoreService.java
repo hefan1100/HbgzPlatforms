@@ -385,7 +385,7 @@ public class StoreService extends HttpServlet {
                 //返回有无可用的优惠券
                //检查有无收货地址
                 sql.append("SELECT * FROM STORE_USER_ADDRESS ADDR WHERE addr.a_userid=(select i.u_userid from " +
-                "store_user_info i where i.openid='"+oid+"') and addr.a_default=1");
+                "store_user_info i where i.openid='"+oid+"') and addr.a_default=1  and addr.A_STATUS=1");
               //  String jsonMessage=ui.queryAny(getJsonSql("queryAnySQL", sql.toString()));
                 String jsonMessage=ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
                 JSONObject rootjson=new JSONObject();
@@ -425,6 +425,65 @@ public class StoreService extends HttpServlet {
 
             //select * from store_user_discount u inner join store_sup_discount up on u.c_id=up.c_id where u.u_userid=(select su.u_userid from store_user_info su where su.u_userid='d8324c4b-9bd9-4dcc-b2dc-9401762fe606')
              System.out.println("acquireConfirmOrderInfo:"+jsonStr);
+        }
+
+        else if(domain.equals("acquireSingleConfirmOrder"))   //获取单个商品订单
+        {
+            ui=new UserHttpImpl();
+            StringBuffer sql = new StringBuffer();
+            String oid=(String)session.getAttribute("openid");
+            String gid=request.getParameter("gid");
+            if(oid==null||oid.equals(""))
+            {
+                JSONObject message=new JSONObject();
+                message.put("code","NoLogin");
+                message.put("message","用户信息不存在，请用户重新登录微信");
+                jsonStr=message.toString();
+            }
+
+            else
+            {
+                //返回有无可用的优惠券
+                //检查有无收货地址
+                sql.append("SELECT * FROM STORE_USER_ADDRESS addr WHERE addr.a_userid=(select i.u_userid from " +
+                        "store_user_info i where i.openid='"+oid+"') and addr.A_DEFAULT=1 and addr.A_STATUS=1");
+                //  String jsonMessage=ui.queryAny(getJsonSql("queryAnySQL", sql.toString()));
+                String jsonMessage=ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
+                JSONObject rootjson=new JSONObject();
+                if(jsonMessage==null||jsonMessage.equals(""))
+                {
+                    rootjson.put("code","NoAddress");
+                    rootjson.put("message","该用户没有地址");
+                }
+                else
+                {
+                    JSONArray json=JSONArray.fromObject(jsonMessage);
+                    if(json.size()==0)
+                    {
+                        rootjson.put("code","NoAddress");
+                        rootjson.put("message","该用户没有地址");
+                    }
+                    else
+                    {      //获取收货地址
+                        rootjson.put("code","success");
+                        rootjson.put("addresslist",json);
+                        //获取购物车商品
+
+                        System.out.println("gid:"+gid);
+
+                        sql=new StringBuffer();
+                        sql.append("SELECT * FROM STORE_GOODS_INFO GI" +
+                                " WHERE GI.G_ID='"+gid+"'");
+                        String jsonM=ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
+                        JSONArray cartlistarray=JSONArray.fromObject(jsonM);
+                        rootjson.put("cartlist",cartlistarray);
+                    }
+                }
+                jsonStr=rootjson.toString();
+            }
+
+            //select * from store_user_discount u inner join store_sup_discount up on u.c_id=up.c_id where u.u_userid=(select su.u_userid from store_user_info su where su.u_userid='d8324c4b-9bd9-4dcc-b2dc-9401762fe606')
+            System.out.println("acquireSingleConfirmOrder:"+jsonStr);
         }
 
         else if(domain.equals("getDiscountByUser"))
@@ -617,7 +676,94 @@ public class StoreService extends HttpServlet {
             rootobj.put("code", "success");
             jsonStr=rootobj.toString();
         }
-        //生成未支付订单，优惠券没有的情况还没有做
+        else if(domain.equals("produceNotPayOrderInstance"))//立即购买生成未支付订单
+        {
+            StringBuffer sql = new StringBuffer();
+            String oid=(String)session.getAttribute("openid");
+            String gid=request.getParameter("gid");
+
+            if(oid==null||oid.equals(""))
+            {
+                JSONObject rootobj=new JSONObject();
+                rootobj.put("code","NoLogin");
+                rootobj.put("message","用户信息已丢失，请用户重新登录微信");
+                jsonStr=rootobj.toString();
+            }
+            else
+            {      //检查库存
+            //    SELECT * FROM STORE_GOODS_INFO G WHERE g.g_id="+gid+"
+                //生成明细表
+           //     INSERT INTO STORE_ORDER_DETAILS VALUES ('"+orderdetailid+"','"+O_ORDERID+"',"+param[0]+","+couponparam+","+param[1]+","+param[2]+",'0','','');
+                //库存减一
+                //UPDATE STORE_GOODS_INFO INFO SET INFO.G_AMOUNT=INFO.G_AMOUNT-"+param[2]+" where INFO.G_ID="+param[0]+";
+                //生成大单
+                //INSERT INTO STORE_ORDER_INFO VALUES ('"+O_ORDERID+"'," +
+//                "(SELECT ui.U_USERID FROM STORE_USER_INFO ui WHERE ui.openid='"+oid+"'),'','"+cellallprice+"'" +
+//                        ",'"+dateFormat.format(sqlDate)+"'," +
+//                        "'"+dateFormat.format(sqlDate)+"','1','0',(SELECT U.A_ADDRESSID FROM " +
+//                        "STORE_USER_ADDRESS U WHERE U.A_USERID=(SELECT SU.U_USERID FROM STORE_USER_INFO SU WHERE SU.OPENID='"+oid+"'
+                sql=new StringBuffer();
+                sql.append("SELECT * FROM STORE_GOODS_INFO G left join store_sup_supply T on G.SUP_ID=T.SUP_ID WHERE G.G_ID='"+gid+"'");
+                String jsonMessage = ui.queryAny(getJsonSql("queryAnySQL",sql.toString()));
+
+                ArrayList<String> sqllist=new ArrayList<String>();
+                JSONObject infoobj=JSONObject.fromObject(jsonMessage);
+                if(infoobj.getInt("G_AMOUNT")>=1)
+                {
+                   String orderdetailid=UUID.randomUUID().toString().replaceAll("-","");
+                   String O_ORDERID=UUID.randomUUID().toString().replaceAll("-","");
+
+                    sql=new StringBuffer();
+                    //gid商品id-总价-数量.
+                    double allprice=infoobj.getDouble("G_PRICE");
+                    sql.append("INSERT INTO STORE_ORDER_DETAILS VALUES ('"+orderdetailid+"','"+O_ORDERID+"','"+gid+"',"+null+",'"+allprice+"','1','0','',''); ");
+                    String sqljson=getJsonSql("addAnySQL",sql.toString());
+                    sqllist.add(sqljson);
+
+                    sql=new StringBuffer();
+                    sql.append("UPDATE STORE_GOODS_INFO INFO SET INFO.G_AMOUNT=INFO.G_AMOUNT-1 where INFO.G_ID='"+gid+"'; ");
+                    sqljson=getJsonSql("updateAnySQL",sql.toString());
+                    sqllist.add(sqljson);
+
+                    Date sqlDate=new Date();
+                    SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    sql=new StringBuffer();
+                    sql.append("INSERT INTO STORE_ORDER_INFO VALUES ('"+O_ORDERID+"'," +
+                            "(SELECT ui.U_USERID FROM STORE_USER_INFO ui WHERE ui.openid='"+oid+"'),'','"+allprice+"'" +
+                            ",'"+dateFormat.format(sqlDate)+"'," +
+                            "'"+dateFormat.format(sqlDate)+"','1','0',(SELECT U.A_ADDRESSID FROM " +
+                            "STORE_USER_ADDRESS U WHERE U.A_USERID=(SELECT SU.U_USERID FROM STORE_USER_INFO SU WHERE SU.OPENID='"+oid+"')  and U.A_DEFAULT=1 and U.A_STATUS=1),null); ");
+                    sqljson=getJsonSql("addAnySQL",sql.toString());
+                    sqllist.add(sqljson);
+
+                    Boolean isSuccess=false;
+                    try
+                    {
+                        ExpandHanlerUtil.ExpandUtilTransaction(sqllist);
+                        isSuccess=true;
+                    }catch(Exception e)
+                    {
+                        e.printStackTrace();
+                        isSuccess=false;
+                    }
+
+                    JSONObject rootobj=new JSONObject();
+                    rootobj.put("code","success");
+                    rootobj.put("orderid",O_ORDERID);
+                    jsonStr=rootobj.toString();
+
+                }
+                else
+                {
+                    JSONObject rootobj=new JSONObject();
+                    rootobj.put("code","NoNumber");
+                    rootobj.put("message","商品库存不够");
+                    jsonStr=rootobj.toString();
+                }
+            }
+
+        }
+        //生成未支付订单，优惠券没有的情况还没有做，步骤如下   1.检查库存  2.生成明细表   3.更改库存   4.生成大单表
         else if(domain.equals("produceNotPayOrder"))
         {
             ui=new UserHttpImpl();
@@ -644,7 +790,7 @@ public class StoreService extends HttpServlet {
 
 
             System.out.println("UC_ID:"+UC_ID);
-            String paramlist=request.getParameter("paramlist");       //参数集合提交上来      格式是    //gid商品id-优惠券id-单个商品总价-数量,gid商品id-优惠券id-单个商品总价-数量...
+            String paramlist=request.getParameter("paramlist");       //参数集合提交上来      格式是    //gid商品id-优惠券id-单个商品总价-数量-店铺id..
             System.out.println("paramlist:"+paramlist);
 
             if(oid==null||oid.equals(""))
@@ -654,30 +800,10 @@ public class StoreService extends HttpServlet {
                 rootobj.put("message","用户信息已丢失，请用户重新登录微信");
                 jsonStr=rootobj.toString();
             }
+
            //根据优惠券条件来判断总价
             else
             {
-            //满减 1   折扣  2
-            //已付款   1    待付款   0     已发货    2    已签收    3     已评论     4      已退款     7      已完成     8
-
-//                    for(int i=0;i<params.length;i++)
-//                    {
-//                          String orderdetailid=UUID.randomUUID().toString();
-//                          String[] param=params[i].split("-");
-//                          //gid商品id-优惠券id-总价-数量
-//                          String couponparam=couponid!=null?"'"+couponid+"'":null;
-//                          sql.append("insert into store_order_details values ('"+orderdetailid+"','"+O_ORDERID+"',"+param[0]+","+couponparam+","+param[1]+","+param[2]+",'0','','');");
-//                    }
-//                    sql.append(" commit;");
-//                    sql.append(" end;");
-//                    String resultStr=ui.addAny(getJsonSql("addAnySQL", sql.toString()));
-//                    Boolean isSuccess=Boolean.parseBoolean(resultStr);
-//                    System.out.println("添加order_details表:"+resultStr);
-//                   //将STORE_USER_DISCOUNT表中的优惠券UC_STATUS改变其状态，改未使用状态为已使用
-
-
-//                   //将STORE_USER_DISCOUNT表中的优惠券O_ORDERID绑定新增的orderid值
-
 
 //                   //0  未使用     1   已使用       2   已过期
 
@@ -694,6 +820,7 @@ public class StoreService extends HttpServlet {
                         String gcount=contentparam[2];
                         System.out.println("GCOUNT:"+gcount);
                         sql=new StringBuffer();
+                        //此处的gid是由js拼接起来的，已经加了‘’
                         sql.append("SELECT * FROM STORE_GOODS_INFO G WHERE g.g_id="+gid+" and g.g_amount<"+gcount+"");
                         String jsonMessage = ui.queryAny(getJsonSql("queryAnySQL",sql.toString()));
                         System.out.println("库存 json info:"+jsonMessage);
@@ -716,12 +843,13 @@ public class StoreService extends HttpServlet {
                     else        //如果库存都够，则让他生成订单
                     {
                            //删除购物车信息
+                            String orderids="";//orderids   orderid集合
+                            int ordernums=0;  //生成订单数量
 
                             ArrayList<String> sqllist=new ArrayList<String>();     //操作数据的集合
 
 
-                            String O_ORDERID=UUID.randomUUID().toString().substring(0,10);
-                            O_ORDERID=O_ORDERID.replaceAll("-","");
+
                             java.util.Date date=new java.util.Date();
                             java.sql.Date sqlDate=new java.sql.Date(date.getTime());
                             SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -737,16 +865,40 @@ public class StoreService extends HttpServlet {
                             //total_price     使用优惠券   插入一条记录到STORE_ORDER_INFO
 
                             sql=new StringBuffer();
+                            //此处是把购物车一整套商品生成一个订单
 
-                            sql.append("INSERT INTO STORE_ORDER_INFO VALUES ('"+O_ORDERID+"'," +
-                                    "(SELECT ui.U_USERID FROM STORE_USER_INFO ui WHERE ui.openid='"+oid+"'),'','"+cartallprice+"'" +
-                                    ",'"+dateFormat.format(sqlDate)+"'," +
-                                    "'"+dateFormat.format(sqlDate)+"','1','0',(SELECT U.A_ADDRESSID FROM " +
-                                    "STORE_USER_ADDRESS U WHERE U.A_USERID=(SELECT SU.U_USERID FROM STORE_USER_INFO SU WHERE SU.OPENID='"+oid+"')  and U.A_DEFAULT=1),null); ");
-                            sqljson=getJsonSql("addAnySQL",sql.toString());
-                            sqllist.add(sqljson);
+                           //向两张表store_order_info和store_order_details加入信息，同一时间下单，同一店铺的商品为一个订单，否则为两个
+                            List<String> dianpuidlist=new ArrayList<String>();
+                            Map<String,ArrayList<String>> sqlmap=new HashMap<String,ArrayList<String>>();    //连成最终的参数集合，根据订单而定，订单详情也要用
+                            String[] parameters=paramlist.split(",");
+                            for(int i=0;i<parameters.length;i++)
+                            {
+                                String celldata=parameters[i];
+                                String[] celldatas=celldata.split("-");
+                                String supid=celldatas[3]; //获取店铺id
+                                boolean isEqual=false;
+                                for(String s:dianpuidlist)
+                                {
+                                    if(s.equals(supid))//如果等于之前搜索出来的结果时，则对应的List加一项
+                                    {
+                                        sqlmap.get(s).add(celldata);
+                                        isEqual=true;
+                                        break;
+                                    }
+                                }
+                                if(!isEqual)//如果没有匹配的就添加，先重组数据，在生成订单
+                                {
+                                    dianpuidlist.add(supid);//专门搜店铺id的
+                                    ArrayList<String> arrays=new ArrayList<String>();
+                                    arrays.add(celldata);
+                                    sqlmap.put(supid,arrays);
+                                }
+                            }
+                            System.out.println(sqlmap);
+                            //重组好了的数据
 
-                            System.out.println("insertsql:"+sql.toString());
+//
+//                            System.out.println("insertsql:"+sql.toString());
                             //生成所有明细STORE_ORDER_DETAIL表
 
 
@@ -754,27 +906,59 @@ public class StoreService extends HttpServlet {
 
                             System.out.println("商品paramlist:"+paramlist);
 
-                            String[] params=paramlist.split(",");
+                            Set<String> keyset=sqlmap.keySet();
+                            Iterator iterator=keyset.iterator();
 
-                            for(int i=0;i<params.length;i++)
+                    //        for(int i=0;i<params.length;i++)
+                            while(iterator.hasNext())
                             {
-                                String orderdetailid=UUID.randomUUID().toString();
-                                orderdetailid=orderdetailid.replaceAll("-","");
-                                String[] param=params[i].split("-");
-                                //gid商品id-总价-数量
-                                String couponparam=couponid!=null?"'"+couponid+"'":null;
+                                String O_ORDERID=UUID.randomUUID().toString().substring(0,10);
+                                O_ORDERID=O_ORDERID.replaceAll("-","");
+                                ArrayList<String> orderarray=sqlmap.get(iterator.next());
+
+                                orderids+=O_ORDERID+",";
+                                ordernums++;
+
+                                double cellallprice=0;//一个订单里面的总价
+
+                                for(String info:orderarray)
+                                {
+
+                                    String orderdetailid=UUID.randomUUID().toString();
+                                    orderdetailid=orderdetailid.replaceAll("-","");
+                                    String[] param=info.split("-");
+                                    for(String t:param)
+                                          System.out.println("t:"+t);
+                                    //gid商品id-总价-数量
+                                    String couponparam=couponid!=null?"'"+couponid+"'":null;
 
 
+                                    sql=new StringBuffer();
+                                    sql.append("INSERT INTO STORE_ORDER_DETAILS VALUES ('"+orderdetailid+"','"+O_ORDERID+"',"+param[0]+","+couponparam+","+param[1]+","+param[2]+",'0','',''); ");
+                                    sqljson=getJsonSql("addAnySQL",sql.toString());
+                                    sqllist.add(sqljson);
+
+
+                                    //更新库存
+                                    sql=new StringBuffer();
+                                    sql.append("UPDATE STORE_GOODS_INFO INFO SET INFO.G_AMOUNT=INFO.G_AMOUNT-"+param[2]+" where INFO.G_ID="+param[0]+"; ");
+                                    sqljson=getJsonSql("updateAnySQL",sql.toString());
+                                    sqllist.add(sqljson);
+
+
+                                    double p=Double.parseDouble(param[1].replaceAll("'",""));
+
+                                    cellallprice+=p;
+                                }
                                 sql=new StringBuffer();
-                                sql.append("INSERT INTO STORE_ORDER_DETAILS VALUES ('"+orderdetailid+"','"+O_ORDERID+"',"+param[0]+","+couponparam+","+param[1]+","+param[2]+",'0','',''); ");
+
+
+                                sql.append("INSERT INTO STORE_ORDER_INFO VALUES ('"+O_ORDERID+"'," +
+                                        "(SELECT ui.U_USERID FROM STORE_USER_INFO ui WHERE ui.openid='"+oid+"'),'','"+cellallprice+"'" +
+                                        ",'"+dateFormat.format(sqlDate)+"'," +
+                                        "'"+dateFormat.format(sqlDate)+"','1','0',(SELECT U.A_ADDRESSID FROM " +
+                                        "STORE_USER_ADDRESS U WHERE U.A_USERID=(SELECT SU.U_USERID FROM STORE_USER_INFO SU WHERE SU.OPENID='"+oid+"')  and U.A_DEFAULT=1 and U.A_STATUS=1),null); ");
                                 sqljson=getJsonSql("addAnySQL",sql.toString());
-                                sqllist.add(sqljson);
-
-
-                                //更新库存
-                                sql=new StringBuffer();
-                                sql.append("UPDATE STORE_GOODS_INFO INFO SET INFO.G_AMOUNT=INFO.G_AMOUNT-"+param[2]+" where INFO.G_ID="+param[0]+"; ");
-                                sqljson=getJsonSql("updateAnySQL",sql.toString());
                                 sqllist.add(sqljson);
                             }
 
@@ -788,15 +972,15 @@ public class StoreService extends HttpServlet {
 
 
                             //update store_user_discount dis set dis.uc_status=1,dis.o_orderid='sdfsfdsfsfdssdfdsf' where dis.uc_id='sdfsfsfss'
-
-                            if(UC_ID!=null)
-                            {
-                                sql=new StringBuffer();
-                                sql.append("UPDATE STORE_USER_DISCOUNT DIS SET dis.uc_status=1,dis.o_orderid='"+O_ORDERID+"' where dis.uc_id='"+UC_ID+"'; ");
-                                sqljson=getJsonSql("updateAnySQL",sql.toString());
-                                sqllist.add(sqljson);
-                                System.out.println("updateCart:"+jsonStr);
-                            }
+                           //优惠券
+//                            if(UC_ID!=null)
+//                            {
+//                                sql=new StringBuffer();
+//                                sql.append("UPDATE STORE_USER_DISCOUNT DIS SET dis.uc_status=1,dis.o_orderid='"+O_ORDERID+"' where dis.uc_id='"+UC_ID+"'; ");
+//                                sqljson=getJsonSql("updateAnySQL",sql.toString());
+//                                sqllist.add(sqljson);
+//                                System.out.println("updateCart:"+jsonStr);
+//                            }
                         //     sql.append(" commit;");
                         //     sql.append(" end;");
                         //     sql.append(" DELIMITER;");
@@ -816,11 +1000,14 @@ public class StoreService extends HttpServlet {
                             }
 
                              System.out.println("总的操作:"+isSuccess);
-
+                           orderids=orderids.substring(0,orderids.length()-1);//订单以逗号连接的字符串
 
                             JSONObject rootobj=new JSONObject();
                             JSONObject dataobj=new JSONObject();
-                            dataobj.put("O_ORDERID",O_ORDERID);
+
+                            dataobj.put("O_ORDERID",orderids);
+                            dataobj.put("ordernums",ordernums);
+
                             rootobj.put("code","success");
                             rootobj.put("data",dataobj);
                             rootobj.put("message","生成未支付订单成功");
@@ -839,6 +1026,7 @@ public class StoreService extends HttpServlet {
             String O_ORDERID=request.getParameter("O_ORDERID");
             String orderstatus=request.getParameter("orderstatus");
             String allprice=request.getParameter("allprice");
+            String orderdesc=request.getParameter("orderdesc")==null?"single": request.getParameter("orderdesc");
             //info_status     待付款   0     作废    5     已评论    4     已退款     7      已完成      8
             //已发货      2       已付款      1     已签收      3
 
@@ -864,27 +1052,58 @@ public class StoreService extends HttpServlet {
                     SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     ArrayList<String> sqllist=new ArrayList<String>();
                     sql=new StringBuffer();
-                    sql.append(" UPDATE STORE_ORDER_INFO I SET i.o_realprice='"+allprice+"' where i.o_orderid='"+O_ORDERID+"';");
-                     sqljson=getJsonSql("updateAnySQL",sql.toString());
-                    sqllist.add(sqljson);
+                    //有优惠券到时候再说，基本上是按照总价给
+                    if(orderdesc.equals("single")) //单个订单
+                    {
+                        sql.append(" UPDATE STORE_ORDER_INFO I SET i.o_realprice='"+allprice+"' where i.o_orderid='"+O_ORDERID+"';");
+                         sqljson=getJsonSql("updateAnySQL",sql.toString());
+                        sqllist.add(sqljson);
 
 
-                    sql=new StringBuffer();
-                    sql.append(" UPDATE STORE_ORDER_INFO I SET i.o_rderstate='"+orderstatus+"' where i.o_orderid='"+O_ORDERID+"';");
-                    sqljson=getJsonSql("updateAnySQL",sql.toString());
-                    sqllist.add(sqljson);
+                        sql=new StringBuffer();
+                        sql.append(" UPDATE STORE_ORDER_INFO I SET i.o_rderstate='"+orderstatus+"' where i.o_orderid='"+O_ORDERID+"';");
+                        sqljson=getJsonSql("updateAnySQL",sql.toString());
+                        sqllist.add(sqljson);
 
-                    sql=new StringBuffer();
-                    sql.append(" UPDATE STORE_ORDER_DETAILS D SET d.info_status='"+orderstatus+"' where d.o_orderid='"+O_ORDERID+"';");
-                    sqljson=getJsonSql("updateAnySQL",sql.toString());
-                    sqllist.add(sqljson);
+                        sql=new StringBuffer();
+                        sql.append(" UPDATE STORE_ORDER_DETAILS D SET d.info_status='"+orderstatus+"' where d.o_orderid='"+O_ORDERID+"';");
+                        sqljson=getJsonSql("updateAnySQL",sql.toString());
+                        sqllist.add(sqljson);
 
 
-                    sql=new StringBuffer();
-                    sql.append(" UPDATE STORE_ORDER_INFO I SET i.LASTMODIFY='"+format.format(date)+"',i.O_PAYDATE='"+format.format(date)+"' where i.O_ORDERID='"+O_ORDERID+"'");
-                    sqljson=getJsonSql("updateAnySQL",sql.toString());
-                    sqllist.add(sqljson);
+                        sql=new StringBuffer();
+                        sql.append(" UPDATE STORE_ORDER_INFO I SET i.LASTMODIFY='"+format.format(date)+"',i.O_PAYDATE='"+format.format(date)+"' where i.O_ORDERID='"+O_ORDERID+"'");
+                        sqljson=getJsonSql("updateAnySQL",sql.toString());
+                        sqllist.add(sqljson);
+                    }
+                    else if(orderdesc.equals("multiple"))
+                    {
+                        String[] orderparams=O_ORDERID.split(",");
+                        for(int i=0;i<orderparams.length;i++)
+                        {
+                            sql=new StringBuffer();
+                            sql.append(" UPDATE STORE_ORDER_INFO I SET i.o_realprice=o_TOTALPRICE where i.o_orderid='"+orderparams[i]+"';");
+                            sqljson=getJsonSql("updateAnySQL",sql.toString());
+                            sqllist.add(sqljson);
 
+
+                            sql=new StringBuffer();
+                            sql.append(" UPDATE STORE_ORDER_INFO I SET i.o_rderstate='"+orderstatus+"' where i.o_orderid='"+orderparams[i]+"';");
+                            sqljson=getJsonSql("updateAnySQL",sql.toString());
+                            sqllist.add(sqljson);
+
+                            sql=new StringBuffer();
+                            sql.append(" UPDATE STORE_ORDER_DETAILS D SET d.info_status='"+orderstatus+"' where d.o_orderid='"+orderparams[i]+"';");
+                            sqljson=getJsonSql("updateAnySQL",sql.toString());
+                            sqllist.add(sqljson);
+
+
+                            sql=new StringBuffer();
+                            sql.append(" UPDATE STORE_ORDER_INFO I SET i.LASTMODIFY='"+format.format(date)+"',i.O_PAYDATE='"+format.format(date)+"' where i.O_ORDERID='"+orderparams[i]+"'");
+                            sqljson=getJsonSql("updateAnySQL",sql.toString());
+                            sqllist.add(sqljson);
+                        }
+                    }
                     //             sql.append(" end;");
                  //   String resultStr=ui.updateAny(getJsonSql("updateAnySQL", sql.toString()));
                     Boolean isSuccess=false;
@@ -1046,7 +1265,7 @@ public class StoreService extends HttpServlet {
                 String jsonMessage = ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
                 JSONArray jsonarrays= JSONArray.fromObject(jsonMessage);
 
-                HashMap<String,JSONObject> ordermap=new HashMap<String,JSONObject>();    //order集合
+                HashMap<String,JSONObject> ordermap=new HashMap<String,JSONObject>();    //order集合,以店铺id作为集合
 
                 JSONArray resultarray=new JSONArray();//结果arr
 
@@ -1159,6 +1378,37 @@ public class StoreService extends HttpServlet {
                     System.out.println("jsonstr:"+jsonStr);
                 }
             }
+        }
+
+        else if(domain.equals("getSupInfo"))//获取店铺信息
+        {
+            ui=new UserHttpImpl();
+            StringBuffer sql = new StringBuffer();
+            JSONObject root=new JSONObject();
+
+            String supid=request.getParameter("supid");//商家id
+            //查询商家信息
+            sql.append("select * from store_sup_supply t where t.SUP_ID='"+supid+"'");
+            String jsonMessage = ui.queryAny(getJsonSql("queryAnySQL", sql.toString()));
+            JSONObject supinfo=JSONObject.fromObject(jsonMessage);
+            root.put("supinfo",supinfo);
+
+
+            //查询优惠券信息
+            sql=new StringBuffer();
+            sql.append("select * from store_sup_discount d where d.SUP_ID='"+supid+"'");
+            jsonMessage=ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
+            JSONArray discountlist=JSONArray.fromObject(jsonMessage);
+            root.put("discountlist",discountlist);
+
+            sql=new StringBuffer();
+            sql.append("select * from store_goods_info i where i.SUP_ID='"+supid+"' limit 0,1");
+            jsonMessage=ui.queryAnyList(getJsonSql("queryAnyListSQL",sql.toString()));
+            JSONArray goodsinfolist=JSONArray.fromObject(jsonMessage);
+            root.put("commendlist",goodsinfolist);
+
+            jsonStr=root.toString();
+
         }
         out.println(jsonStr);
     }
