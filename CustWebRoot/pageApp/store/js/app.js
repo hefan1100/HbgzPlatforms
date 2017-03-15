@@ -63,6 +63,17 @@ angular.module("indexApp", ["ionic","ui.router","indexApp.controllers","indexApp
                     }
                 }
             })
+            .state('tabs.may', {
+                url:"/may",
+                cache:false,
+                views:{
+                    'may-tab':{
+                        templateUrl:"date.html",
+                        controller: 'dateCtrl'
+                    }
+                }
+            })
+
             .state('goodslist', {
                 cache:false,
                 url:"/goodslist/:clarifyId",
