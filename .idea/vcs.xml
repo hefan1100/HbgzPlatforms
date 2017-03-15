@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="SourceSafe">
-      <rootSettings class="com.intellij.vssSupport.VssRootSettings" VssProject="$/03中国邮政/01代码管理/HbgzPlatforms" />
-    </mapping>
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
 </project>
 

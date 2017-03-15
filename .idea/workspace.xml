@@ -1,7 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="93a00b69-23ea-4792-bfb6-09cec606f679" name="Default" comment="" />
+    <list default="true" id="93a00b69-23ea-4792-bfb6-09cec606f679" name="Default" comment="王文海  zhuanquApp提交">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/date.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/js/date/fullcalendar.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/js/date/fullcalendar.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/js/date/fullcalendar.print.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/js/date/jquery.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/js/date/moment.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CustWebRoot/pageApp/store/css/mui.css" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\css\animate.min.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\css\swiper.min.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\Baiyang.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\Chunv.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\D_baiyang.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\D_chunv.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\D_jinniu.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\D_juxie.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\D_moxie.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\D_sheshou.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\D_shizi.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\D_shuangyu.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\D_shuangzi.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\D_shuiping.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\D_tianping.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\D_tianxie.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\Jinniu.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\Juxie.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\Moxie.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\Sheshou.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\Shizi.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\Shuangyu.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\Shuangzi.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\Shuiping.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\Tianping.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\Tianxie.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\bg1.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\bg13.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\bg3.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\font6.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\font9.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\img10.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\img11.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\img14.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\img15.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\img16.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\img18.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\img4.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\img5.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\img6.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\img7.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\img8.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img\music2.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\index2.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\js\swipe1.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\js\swiper.animate1.0.2.min.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\js\swiper.min.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\resource\music2.mp3" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CustWebRoot/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/CustWebRoot/WEB-INF/web.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/index.html" afterPath="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/js/app.js" afterPath="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/js/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/js/controllers.js" afterPath="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/js/controllers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CustWebRoot/pageWeb/sign-in.html" afterPath="$PROJECT_DIR$/CustWebRoot/pageWeb/sign-in.html" />
+    </list>
     <ignored path="HbgzPlatforms.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,8 +94,8 @@
         <option name="CONDITION_ENABLED" value="false" />
         <option name="CLASS_FILTERS_ENABLED" value="false" />
         <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
+        <option name="CONDITION" value="&#13;&#13;JAVA" />
+        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
       </breakpoint>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -46,94 +109,63 @@
         <option name="CONDITION_ENABLED" value="false" />
         <option name="CLASS_FILTERS_ENABLED" value="false" />
         <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
+        <option name="CONDITION" value="&#13;&#13;JAVA" />
+        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
       </breakpoint>
     </breakpoint_any>
     <breakpoint_rules />
-    <ui_properties />
+    <ui_properties>
+      <property name="line_breakpoints_groupByMethods" value="false" />
+      <property name="line_breakpoints_viewId" value="TABLE" />
+      <property name="exception_breakpoints_flattenPackages" value="true" />
+      <property name="method_breakpoints_flattenPackages" value="true" />
+      <property name="field_breakpoints_flattenPackages" value="true" />
+      <property name="exception_breakpoints_groupByMethods" value="false" />
+      <property name="line_breakpoints_groupByClasses" value="true" />
+      <property name="method_breakpoints_viewId" value="TABLE" />
+      <property name="field_breakpoints_groupByMethods" value="false" />
+      <property name="line_breakpoints_flattenPackages" value="true" />
+      <property name="field_breakpoints_groupByClasses" value="true" />
+      <property name="method_breakpoints_groupByClasses" value="true" />
+      <property name="exception_breakpoints_viewId" value="TABLE" />
+      <property name="field_breakpoints_viewId" value="TABLE" />
+      <property name="exception_breakpoints_groupByClasses" value="true" />
+      <property name="method_breakpoints_groupByMethods" value="false" />
+    </ui_properties>
   </component>
   <component name="FavoritesManager">
     <favorites_list name="HbgzPlatforms" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="customReg.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/secure/customReg.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="0" selection-start="2836" selection-end="2836" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/secure/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="7" selection-start="2587" selection-end="2587" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="salesRegister.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/secure/salesRegister.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="0" selection-start="2147" selection-end="2147" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/secure/test.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="indesx.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/secure/indesx.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="34" selection-start="1023" selection-end="1023" vertical-scroll-proportion="0.7799228">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CustWebRoot/pageStore/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="221" column="17" selection-start="11038" selection-end="11038" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/webservice/AppService.java" />
-        <option value="$PROJECT_DIR$/src/com/webservice/ChatsService.java" />
-        <option value="$PROJECT_DIR$/src/com/test.java" />
-        <option value="$PROJECT_DIR$/src/com/webservice/ManageService.java" />
-        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/secure/customReg.html" />
-        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/secure/index.html" />
-        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/secure/salesRegister.html" />
-        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/secure/secureIndex.html" />
-        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/secure/js/controllers.js" />
-        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/secure/js/services.js" />
-        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/js/services.js" />
-        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/secure/indesx.html" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/testapp/index.html" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/js/app.js" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/date.html" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/index.html" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/js/controllers.js" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/index.html" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/store/may.html" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/store/js/controllers.js" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/store/js/services.js" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/store/js/app.js" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/store/tabs.html" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/store/index.html" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/js/swipe1.js" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/store2/js/services.js" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/store2/index.html" />
+        <option value="$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/index2.html" />
       </list>
     </option>
   </component>
@@ -146,8 +178,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="1382" />
-    <option name="height" value="735" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -158,8 +191,8 @@
     <OptionsSetting value="true" id="Edit" />
     <OptionsSetting value="true" id="Undo Check Out" />
     <OptionsSetting value="true" id="Get Latest Version" />
-    <ConfirmationsSetting value="0" id="Add" />
-    <ConfirmationsSetting value="0" id="Remove" />
+    <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="2" id="Remove" />
   </component>
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
@@ -261,28 +294,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webservice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HbgzPlatforms" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HbgzPlatforms" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="CustWebRoot" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -319,11 +330,39 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="pageApp" />
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HbgzPlatforms" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HbgzPlatforms" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="secure" />
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HbgzPlatforms" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HbgzPlatforms" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ibatis" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -333,15 +372,15 @@
   </component>
   <component name="PropertiesComponent">
     <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_treeOrder4" value="4" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_treeOrder3" value="3" />
-    <property name="project.structure.last.edited" value="Libraries" />
     <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_treeOrder2" value="2" />
-    <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_treeOrder1" value="1" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_treeOrder1" value="1" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="recentsLimit" value="5" />
+    <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_treeOrder0" value="0" />
     <property name="MemberChooser.sorted" value="false" />
+    <property name="recentsLimit" value="5" />
     <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_flatWidth4" value="81" />
     <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_flatWidth5" value="796" />
     <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_flatWidth2" value="165" />
@@ -359,10 +398,11 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_treeOrder5" value="5" />
-    <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_treeWidth5" value="880" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_treeWidth5" value="880" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
+    <property name="options.lastSelected" value="preferences.sourceCode.General" />
+    <property name="DefaultHtmlFileTemplate" value="Html" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="FileHistory.com.intellij.vssSupport.VssFileHistoryProvider_flatOrder1" value="1" />
@@ -378,7 +418,14 @@
       <recent name="com.webservice" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\湖北公众\HbgzPlatforms\CustWebRoot\pageApp\secure" />
+      <recent name="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\img" />
+      <recent name="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\birthdayApp\resource" />
+      <recent name="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp" />
+      <recent name="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\store\js" />
+      <recent name="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\YXApp\js\date" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\hefan1100\HbgzPlatforms\CustWebRoot\pageApp\store\css" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 7">
@@ -402,24 +449,6 @@
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
@@ -456,6 +485,24 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -473,6 +520,28 @@
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
         <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
+      <JSRemoteDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSRemoteDebuggerConfigurationSettings>
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
@@ -495,40 +564,6 @@
       </option>
       <envs />
       <patterns />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
-      <JSDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSDebuggerConfigurationSettings>
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote">
-      <option name="LOCAL" value="false" />
-      <deployment />
-      <server-settings>
-        <data>
-          <option name="transportHostId" />
-        </data>
-      </server-settings>
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="50201" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="false" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -596,6 +631,29 @@
           <option name="PROGRAM_PARAMETERS" value="" />
         </SHUTDOWN>
       </ConfigurationWrapper>
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote">
+      <option name="LOCAL" value="false" />
+      <deployment />
+      <server-settings>
+        <data>
+          <option name="transportHostId" />
+        </data>
+      </server-settings>
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="50201" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -720,35 +778,139 @@
       <created>1485337516269</created>
       <updated>1485337516269</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="王文海  OnlineserviceApp提交">
+      <created>1487142968321</created>
+      <updated>1487142968321</updated>
+    </task>
+    <task id="LOCAL-00005" summary="王文海  YxApp提交">
+      <created>1487143165681</created>
+      <updated>1487143165681</updated>
+    </task>
+    <task id="LOCAL-00006" summary="王文海  zhuanquApp提交">
+      <created>1487143278786</created>
+      <updated>1487143278786</updated>
+    </task>
+    <task id="LOCAL-00007" summary="王文海  zhuanquApp提交">
+      <created>1487294951466</created>
+      <updated>1487294951466</updated>
+    </task>
+    <task id="LOCAL-00008" summary="王文海  zhuanquApp提交">
+      <created>1487557700567</created>
+      <updated>1487557700567</updated>
+    </task>
+    <task id="LOCAL-00009" summary="王文海  zhuanquApp提交">
+      <created>1487558501717</created>
+      <updated>1487558501717</updated>
+    </task>
+    <task id="LOCAL-00010" summary="王文海  zhuanquApp提交">
+      <created>1487558660852</created>
+      <updated>1487558660852</updated>
+    </task>
+    <task id="LOCAL-00011" summary="王文海  zhuanquApp提交">
+      <created>1487558962583</created>
+      <updated>1487558962583</updated>
+    </task>
+    <task id="LOCAL-00012" summary="王文海  zhuanquApp提交">
+      <created>1487559107739</created>
+      <updated>1487559107739</updated>
+    </task>
+    <task id="LOCAL-00013" summary="王文海  zhuanquApp提交">
+      <created>1487559781422</created>
+      <updated>1487559781422</updated>
+    </task>
+    <task id="LOCAL-00014" summary="王文海  zhuanquApp提交">
+      <created>1487560736985</created>
+      <updated>1487560736985</updated>
+    </task>
+    <task id="LOCAL-00015" summary="王文海  zhuanquApp提交">
+      <created>1487562083212</created>
+      <updated>1487562083212</updated>
+    </task>
+    <task id="LOCAL-00016" summary="王文海  zhuanquApp提交">
+      <created>1487662645613</created>
+      <updated>1487662645613</updated>
+    </task>
+    <task id="LOCAL-00017" summary="王文海  zhuanquApp提交">
+      <created>1487726555558</created>
+      <updated>1487726555558</updated>
+    </task>
+    <task id="LOCAL-00018" summary="王文海  zhuanquApp提交">
+      <created>1487734328103</created>
+      <updated>1487734328103</updated>
+    </task>
+    <task id="LOCAL-00019" summary="王文海  zhuanquApp提交">
+      <created>1487900393107</created>
+      <updated>1487900393107</updated>
+    </task>
+    <task id="LOCAL-00020" summary="王文海  zhuanquApp提交">
+      <created>1488334484867</created>
+      <updated>1488334484867</updated>
+    </task>
+    <task id="LOCAL-00021" summary="王文海  zhuanquApp提交">
+      <created>1488417203810</created>
+      <updated>1488417203810</updated>
+    </task>
+    <task id="LOCAL-00022" summary="王文海  zhuanquApp提交">
+      <created>1488709419064</created>
+      <updated>1488709419064</updated>
+    </task>
+    <task id="LOCAL-00023" summary="王文海  zhuanquApp提交">
+      <created>1488933459659</created>
+      <updated>1488933459659</updated>
+    </task>
+    <task id="LOCAL-00024" summary="王文海  zhuanquApp提交">
+      <created>1489559721536</created>
+      <updated>1489559721536</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1382" height="735" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328152" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962063" sideWeight="0.6712565" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3811189" sideWeight="0.7959029" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3786575" sideWeight="0.7959029" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36488813" sideWeight="0.19878604" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2215478" sideWeight="0.22203098" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32867134" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22078907" sideWeight="0.22547331" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.55593807" sideWeight="0.4908953" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22114669" sideWeight="0.22203098" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328152" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2215478" sideWeight="0.37349397" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39984825" sideWeight="0.6712565" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22230652" sideWeight="0.44230768" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2960413" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2215478" sideWeight="0.5869191" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4130809" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34423408" sideWeight="0.90895295" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5576923" sideWeight="0.4908953" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3425129" sideWeight="0.90895295" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962063" sideWeight="0.64199656" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -790,7 +952,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="a" />
+    <option name="LAST_COMMIT_MESSAGE" value="王文海  zhuanquApp提交" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -804,6 +966,9 @@
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="a" />
+    <MESSAGE value="王文海  OnlineserviceApp提交" />
+    <MESSAGE value="王文海  YxApp提交" />
+    <MESSAGE value="王文海  zhuanquApp提交" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="D:\SourceSafe6.0d\VSS\Win32\ss.exe" />
@@ -859,88 +1024,75 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="61" selection-start="806" selection-end="806" vertical-scroll-proportion="0.0" />
+    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/img/img15.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageStore/enjoyLifeMenu/adEdit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="42" selection-start="2887" selection-end="2897" vertical-scroll-proportion="0.0" />
+    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/img/img14.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/commons/util/Json.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="406" column="86" selection-start="11151" selection-end="11151" vertical-scroll-proportion="0.0" />
+    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/img/bg1.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/commons/util/WeChatUtil.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/standardSchemas/xhtml1-transitional.dtd">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="14" selection-start="1761" selection-end="1761" vertical-scroll-proportion="0.0" />
+        <state line="135" column="2" selection-start="3748" selection-end="3748" vertical-scroll-proportion="0.33333334" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/commons/log/LoggerWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="21" selection-start="529" selection-end="529" vertical-scroll-proportion="0.0" />
+    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/img/img10.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/webservice/ManageService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="360" column="67" selection-start="22753" selection-end="22753" vertical-scroll-proportion="0.0" />
+    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/img/img16.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/secure/js/services.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="138" column="1" selection-start="6420" selection-end="6420" vertical-scroll-proportion="0.0" />
+    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/img/font9.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/YXApp/js/services.js">
+    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/js/swipe1.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="186" column="91" selection-start="7528" selection-end="7528" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/secure/js/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="275" column="0" selection-start="9035" selection-end="9035" vertical-scroll-proportion="0.77734375" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/secure/secureIndex.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="1481" selection-end="1481" vertical-scroll-proportion="0.77062374" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/secure/customReg.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="0" selection-start="2836" selection-end="2836" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/secure/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="7" selection-start="2587" selection-end="2587" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/secure/salesRegister.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="0" selection-start="2147" selection-end="2147" vertical-scroll-proportion="0.0">
+        <state line="40" column="82" selection-start="161" selection-end="1422" vertical-scroll-proportion="0.63809526">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/secure/test.html">
+    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/js/swiper.animate1.0.2.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageStore/index.html">
+    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/js/swiper.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="221" column="17" selection-start="11038" selection-end="11038" vertical-scroll-proportion="0.0" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/secure/indesx.html">
+    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/img/music2.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/img/img6.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CustWebRoot/pageApp/birthdayApp/index2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="34" selection-start="1023" selection-end="1023" vertical-scroll-proportion="0.7799228">
+        <state line="397" column="70" selection-start="17646" selection-end="17646" vertical-scroll-proportion="0.46586347">
           <folding />
         </state>
       </provider>
@@ -999,7 +1151,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>HbgzPlatforms</last-edited>
+          <last-edited>Web|HbgzPlatforms</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
